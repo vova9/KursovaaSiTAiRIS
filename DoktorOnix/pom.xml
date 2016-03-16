@@ -10,12 +10,6 @@
     <module>DoktorOnix-ear</module>
     <module>DoktorOnix-web</module>
     <module>DoktorOnix-ejb</module>
-    <module>../DoktorOnix-lib</module>
-    <module>../DoktorOnix-lib</module>
-    <module>../DoktorOnix-lib</module>
-    <module>DoktorOnix-lib</module>
-    <module>DoktorOnix-lib</module>
-    <module>DoktorOnix-lib</module>
-    <module>../DoktorOnix-lib</module>
+    <module>../../kursovaa/DoktorOnix-lib</module>
   </modules>
 </project>
