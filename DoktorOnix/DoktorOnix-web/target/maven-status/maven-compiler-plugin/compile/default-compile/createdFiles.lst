@@ -1,1 +1,7 @@
-by\Kursovaa\indexTest.class
+by\Kursovaa\controllerAvtushkoVM\StudentController.class
+by\Kursovaa\confingAvtushkoVM\WebAppInitializer.class
+by\Kursovaa\confingAvtushkoVM\SecurityInitializer.class
+by\Kursovaa\service\StudentService.class
+by\Kursovaa\confingAvtushkoVM\SecurityConfig.class
+by\Kursovaa\confingAvtushkoVM\ThymeleafConfig.class
+by\Kursovaa\bean\Student.class

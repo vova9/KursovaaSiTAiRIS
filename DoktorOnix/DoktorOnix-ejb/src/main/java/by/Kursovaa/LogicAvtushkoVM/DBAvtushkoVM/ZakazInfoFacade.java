@@ -7,6 +7,8 @@ package by.Kursovaa.LogicAvtushkoVM.DBAvtushkoVM;
 
 import by.Kursovaa.DBAvtushkoVM.ZakazInfo;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -14,6 +16,7 @@ import javax.persistence.PersistenceContext;
  *
  * @author Vladimir
  */
+@TransactionAttribute(TransactionAttributeType.REQUIRED)
 @Stateless
 public class ZakazInfoFacade extends AbstractFacade<ZakazInfo> implements by.Kursovaa.LogicAvtushkoVM.DBAvtushkoVM.ZakazInfoFacadeRemote {
 
@@ -28,5 +31,5 @@ public class ZakazInfoFacade extends AbstractFacade<ZakazInfo> implements by.Kur
     public ZakazInfoFacade() {
         super(ZakazInfo.class);
     }
-    
+
 }
