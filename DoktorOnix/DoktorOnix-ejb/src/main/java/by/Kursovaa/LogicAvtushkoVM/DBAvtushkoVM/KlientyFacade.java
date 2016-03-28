@@ -31,5 +31,4 @@ public class KlientyFacade extends AbstractFacade<Klienty> implements by.Kursova
     public KlientyFacade() {
         super(Klienty.class);
     }
-
 }

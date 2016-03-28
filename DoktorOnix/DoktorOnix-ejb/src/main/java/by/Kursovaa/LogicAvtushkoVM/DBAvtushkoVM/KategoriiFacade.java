@@ -31,5 +31,4 @@ public class KategoriiFacade extends AbstractFacade<Kategorii> implements by.Kur
     public KategoriiFacade() {
         super(Kategorii.class);
     }
-
 }

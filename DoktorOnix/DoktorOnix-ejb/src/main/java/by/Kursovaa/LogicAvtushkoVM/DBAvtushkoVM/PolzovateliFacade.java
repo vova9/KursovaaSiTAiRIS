@@ -28,5 +28,4 @@ public class PolzovateliFacade extends AbstractFacade<Polzovateli> implements by
     public PolzovateliFacade() {
         super(Polzovateli.class);
     }
-    
 }

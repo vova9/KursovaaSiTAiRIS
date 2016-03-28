@@ -6,5 +6,6 @@ by\Kursovaa\LogicAvtushkoVM\DBAvtushkoVM\PolzovateliFacade.class
 by\Kursovaa\LogicAvtushkoVM\DBAvtushkoVM\KassaFacade.class
 by\Kursovaa\LogicAvtushkoVM\DBAvtushkoVM\TovaryFacade.class
 by\Kursovaa\LogicAvtushkoVM\DBAvtushkoVM\ZakazStatusFacade.class
+by\Kursovaa\LogicAvtushkoVM\EMail.class
 by\Kursovaa\LogicAvtushkoVM\DBAvtushkoVM\ZakazyFacade.class
 by\Kursovaa\LogicAvtushkoVM\DBAvtushkoVM\KlientyFacade.class

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="DoktorOnix-ejb.PU" transaction-type="JTA">
+    <jta-data-source>jdbc/avtushko_v_m</jta-data-source>
+    <class>by.Kursovaa.DBAvtushkoVM.Kassa</class>
+    <class>by.Kursovaa.DBAvtushkoVM.Kategorii</class>
+    <class>by.Kursovaa.DBAvtushkoVM.Klienty</class>
+    <class>by.Kursovaa.DBAvtushkoVM.Polzovateli</class>
+    <class>by.Kursovaa.DBAvtushkoVM.Tovary</class>
+    <class>by.Kursovaa.DBAvtushkoVM.ZakazInfo</class>
+    <class>by.Kursovaa.DBAvtushkoVM.ZakazStatus</class>
+    <class>by.Kursovaa.DBAvtushkoVM.Zakazy</class>
+    <exclude-unlisted-classes>true</exclude-unlisted-classes>
+   <properties>
+      <property name="eclipselink.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <property name="eclipselink.jdbc.url" value="jdbc:mysql://localhost:3306/avtushko_v_m"/>
+      <property name="eclipselink.jdbc.user" value="root"/>
+      <property name="eclipselink.jdbc.password" value="1629807"/>
+      <property name="eclipselink.logging.level" value="INFO"/>
+    </properties>
+  </persistence-unit>
+</persistence>

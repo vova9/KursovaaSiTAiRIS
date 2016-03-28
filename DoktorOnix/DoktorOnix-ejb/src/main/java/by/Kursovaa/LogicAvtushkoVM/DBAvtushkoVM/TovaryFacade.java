@@ -31,5 +31,4 @@ public class TovaryFacade extends AbstractFacade<Tovary> implements by.Kursovaa.
     public TovaryFacade() {
         super(Tovary.class);
     }
-    
 }

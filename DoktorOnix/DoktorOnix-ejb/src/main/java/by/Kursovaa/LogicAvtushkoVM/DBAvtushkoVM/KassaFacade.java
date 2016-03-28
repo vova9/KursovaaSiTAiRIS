@@ -31,5 +31,4 @@ public class KassaFacade extends AbstractFacade<Kassa> implements KassaFacadeRem
     public KassaFacade() {
         super(Kassa.class);
     }
-    
 }

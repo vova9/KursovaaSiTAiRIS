@@ -31,5 +31,4 @@ public class ZakazyFacade extends AbstractFacade<Zakazy> implements by.Kursovaa.
     public ZakazyFacade() {
         super(Zakazy.class);
     }
-    
 }

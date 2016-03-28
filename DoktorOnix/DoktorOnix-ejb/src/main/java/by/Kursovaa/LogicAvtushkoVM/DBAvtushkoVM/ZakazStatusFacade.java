@@ -31,5 +31,4 @@ public class ZakazStatusFacade extends AbstractFacade<ZakazStatus> implements by
     public ZakazStatusFacade() {
         super(ZakazStatus.class);
     }
-    
 }

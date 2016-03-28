@@ -31,5 +31,4 @@ public class ZakazInfoFacade extends AbstractFacade<ZakazInfo> implements by.Kur
     public ZakazInfoFacade() {
         super(ZakazInfo.class);
     }
-
 }
