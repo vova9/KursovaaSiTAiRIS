@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package by.Kursovaa.DBAvtushkoVM;
+package by.kursovaa.dbAvtushkoVM;
 
 import java.io.Serializable;
 import java.util.List;
@@ -16,8 +16,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -43,32 +41,22 @@ public class Klienty implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 13)
     @Column(name = "telefon")
     private String telefon;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
     @Column(name = "familia")
     private String familia;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
     @Column(name = "ima")
     private String ima;
-    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Недопустимый адрес электронной почты")//if the field contains email address consider using this annotation to enforce field validation
-    @Size(max = 50)
     @Column(name = "email")
     private String email;
-    @Size(max = 100)
     @Column(name = "gorod")
     private String gorod;
     @Column(name = "nomer_sklada")
     private Integer nomerSklada;
     @Column(name = "zip")
     private Integer zip;
-    @Size(max = 150)
     @Column(name = "adress")
     private String adress;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "telefon")
@@ -182,7 +170,7 @@ public class Klienty implements Serializable {
 
     @Override
     public String toString() {
-        return "by.Kursovaa.DBAvtushkoVM.Klienty[ telefon=" + telefon + " ]";
+        return "by.kursovaa.dbAvtushkoVM.Klienty[ telefon=" + telefon + " ]";
     }
     
 }

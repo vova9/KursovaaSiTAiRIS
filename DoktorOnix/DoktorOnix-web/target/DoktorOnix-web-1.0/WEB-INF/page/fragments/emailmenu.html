@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+
+    </head>
+    <body>
+        <div class="col-md-3" th:fragment="emailmenu">
+            <a href="compose.html" th:href="@{/mailbox/new}" class="btn btn-primary btn-block margin-bottom">
+                Написать</a>
+            <div class="box box-solid">
+                <div class="box-header with-border">
+                    <div class="box-tools">
+                        <button class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i></button>
+                    </div>
+                </div>
+                <div class="box-body no-padding">
+                    <ul class="nav nav-pills nav-stacked">
+                        <li id="in" class="active"><a href="#" th:href="@{/mailbox/index}"><i class="fa fa-inbox"></i> 
+                                Входящие 
+                                <span class="label label-primary pull-right" th:text="${newmail}">
+                                    </span></a></li>
+                        <li id="ot"><a href="#" th:href="@{/mailbox/index/Sent}"><i class="fa fa-envelope-o"></i> 
+                                Отправленные</a></li>
+                        <li id="ch"><a href="#" th:href="@{/mailbox/index/Drafts}"><i class="fa fa-file-text-o"></i> 
+                                Черновики
+                                <span class="label label-warning pull-right" th:text="${dmail}">
+                                    </span></a></li>
+                        <li id="t"><a href="#" th:href="@{/mailbox/index/Trash}"><i class="fa fa-filter"></i> Корзина 
+                                <span class="label label-warning pull-right" th:text="${bmail}">
+                                    </span></a></li>
+                        <li id="s"><a href="#" th:href="@{/mailbox/index/Junk}"><i class="fa fa-trash-o"></i> Спам
+                                <span class="label label-warning pull-right" th:text="${spammail}">
+                                    </span></a></li>
+                    </ul>
+                </div><!-- /.box-body -->
+            </div><!-- /. box -->
+
+        </div><!-- /.col -->
+    </body>
+</html>

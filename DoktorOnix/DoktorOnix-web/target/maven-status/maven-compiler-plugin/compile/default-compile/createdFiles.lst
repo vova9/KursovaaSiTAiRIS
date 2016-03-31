@@ -1,4 +1,8 @@
+by\Kursovaa\controllerAvtushkoVM\Ejb.class
+by\Kursovaa\controllerAvtushkoVM\Email.class
+by\Kursovaa\controllerAvtushkoVM\GlobalControllerExceptionHandler.class
 by\Kursovaa\controllerAvtushkoVM\StudentController.class
+by\Kursovaa\controllerAvtushkoVM\Index.class
 by\Kursovaa\confingAvtushkoVM\WebAppInitializer.class
 by\Kursovaa\confingAvtushkoVM\SecurityInitializer.class
 by\Kursovaa\service\StudentService.class

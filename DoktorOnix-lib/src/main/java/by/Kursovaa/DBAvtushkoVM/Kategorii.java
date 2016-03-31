@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package by.Kursovaa.DBAvtushkoVM;
+package by.kursovaa.dbAvtushkoVM;
 
 import java.io.Serializable;
 import java.util.List;
@@ -16,8 +16,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -38,16 +36,12 @@ public class Kategorii implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @NotNull
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 60)
     @Column(name = "name")
     private String name;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "roditel")
     private int roditel;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "kategoria")
@@ -121,7 +115,7 @@ public class Kategorii implements Serializable {
 
     @Override
     public String toString() {
-        return "by.Kursovaa.DBAvtushkoVM.Kategorii[ id=" + id + " ]";
+        return "by.kursovaa.dbAvtushkoVM.Kategorii[ id=" + id + " ]";
     }
     
 }

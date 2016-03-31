@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package by.Kursovaa.DBAvtushkoVM;
+package by.kursovaa.dbAvtushkoVM;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -20,7 +20,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -43,7 +42,6 @@ public class ZakazStatus implements Serializable {
     @Basic(optional = false)
     @Column(name = "idzakaz_status")
     private Integer idzakazStatus;
-    @Size(max = 45)
     @Column(name = "status")
     private String status;
     @Column(name = "data")
@@ -114,7 +112,7 @@ public class ZakazStatus implements Serializable {
 
     @Override
     public String toString() {
-        return "by.Kursovaa.DBAvtushkoVM.ZakazStatus[ idzakazStatus=" + idzakazStatus + " ]";
+        return "by.kursovaa.dbAvtushkoVM.ZakazStatus[ idzakazStatus=" + idzakazStatus + " ]";
     }
     
 }

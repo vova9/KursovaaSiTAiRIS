@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package by.Kursovaa.LogicAvtushkoVM.DBAvtushkoVM;
+package by.kursovaa.logicAvtushkoVM.dbAvtushkoVM;
 
-import by.Kursovaa.DBAvtushkoVM.Polzovateli;
+import by.kursovaa.dbAvtushkoVM.Polzovateli;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,7 +15,7 @@ import javax.persistence.PersistenceContext;
  * @author Vladimir
  */
 @Stateless
-public class PolzovateliFacade extends AbstractFacade<Polzovateli> implements by.Kursovaa.LogicAvtushkoVM.DBAvtushkoVM.PolzovateliFacadeRemote {
+public class PolzovateliFacade extends AbstractFacade<Polzovateli> implements PolzovateliFacadeRemote {
 
     @PersistenceContext(unitName = "DoktorOnix-ejb.PU")
     private EntityManager em;
@@ -28,4 +28,5 @@ public class PolzovateliFacade extends AbstractFacade<Polzovateli> implements by
     public PolzovateliFacade() {
         super(Polzovateli.class);
     }
+    
 }

@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package by.Kursovaa.LogicAvtushkoVM.DBAvtushkoVM;
+package by.kursovaa.logicAvtushkoVM.dbAvtushkoVM;
 
-import by.Kursovaa.DBAvtushkoVM.Polzovateli;
+import by.kursovaa.dbAvtushkoVM.Polzovateli;
 import java.util.List;
 import javax.ejb.Remote;
 

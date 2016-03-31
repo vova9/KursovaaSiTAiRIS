@@ -1,21 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package by.Kursovaa.LogicAvtushkoVM;
+package by.kursovaa.logicAvtushkoVM;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
-/**
- *
- * @author Vladimir
- */
-public class MessageBean implements Serializable {
-
-    private static final long serialVersionUID = 1L;
-
+public class MessageBean implements Serializable{
     private String subject;
     private String from;
     private String to;
@@ -25,8 +13,7 @@ public class MessageBean implements Serializable {
     private int msgId;
     private ArrayList<String> attachments;
 
-    public MessageBean(int msgId, String subject, String from, String to, 
-            String dateSent, String content, boolean isNew, ArrayList<String> attachments) {
+    public MessageBean(int msgId, String subject, String from, String to, String dateSent, String content, boolean isNew, ArrayList<String> attachments) {
         this.subject = subject;
         this.from = from;
         this.to = to;

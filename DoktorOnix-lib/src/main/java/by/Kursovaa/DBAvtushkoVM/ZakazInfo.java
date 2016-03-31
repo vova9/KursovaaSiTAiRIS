@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package by.Kursovaa.DBAvtushkoVM;
+package by.kursovaa.dbAvtushkoVM;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
@@ -17,7 +17,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -42,7 +41,6 @@ public class ZakazInfo implements Serializable {
     @Column(name = "idzakaz_info")
     private Integer idzakazInfo;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "zena")
     private double zena;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
@@ -139,7 +137,7 @@ public class ZakazInfo implements Serializable {
 
     @Override
     public String toString() {
-        return "by.Kursovaa.DBAvtushkoVM.ZakazInfo[ idzakazInfo=" + idzakazInfo + " ]";
+        return "by.kursovaa.dbAvtushkoVM.ZakazInfo[ idzakazInfo=" + idzakazInfo + " ]";
     }
     
 }

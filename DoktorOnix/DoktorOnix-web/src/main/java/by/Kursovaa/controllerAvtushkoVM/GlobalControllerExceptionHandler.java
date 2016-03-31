@@ -5,19 +5,19 @@
  */
 package by.Kursovaa.controllerAvtushkoVM;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  *
  * @author Vladimir
  */
-@ControllerAdvice
+@Controller
 public class GlobalControllerExceptionHandler {
 
-    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @RequestMapping(value = "/404")
     public String handleConflict() {
+        System.out.println(5);
         return "404";
     }
 }

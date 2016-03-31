@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html  xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <link rel="shortcut icon" href="../../dist/img/favicon.ico" 
+              th:href="@{/resources/dist/img/favicon.ico}" type="image/x-icon"/>
+    </head>
+    <body>
+        <header class="main-header" th:fragment="header">
+            <!-- Logo -->
+            <a href="index.html" class="logo" th:href="@{/}">
+                <!-- mini logo for sidebar mini 50x50 pixels -->
+                <span class="logo-mini"><b>ДО</b></span>
+                <!-- logo for regular state and mobile devices -->
+                <span class="logo-lg">
+                    <b>Доктор Оникс</b>
+                </span>
+            </a>
+            <!-- Header Navbar: style can be found in header.less -->
+            <nav class="navbar navbar-static-top" role="navigation">
+                <!-- Sidebar toggle button-->
+                <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                    <span class="sr-only">Переключение навигации</span>
+                </a>
+                <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav">
+                        <!-- Messages: style can be found in dropdown.less-->           
+                        <li>
+                            <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+    </body>
+</html>

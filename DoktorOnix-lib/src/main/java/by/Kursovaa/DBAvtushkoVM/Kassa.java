@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package by.Kursovaa.DBAvtushkoVM;
+package by.kursovaa.dbAvtushkoVM;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -18,8 +18,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -45,19 +43,14 @@ public class Kassa implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
     @Column(name = "tip")
     private String tip;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "summa")
     private double summa;
-    @Size(max = 255)
     @Column(name = "detali")
     private String detali;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "date")
     @Temporal(TemporalType.DATE)
     private Date date;
@@ -138,7 +131,7 @@ public class Kassa implements Serializable {
 
     @Override
     public String toString() {
-        return "by.Kursovaa.DBAvtushkoVM.Kassa[ id=" + id + " ]";
+        return "by.kursovaa.dbAvtushkoVM.Kassa[ id=" + id + " ]";
     }
     
 }

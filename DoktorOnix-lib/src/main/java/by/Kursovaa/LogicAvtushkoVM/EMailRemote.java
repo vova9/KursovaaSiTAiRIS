@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package by.Kursovaa.LogicAvtushkoVM;
+package by.kursovaa.logicAvtushkoVM;
 
-import java.io.IOException;
+import by.kursovaa.dbAvtushkoVM.Email;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import javax.ejb.Remote;
-import javax.mail.MessagingException;
 
 /**
  *
@@ -17,8 +17,9 @@ import javax.mail.MessagingException;
 @Remote
 public interface EMailRemote {
 
-    void delete(String user, String password, int n, String host) throws MessagingException, IOException;
+    void delete(String user, String password, int n, String host);
 
-    LinkedList<MessageBean> receive(String user, String password, String host);
+    LinkedList<MessageBean> receive(String what, Email mail);
 
+    void send(String to, String content, String subject, ArrayList<String> attachments, Email mail);
 }

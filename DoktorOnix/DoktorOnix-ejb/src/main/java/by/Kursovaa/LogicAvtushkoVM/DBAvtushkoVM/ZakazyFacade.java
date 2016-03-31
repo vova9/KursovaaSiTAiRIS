@@ -3,12 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package by.Kursovaa.LogicAvtushkoVM.DBAvtushkoVM;
+package by.kursovaa.logicAvtushkoVM.dbAvtushkoVM;
 
-import by.Kursovaa.DBAvtushkoVM.Zakazy;
+import by.kursovaa.dbAvtushkoVM.Zakazy;
 import javax.ejb.Stateless;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -16,9 +14,8 @@ import javax.persistence.PersistenceContext;
  *
  * @author Vladimir
  */
-@TransactionAttribute(TransactionAttributeType.REQUIRED)
 @Stateless
-public class ZakazyFacade extends AbstractFacade<Zakazy> implements by.Kursovaa.LogicAvtushkoVM.DBAvtushkoVM.ZakazyFacadeRemote {
+public class ZakazyFacade extends AbstractFacade<Zakazy> implements by.kursovaa.logicAvtushkoVM.dbAvtushkoVM.ZakazyFacadeRemote {
 
     @PersistenceContext(unitName = "DoktorOnix-ejb.PU")
     private EntityManager em;
@@ -31,4 +28,5 @@ public class ZakazyFacade extends AbstractFacade<Zakazy> implements by.Kursovaa.
     public ZakazyFacade() {
         super(Zakazy.class);
     }
+    
 }

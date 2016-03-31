@@ -1,9 +1,0 @@
-#surefire
-#Sat Mar 26 20:15:59 MSK 2016
-maven.ext.class.path=D\:\\Program Files\\NetBeans 8.1\\java\\maven-nblib\\netbeans-eventspy.jar
-user.dir=D\:\\NetBeansProjects\\kursovaa\\DoktorOnix\\DoktorOnix-web
-file.encoding=UTF-8
-localRepository=C\:\\Users\\Vladimir\\.m2\\repository
-netbeans.deploy=true
-netbeans.deploy.clientUrlPart=/
-basedir=D\:\\NetBeansProjects\\kursovaa\\DoktorOnix\\DoktorOnix-web

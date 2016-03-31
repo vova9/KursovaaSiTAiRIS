@@ -3,31 +3,45 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package by.Kursovaa.LogicAvtushkoVM;
+package by.kursovaa.logicAvtushkoVM;
 
+import by.kursovaa.dbAvtushkoVM.Email;
+import com.sun.mail.util.MailSSLSocketFactory;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.security.GeneralSecurityException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import static java.util.Date.from;
 import java.util.LinkedList;
-import javax.ejb.Stateful;
-import javax.mail.MessagingException;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.mail.Flags;
+import javax.ejb.Stateful;
+import javax.mail.Authenticator;
+import javax.mail.BodyPart;
 import javax.mail.Folder;
 import javax.mail.Message;
+import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.NoSuchProviderException;
 import javax.mail.Part;
 import javax.mail.Session;
 import javax.mail.Store;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import javax.mail.internet.MimeUtility;
-import javax.mail.search.FlagTerm;
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
+import javax.ejb.EJB;
+
 
 /**
  *
@@ -36,40 +50,56 @@ import javax.mail.search.FlagTerm;
 @Stateful
 public class EMail implements EMailRemote {
 
+   
+    final String ENCODING = "koi8-r";
+
     @Override
-    public void delete(String user, String password, int n, String host) throws MessagingException, IOException {
+    public void delete(String user, String password, int n, String host) {
     }
 
     @Override
-    public LinkedList<MessageBean> receive(String user, String password1, String host1) {
-        Properties props = new Properties();
-        String host = "mail.ukraine.com.ua";
-        String username = "ras@doktoronix.net.ua";
-        String password = "1629807V";
-        String provider = "pop3";
-        // String provider = "imap";
+    public LinkedList<MessageBean> receive(String what, Email mail) {
         try {
-            //Connect to the server
-            Session session = Session.getDefaultInstance(props, null);
-            Store store = session.getStore(provider);
-            store.connect(host, username, password);
+        
+        // Создание свойств
+            Properties props = new Properties();
+            MailSSLSocketFactory sf = new MailSSLSocketFactory();
+            sf.setTrustAllHosts(true);
+            props.put("mail.imaps.ssl.trust", "*");
+            java.security.Security.setProperty("ssl.SocketFactory.provider",
+                    "by.Kursovaa.LogicAvtushkoVM.MySSLSocketFactory");
+            props.put("mail.imaps.ssl.socketFactory", sf);
 
-            //open the inbox folder
-            Folder inbox = store.getFolder("INBOX");
+            //включение debug-режима
+            props.put("mail.debug", "true");
+
+            //Указываем протокол - IMAP с SSL
+            props.put("mail.store.protocol", "imaps");
+            Session session = Session.getInstance(props);
+            Store store = session.getStore();
+
+            //подключаемся к почтовому серверу
+            store.connect(mail.getImap(), mail.getLogin(), mail.getPassword());
+
+            //получаем папку с входящими сообщениями
+            Folder inbox = store.getFolder(what);
+
+            //открываем её только для чтения
             inbox.open(Folder.READ_ONLY);
 
-            Message[] messages = inbox.search(new FlagTerm(new Flags(Flags.Flag.SEEN), false));
+            //получаем последнее сообщение (самое старое будет под номером 1)
+            Message[] messages = inbox.getMessages();
             ArrayList<String> attachments = new ArrayList<String>();
-
             LinkedList<MessageBean> listMessages = getPart(messages, attachments);
-
-            inbox.setFlags(messages, new Flags(Flags.Flag.SEEN), true);
+            //          inbox.setFlags(messages, new Flags(Flags.Flag.SEEN), true);
             inbox.close(false);
             store.close();
             return listMessages;
         } catch (NoSuchProviderException ex) {
             Logger.getLogger(EMail.class.getName()).log(Level.SEVERE, null, ex);
         } catch (MessagingException ex) {
+            Logger.getLogger(EMail.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (GeneralSecurityException ex) {
             Logger.getLogger(EMail.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
@@ -82,7 +112,7 @@ public class EMail implements EMailRemote {
             try {
                 attachments.clear();
                 if (inMessage.isMimeType("text/plain")) {
-                    MessageBean message = new MessageBean(inMessage.getMessageNumber(), MimeUtility.decodeText(inMessage.getSubject()), inMessage.getFrom()[0].toString(), null, f.format(inMessage.getSentDate()), (String) inMessage.getContent(), false, null);
+                    MessageBean message = new MessageBean(inMessage.getMessageNumber(), MimeUtility.decodeText(inMessage.getSubject()), MimeUtility.decodeText(inMessage.getFrom()[0].toString()), null, f.format(inMessage.getSentDate()), (String) inMessage.getContent(), false, null);
                     listMessages.add(message);
                 } else if (inMessage.isMimeType("multipart/*")) {
                     Multipart mp = (Multipart) inMessage.getContent();
@@ -128,5 +158,56 @@ public class EMail implements EMailRemote {
             e.printStackTrace();
         }
         return path;
+    }
+
+    @Override
+    public void send(String to, String content, String subject, ArrayList<String> attachments,Email mail) {
+        try {
+            Properties props = new Properties();
+            props.put("mail.transport.protocol", "smtp");
+            props.put("mail.smtp.host", mail.getSmtp());
+            props.put("mail.smtp.auth", "true");
+
+            Authenticator auth = new MyAuthenticator(mail.getLogin(), mail.getPassword());
+            Session mailSession = Session.getDefaultInstance(props, auth);
+            // uncomment for debugging infos to stdout
+            // mailSession.setDebug(true);
+            Transport transport = mailSession.getTransport();
+            MimeMessage msg = new MimeMessage(mailSession);
+
+            msg.setFrom(new InternetAddress(mail.getLogin()));
+            msg.setRecipient(Message.RecipientType.TO, new InternetAddress(to));
+            msg.setSubject(subject, ENCODING);
+
+            if (attachments.size() == 0) {
+                msg.setText(content, ENCODING);
+            } else {
+                BodyPart messageBodyPart = new MimeBodyPart();
+                messageBodyPart.setContent(content, "text/plain; charset=" + ENCODING + "");
+                Multipart multipart = new MimeMultipart();
+                multipart.addBodyPart(messageBodyPart);
+                addAttachments(attachments, multipart);
+                msg.setContent(multipart);
+            }
+
+            Transport.send(msg);
+        } catch (NoSuchProviderException ex) {
+            Logger.getLogger(EMail.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (MessagingException ex) {
+            Logger.getLogger(EMail.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(EMail.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    protected void addAttachments(ArrayList<String> attachments, Multipart multipart) throws MessagingException, UnsupportedEncodingException {
+        for (int i = 0; i < attachments.size(); i++) {
+            String filename = attachments.get(i);
+            MimeBodyPart attachmentBodyPart = new MimeBodyPart();
+            DataSource source = new FileDataSource(filename);
+            attachmentBodyPart.setDataHandler(new DataHandler(source));
+            attachmentBodyPart.setFileName(MimeUtility.encodeText(source.getName()));
+            multipart.addBodyPart(attachmentBodyPart);
+        }
     }
 }

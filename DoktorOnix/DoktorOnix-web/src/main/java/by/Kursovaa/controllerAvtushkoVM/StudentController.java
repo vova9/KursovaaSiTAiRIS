@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author Vladimir
  */
 @Controller
-@RequestMapping("/app")
 public class StudentController {
 
     @Autowired
@@ -24,7 +23,7 @@ public class StudentController {
 
     @RequestMapping(value = "/login")
     public String homePage() {
-        return "Login";
+        return "login";
     }
 
     @RequestMapping(value = "/secure/studentDetail")

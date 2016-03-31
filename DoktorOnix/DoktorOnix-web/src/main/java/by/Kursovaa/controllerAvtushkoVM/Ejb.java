@@ -5,15 +5,16 @@
  */
 package by.Kursovaa.controllerAvtushkoVM;
 
-import by.Kursovaa.LogicAvtushkoVM.DBAvtushkoVM.KassaFacadeRemote;
-import by.Kursovaa.LogicAvtushkoVM.DBAvtushkoVM.KategoriiFacadeRemote;
-import by.Kursovaa.LogicAvtushkoVM.DBAvtushkoVM.KlientyFacadeRemote;
-import by.Kursovaa.LogicAvtushkoVM.DBAvtushkoVM.PolzovateliFacadeRemote;
-import by.Kursovaa.LogicAvtushkoVM.DBAvtushkoVM.TovaryFacadeRemote;
-import by.Kursovaa.LogicAvtushkoVM.DBAvtushkoVM.ZakazInfoFacadeRemote;
-import by.Kursovaa.LogicAvtushkoVM.DBAvtushkoVM.ZakazStatusFacadeRemote;
-import by.Kursovaa.LogicAvtushkoVM.DBAvtushkoVM.ZakazyFacadeRemote;
-import by.Kursovaa.LogicAvtushkoVM.EMailRemote;
+import by.kursovaa.logicAvtushkoVM.EMailRemote;
+import by.kursovaa.logicAvtushkoVM.dbAvtushkoVM.EmailFacadeRemote;
+import by.kursovaa.logicAvtushkoVM.dbAvtushkoVM.KassaFacadeRemote;
+import by.kursovaa.logicAvtushkoVM.dbAvtushkoVM.KategoriiFacadeRemote;
+import by.kursovaa.logicAvtushkoVM.dbAvtushkoVM.KlientyFacadeRemote;
+import by.kursovaa.logicAvtushkoVM.dbAvtushkoVM.PolzovateliFacadeRemote;
+import by.kursovaa.logicAvtushkoVM.dbAvtushkoVM.TovaryFacadeRemote;
+import by.kursovaa.logicAvtushkoVM.dbAvtushkoVM.ZakazInfoFacadeRemote;
+import by.kursovaa.logicAvtushkoVM.dbAvtushkoVM.ZakazStatusFacadeRemote;
+import by.kursovaa.logicAvtushkoVM.dbAvtushkoVM.ZakazyFacadeRemote;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.Context;
@@ -26,10 +27,24 @@ import javax.naming.NamingException;
  */
 public class Ejb {
 
-    public PolzovateliFacadeRemote lookupPolzovateliFacadeRemote() {
+    public static Ejb getInterface() {
+        return new Ejb();
+    }
+
+    public EMailRemote lookupEMailRemote() {
         try {
             Context c = new InitialContext();
-            return (PolzovateliFacadeRemote) c.lookup("java:global/DoktorOnix-ejb/PolzovateliFacade!by.Kursovaa.LogicAvtushkoVM.DBAvtushkoVM.PolzovateliFacadeRemote");
+            return (EMailRemote) c.lookup("java:global/DoktorOnix-ejb/EMail!by.kursovaa.logicAvtushkoVM.EMailRemote");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
+
+    public EmailFacadeRemote lookupEmailFacadeRemote() {
+        try {
+            Context c = new InitialContext();
+            return (EmailFacadeRemote) c.lookup("java:global/DoktorOnix-ejb/EmailFacade!by.kursovaa.logicAvtushkoVM.dbAvtushkoVM.EmailFacadeRemote");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);
@@ -39,7 +54,7 @@ public class Ejb {
     public KassaFacadeRemote lookupKassaFacadeRemote() {
         try {
             Context c = new InitialContext();
-            return (KassaFacadeRemote) c.lookup("java:global/DoktorOnix-ejb/KassaFacade!by.Kursovaa.LogicAvtushkoVM.DBAvtushkoVM.KassaFacadeRemote");
+            return (KassaFacadeRemote) c.lookup("java:global/DoktorOnix-ejb/KassaFacade!by.kursovaa.logicAvtushkoVM.dbAvtushkoVM.KassaFacadeRemote");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);
@@ -49,7 +64,7 @@ public class Ejb {
     public KategoriiFacadeRemote lookupKategoriiFacadeRemote() {
         try {
             Context c = new InitialContext();
-            return (KategoriiFacadeRemote) c.lookup("java:global/DoktorOnix-ejb/KategoriiFacade!by.Kursovaa.LogicAvtushkoVM.DBAvtushkoVM.KategoriiFacadeRemote");
+            return (KategoriiFacadeRemote) c.lookup("java:global/DoktorOnix-ejb/KategoriiFacade!by.kursovaa.logicAvtushkoVM.dbAvtushkoVM.KategoriiFacadeRemote");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);
@@ -59,7 +74,17 @@ public class Ejb {
     public KlientyFacadeRemote lookupKlientyFacadeRemote() {
         try {
             Context c = new InitialContext();
-            return (KlientyFacadeRemote) c.lookup("java:global/DoktorOnix-ejb/KlientyFacade!by.Kursovaa.LogicAvtushkoVM.DBAvtushkoVM.KlientyFacadeRemote");
+            return (KlientyFacadeRemote) c.lookup("java:global/DoktorOnix-ejb/KlientyFacade!by.kursovaa.logicAvtushkoVM.dbAvtushkoVM.KlientyFacadeRemote");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
+
+    public PolzovateliFacadeRemote lookupPolzovateliFacadeRemote() {
+        try {
+            Context c = new InitialContext();
+            return (PolzovateliFacadeRemote) c.lookup("java:global/DoktorOnix-ejb/PolzovateliFacade!by.kursovaa.logicAvtushkoVM.dbAvtushkoVM.PolzovateliFacadeRemote");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);
@@ -69,17 +94,17 @@ public class Ejb {
     public TovaryFacadeRemote lookupTovaryFacadeRemote() {
         try {
             Context c = new InitialContext();
-            return (TovaryFacadeRemote) c.lookup("java:global/DoktorOnix-ejb/TovaryFacade!by.Kursovaa.LogicAvtushkoVM.DBAvtushkoVM.TovaryFacadeRemote");
+            return (TovaryFacadeRemote) c.lookup("java:global/DoktorOnix-ejb/TovaryFacade!by.kursovaa.logicAvtushkoVM.dbAvtushkoVM.TovaryFacadeRemote");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);
         }
     }
 
-    private ZakazInfoFacadeRemote lookupZakazInfoFacadeRemote() {
+    public ZakazInfoFacadeRemote lookupZakazInfoFacadeRemote() {
         try {
             Context c = new InitialContext();
-            return (ZakazInfoFacadeRemote) c.lookup("java:global/DoktorOnix-ejb/ZakazInfoFacade!by.Kursovaa.LogicAvtushkoVM.DBAvtushkoVM.ZakazInfoFacadeRemote");
+            return (ZakazInfoFacadeRemote) c.lookup("java:global/DoktorOnix-ejb/ZakazInfoFacade!by.kursovaa.logicAvtushkoVM.dbAvtushkoVM.ZakazInfoFacadeRemote");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);
@@ -89,7 +114,7 @@ public class Ejb {
     public ZakazStatusFacadeRemote lookupZakazStatusFacadeRemote() {
         try {
             Context c = new InitialContext();
-            return (ZakazStatusFacadeRemote) c.lookup("java:global/DoktorOnix-ejb/ZakazStatusFacade!by.Kursovaa.LogicAvtushkoVM.DBAvtushkoVM.ZakazStatusFacadeRemote");
+            return (ZakazStatusFacadeRemote) c.lookup("java:global/DoktorOnix-ejb/ZakazStatusFacade!by.kursovaa.logicAvtushkoVM.dbAvtushkoVM.ZakazStatusFacadeRemote");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);
@@ -99,24 +124,10 @@ public class Ejb {
     public ZakazyFacadeRemote lookupZakazyFacadeRemote() {
         try {
             Context c = new InitialContext();
-            return (ZakazyFacadeRemote) c.lookup("java:global/DoktorOnix-ejb/ZakazyFacade!by.Kursovaa.LogicAvtushkoVM.DBAvtushkoVM.ZakazyFacadeRemote");
+            return (ZakazyFacadeRemote) c.lookup("java:global/DoktorOnix-ejb/ZakazyFacade!by.kursovaa.logicAvtushkoVM.dbAvtushkoVM.ZakazyFacadeRemote");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);
         }
-    }
-
-    public EMailRemote lookupEMailRemote() {
-        try {
-            Context c = new InitialContext();
-            return (EMailRemote) c.lookup("java:global/DoktorOnix-ejb/EMail!by.Kursovaa.LogicAvtushkoVM.EMailRemote");
-        } catch (NamingException ne) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
-            throw new RuntimeException(ne);
-        }
-    }
-
-    public static Ejb getInterface() {
-        return new Ejb();
     }
 }

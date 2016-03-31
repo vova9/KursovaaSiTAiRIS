@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package by.Kursovaa.DBAvtushkoVM;
+package by.kursovaa.dbAvtushkoVM;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -24,8 +24,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -59,7 +57,6 @@ public class Zakazy implements Serializable {
     @Column(name = "data_zakaza")
     @Temporal(TemporalType.DATE)
     private Date dataZakaza;
-    @Size(max = 45)
     @Column(name = "status")
     private String status;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
@@ -70,16 +67,12 @@ public class Zakazy implements Serializable {
     @Column(name = "data_otpravki")
     @Temporal(TemporalType.DATE)
     private Date dataOtpravki;
-    @Size(max = 50)
     @Column(name = "nakladnaa")
     private String nakladnaa;
     @Lob
-    @Size(max = 2147483647)
     @Column(name = "zamechanie")
     private String zamechanie;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
     @Column(name = "istochnik")
     private String istochnik;
     @Column(name = "oplata")
@@ -242,7 +235,7 @@ public class Zakazy implements Serializable {
 
     @Override
     public String toString() {
-        return "by.Kursovaa.DBAvtushkoVM.Zakazy[ id=" + id + " ]";
+        return "by.kursovaa.dbAvtushkoVM.Zakazy[ id=" + id + " ]";
     }
     
 }

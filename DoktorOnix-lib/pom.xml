@@ -5,23 +5,23 @@
     <artifactId>DoktorOnix-lib</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
-    <properties>
+     <name>DoktorOnix-lib</name>
+       <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-    </properties>
+    </properties> 
     <dependencies>
         <dependency>
             <groupId>org.eclipse.persistence</groupId>
-            <artifactId>org.eclipse.persistence.jpa.modelgen.processor</artifactId>
-            <version>2.5.2</version>
-            <scope>provided</scope>
+            <artifactId>javax.persistence</artifactId>
+            <version>2.1.0</version>
         </dependency>
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
-            <version>7.0</version>
+            <version>6.0</version>
             <scope>provided</scope>
         </dependency>
-    </dependencies>
+    </dependencies> 
 </project>
