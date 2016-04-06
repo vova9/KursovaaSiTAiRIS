@@ -3,17 +3,23 @@ package by.kursovaa.logicAvtushkoVM;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class MessageBean implements Serializable{
+public class MessageBean implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     private String subject;
     private String from;
     private String to;
     private String dateSent;
-    private String content;
+    private ArrayList<String> content;
     private boolean isNew;
     private int msgId;
     private ArrayList<String> attachments;
 
-    public MessageBean(int msgId, String subject, String from, String to, String dateSent, String content, boolean isNew, ArrayList<String> attachments) {
+    public MessageBean() {
+    }
+
+    public MessageBean(int msgId, String subject, String from, String to, String dateSent, ArrayList<String> content, boolean isNew, ArrayList<String> attachments) {
         this.subject = subject;
         this.from = from;
         this.to = to;
@@ -48,11 +54,11 @@ public class MessageBean implements Serializable{
         this.dateSent = dateSent;
     }
 
-    public String getContent() {
+    public ArrayList<String> getContent() {
         return content;
     }
 
-    public void setContent(String content) {
+    public void setContent(ArrayList<String> content) {
         this.content = content;
     }
 
@@ -64,7 +70,7 @@ public class MessageBean implements Serializable{
         this.to = to;
     }
 
-    public boolean isNew() {
+    public boolean getIsNew() {
         return isNew;
     }
 

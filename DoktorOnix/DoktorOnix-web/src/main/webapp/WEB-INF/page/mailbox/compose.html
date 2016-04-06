@@ -5,6 +5,8 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
         <title>Написать сообщение</title>
         <!-- Tell the browser to be responsive to screen width -->
+        <link rel="shortcut icon" href="../../dist/img/favicon.ico" 
+              th:href="@{/resources/dist/img/favicon.ico}" type="image/x-icon"/>
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
         <!-- Bootstrap 3.3.5 -->
         <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css"
@@ -19,8 +21,8 @@
         <link rel="stylesheet" href="../../plugins/fullcalendar/fullcalendar.print.css" media="print"
               th:href="@{/resources/plugins/fullcalendar/fullcalendar.print.css}"/>
         <!-- Theme style -->
-        <link rel="stylesheet" href="../../dist/css/AdminLTE.min.css"
-              th:href="@{/resources/dist/css/AdminLTE.min.css}"/>
+        <link rel="stylesheet" href="../../dist/css/AdminLTE.css"
+              th:href="@{/resources/dist/css/AdminLTE.css}"/>
         <!-- Choose a skin from the css/skins
              folder instead of downloading all of them to reduce the load. -->
         <link rel="stylesheet" href="../../dist/css/skins/_all-skins.min.css"
@@ -31,7 +33,6 @@
         <!-- bootstrap wysihtml5 - text editor -->
         <link rel="stylesheet" href="../../plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css"
               th:href="@{/resources/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css}"/>
-
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -67,32 +68,39 @@
                                 <div class="box-header with-border">
                                     <h3 class="box-title">Написать новое сообщение</h3>
                                 </div><!-- /.box-header -->
-                                <div class="box-body">
-                                    <div class="form-group">
-                                        <input class="form-control" placeholder="Кому:" />
-                                    </div>
-                                    <div class="form-group">
-                                        <input class="form-control" placeholder="Тема" />
-                                    </div>
-                                    <div class="form-group">
-                                        <textarea id="compose-textarea" class="form-control" style="height: 300px">
-                                        </textarea>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="btn btn-default btn-file">
-                                            <i class="fa fa-paperclip"></i> Прикрепить файлы
-                                            <input type="file" name="attachment"/>
+                                <form class="contact_form" th:action="@{/mailbox/sendmail}" 
+                                      th:object="${Email}" method="POST">
+                                    <div class="box-body">
+                                        <div class="form-group">                                          
+                                            <input type="email" class="form-control" name="to" 
+                                                   id="to" th:field="*{to}" th:value="*{to}" 
+                                                   placeholder="Кому:" required=""/>
+                                            <span class="form_hint">Допустимый формат: "name@domen.com"</span>
                                         </div>
-                                        <p class="help-block">Макс. 32MB</p>
-                                    </div>
-                                </div><!-- /.box-body -->
-                                <div class="box-footer">
-                                    <div class="pull-right">
-                                        <button class="btn btn-default" th:href="@{mailbox/draftsmail}"><i class="fa fa-pencil" ></i> Черновик</button>
-                                        <button type="submit" class="btn btn-primary" th:href="@{mailbox/sendmail}"><i class="fa fa-envelope-o"></i> Отправить</button>
-                                    </div>
-                                    <button class="btn btn-default" th:href="@{mailbox/index}"><i class="fa fa-times"></i> Отменить</button>
-                                </div><!-- /.box-footer -->
+                                        <div class="form-group">
+                                            <input class="form-control" name="subject" id="subject" 
+                                                   th:field="*{subject}" th:value="*{subject}" 
+                                                   placeholder="Тема" />
+                                        </div>
+                                        <div class="form-group">
+                                            <textarea id="compose-textarea" th:field="*{content}" 
+                                                      class="form-control" style="height: 300px">
+                                                <p th:each="content1 : *{content}" th:text="${content1}"></p>
+                                            </textarea>
+                                        </div>
+                                    </div><!-- /.box-body -->
+                                    <div class="box-footer">
+                                        <div class="pull-right">
+                                            <button class="btn btn-default" type="submit" 
+                                                    th:formaction="@{/mailbox/draftsmail}">
+                                                <i class="fa fa-pencil" ></i> Черновик</button>
+                                            <button type="submit" class="btn btn-primary">
+                                                <i class="fa fa-envelope-o"></i> Отправить</button>
+                                        </div>
+                                        <button class="btn btn-default"><i class="fa fa-times"></i> 
+                                            <a th:href="@{/mailbox/index}"> Отменить</a></button>
+                                    </div><!-- /.box-footer -->
+                                </form>
                             </div><!-- /. box -->
                         </div><!-- /.col -->
                     </div><!-- /.row -->

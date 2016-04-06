@@ -21,9 +21,9 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
     <ejb-ref>
-        <ejb-ref-name>EMail</ejb-ref-name>
+        <ejb-ref-name>Email</ejb-ref-name>
         <ejb-ref-type>Session</ejb-ref-type>
-        <remote>by.kursovaa.logicAvtushkoVM.EMailRemote</remote>
+        <remote>by.kursovaa.logicAvtushkoVM.EmailRemote</remote>
     </ejb-ref>
     <ejb-ref>
         <ejb-ref-name>EmailFacade</ejb-ref-name>

@@ -5,7 +5,7 @@
  */
 package by.Kursovaa.controllerAvtushkoVM;
 
-import by.kursovaa.logicAvtushkoVM.EMailRemote;
+import by.kursovaa.logicAvtushkoVM.EmailRemote;
 import by.kursovaa.logicAvtushkoVM.dbAvtushkoVM.EmailFacadeRemote;
 import by.kursovaa.logicAvtushkoVM.dbAvtushkoVM.KassaFacadeRemote;
 import by.kursovaa.logicAvtushkoVM.dbAvtushkoVM.KategoriiFacadeRemote;
@@ -31,10 +31,10 @@ public class Ejb {
         return new Ejb();
     }
 
-    public EMailRemote lookupEMailRemote() {
+    public EmailRemote lookupEMailRemote() {
         try {
             Context c = new InitialContext();
-            return (EMailRemote) c.lookup("java:global/DoktorOnix-ejb/EMail!by.kursovaa.logicAvtushkoVM.EMailRemote");
+            return (EmailRemote) c.lookup("java:global/DoktorOnix-ejb/Email!by.kursovaa.logicAvtushkoVM.EmailRemote");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

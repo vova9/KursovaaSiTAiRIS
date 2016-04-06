@@ -1,5 +1,6 @@
 by\kursovaa\logicAvtushkoVM\dbAvtushkoVM\KassaFacade.class
 by\kursovaa\logicAvtushkoVM\dbAvtushkoVM\PolzovateliFacade.class
+by\kursovaa\logicAvtushkoVM\Email.class
 by\kursovaa\logicAvtushkoVM\dbAvtushkoVM\ZakazyFacade.class
 by\kursovaa\logicAvtushkoVM\MyTrustManager.class
 by\kursovaa\logicAvtushkoVM\MySSLSocketFactory.class
@@ -9,7 +10,6 @@ by\kursovaa\NewSessionBean.class
 by\kursovaa\logicAvtushkoVM\dbAvtushkoVM\KlientyFacade.class
 by\kursovaa\logicAvtushkoVM\dbAvtushkoVM\ZakazInfoFacade.class
 by\kursovaa\logicAvtushkoVM\dbAvtushkoVM\ZakazStatusFacade.class
-by\kursovaa\logicAvtushkoVM\EMail.class
 by\kursovaa\logicAvtushkoVM\dbAvtushkoVM\AbstractFacade.class
 by\kursovaa\logicAvtushkoVM\dbAvtushkoVM\TovaryFacade.class
 by\kursovaa\logicAvtushkoVM\dbAvtushkoVM\EmailFacade.class

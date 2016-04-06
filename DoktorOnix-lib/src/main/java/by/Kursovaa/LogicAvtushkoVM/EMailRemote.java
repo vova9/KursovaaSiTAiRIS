@@ -7,7 +7,6 @@ package by.kursovaa.logicAvtushkoVM;
 
 import by.kursovaa.dbAvtushkoVM.Email;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import javax.ejb.Remote;
 
 /**
@@ -15,11 +14,21 @@ import javax.ejb.Remote;
  * @author Vladimir
  */
 @Remote
-public interface EMailRemote {
+public interface EmailRemote {
 
-    void delete(String user, String password, int n, String host);
+    ArrayList<MessageBean> fetch(Email mail, String what);
 
-    LinkedList<MessageBean> receive(String what, Email mail);
+    void sent(Email mail, MessageBean mess);
 
-    void send(String to, String content, String subject, ArrayList<String> attachments, Email mail);
+    void delete(Email mail, String what, Integer mess);
+
+    void forward(Email mail, MessageBean mess);
+
+    void reply(Email mail, MessageBean mess,String what);
+
+    boolean newMess(Email mail);
+
+    CoutMessage chek(Email mail);
+
+    void messegeRead(Email mail, MessageBean mess, String what);
 }
