@@ -62,8 +62,8 @@
                     <div class="row">
                         <div th:replace="fragments/emailmenu :: emailmenu"></div>
                         <div class="col-md-9">
-                            <div th:if="${success=='o'}" class="callout callout-success">
-                                <h4>Сообщение было успешно отправлено!</h4>
+                            <div th:if="${success != null}" class="callout callout-success">
+                                <h4 th:text="${success}"></h4>
                             </div>
                             <div class="box box-primary">
                                 <div class="box-header with-border">
@@ -73,7 +73,7 @@
                                     <div class="mailbox-controls">
                                         <!-- Check all button -->
                                         <button class="btn btn-default btn-sm"><a th:href="@{/mailbox/reflesh}">
-                                            <i class="fa fa-refresh"> </i> </a></button>
+                                                <i class="fa fa-refresh"> </i> </a></button>
                                         <div class="pull-right" th:text="${coutmail}">
                                             1-50/200
                                             <div class="btn-group">

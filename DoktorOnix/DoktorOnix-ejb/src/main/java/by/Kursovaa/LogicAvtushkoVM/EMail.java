@@ -64,11 +64,15 @@ public class Email implements EmailRemote {
             Folder emailFolder = store.getFolder(what);
             emailFolder.open(Folder.READ_ONLY);
             Message[] messages = emailFolder.getMessages();
+            int newMes = emailFolder.getNewMessageCount();
             for (int i = 0; i < messages.length; i++) {
                 ArrayList<String> arr = new ArrayList();
                 ArrayList<String> content = new ArrayList();
                 Message message = messages[i];
                 listMail.add(writePart(message, arr, content));
+                if (i > messages.length - newMes) {
+                    listMail.get(i).setNew(true);
+                }
             }
             emailFolder.close(false);
             store.close();
@@ -98,9 +102,16 @@ public class Email implements EmailRemote {
             msg.setFrom(new InternetAddress(mail.getLogin()));
             msg.setRecipient(Message.RecipientType.TO, new InternetAddress(mess.getTo()));
             msg.setSubject(mess.getSubject(), ENCODING);
-
             if (mess.getAttachments().size() == 0) {
-                msg.setContent(mess.getContent().get(0), "text/html; charset=" + ENCODING + "");
+                if (mess.getContent().size() != 0) {
+                    String temp="";
+                    for (int i=0;i<mess.getContent().size();i++){
+                        if (mess.getContent().get(i).indexOf("<p>")==-1){
+                        temp+="<p>"+mess.getContent().get(i)+"</p>";
+                        } 
+                        else{temp+=mess.getContent().get(i);}
+                    }
+                    msg.setContent(temp, "text/html; charset=" + ENCODING + "");}
             } else {
                 BodyPart messageBodyPart = new MimeBodyPart();
                 messageBodyPart.setContent(mess.getContent().get(0), "text/plain; charset=" + ENCODING + "");
@@ -110,69 +121,40 @@ public class Email implements EmailRemote {
                 msg.setContent(multipart);
             }
             Transport.send(msg);
+            Properties prop = new Properties();
+            MailSSLSocketFactory sf = new MailSSLSocketFactory();
+            sf.setTrustAllHosts(true);
+            prop.put("mail.imaps.ssl.trust", "*");
+            java.security.Security.setProperty("ssl.SocketFactory.provider",
+                    "by.Kursovaa.LogicAvtushkoVM.MySSLSocketFactory");
+            prop.put("mail.imaps.ssl.socketFactory", sf);
+
+            //включение debug-режима
+            prop.put("mail.debug", "true");
+
+            //Указываем протокол - IMAP с SSL
+            prop.put("mail.store.protocol", "imaps");
+            session = Session.getInstance(prop);
+            Store store = session.getStore();
+            //подключаемся к почтовому серверу
+            store.connect(mail.getImap(), mail.getLogin(), mail.getPassword());
+            Folder emailFolder = store.getFolder("INBOX.Sent");
+            emailFolder.open(Folder.READ_WRITE);
+            emailFolder.appendMessages(new Message[]{msg});
+            emailFolder.close(true);
         } catch (AddressException ex) {
             Logger.getLogger(Email.class.getName()).log(Level.SEVERE, null, ex);
         } catch (MessagingException ex) {
             Logger.getLogger(Email.class.getName()).log(Level.SEVERE, null, ex);
         } catch (UnsupportedEncodingException ex) {
             Logger.getLogger(Email.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    protected void addAttachments(ArrayList<String> attachments, Multipart multipart) throws MessagingException, UnsupportedEncodingException {
-        for (int i = 0; i < attachments.size(); i++) {
-            String filename = attachments.get(i);
-            MimeBodyPart attachmentBodyPart = new MimeBodyPart();
-            DataSource source = new FileDataSource(filename);
-            attachmentBodyPart.setDataHandler(new DataHandler(source));
-            attachmentBodyPart.setFileName(MimeUtility.encodeText(source.getName()));
-            multipart.addBodyPart(attachmentBodyPart);
-        }
-    }
-
-    @Override
-    public void forward(by.kursovaa.dbAvtushkoVM.Email mail, MessageBean mess) {
-        try {
-            Properties props = System.getProperties();
-            props.put("mail.smtp.port", 993);
-            props.put("mail.smtp.host", mail.getSmtp());
-            props.put("mail.smtp.auth", "true");
-            props.put("mail.mime.charset", ENCODING);
-
-            Authenticator auth = new MyAuthenticator(mail.getLogin(), mail.getPassword());
-            Session session = Session.getDefaultInstance(props, auth);
-            Message forward = new MimeMessage(session);
-            // Fill in header
-            forward.setRecipients(Message.RecipientType.TO,
-                    InternetAddress.parse(mail.getLogin()));
-            forward.setSubject("Fwd: " + mess.getFrom());
-            forward.setFrom(new InternetAddress(mess.getTo()));
-            // Create the message part
-            MimeBodyPart messageBodyPart = new MimeBodyPart();
-            // Create a multipart message
-            Multipart multipart = new MimeMultipart();
-            // set content
-            messageBodyPart.setContent(mess.getContent(), "message/rfc822");
-            // Add part to multi part
-            multipart.addBodyPart(messageBodyPart);
-            // Associate multi-part with message
-            forward.setContent(multipart);
-            forward.saveChanges();
-            // Send the message by authenticating the SMTP server
-            // Create a Transport instance and call the sendMessage
-            Transport t = session.getTransport("smtp");
-            try {
-                t.sendMessage(forward, forward.getAllRecipients());
-            } finally {
-                t.close();
-            }
-        } catch (MessagingException ex) {
+        } catch (GeneralSecurityException ex) {
             Logger.getLogger(Email.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     @Override
-    public void reply(by.kursovaa.dbAvtushkoVM.Email mail, MessageBean mess, String what) {
+    public void draft(MessageBean Email, by.kursovaa.dbAvtushkoVM.Email mail) {
         try {
             Properties props = new Properties();
             MailSSLSocketFactory sf = new MailSSLSocketFactory();
@@ -191,34 +173,37 @@ public class Email implements EmailRemote {
             Store store = session.getStore();
             //подключаемся к почтовому серверу
             store.connect(mail.getImap(), mail.getLogin(), mail.getPassword());
-            Folder emailFolder = store.getFolder(what);
-            emailFolder.open(Folder.READ_ONLY);
-            Message message = emailFolder.getMessage(mess.getMsgId());
-
-            Message replyMessage = new MimeMessage(session);
-            replyMessage = (MimeMessage) message.reply(false);
-            replyMessage.setFrom(new InternetAddress(mess.getTo()));
-            replyMessage.setText(mess.getTo());
-            replyMessage.setReplyTo(message.getReplyTo());
-            Properties prop = System.getProperties();
-            prop.put("mail.smtp.port", 993);
-            prop.put("mail.smtp.host", mail.getSmtp());
-            prop.put("mail.smtp.auth", "true");
-            prop.put("mail.mime.charset", ENCODING);
-
-            Authenticator auth = new MyAuthenticator(mail.getLogin(), mail.getPassword());
-            Session session1 = Session.getDefaultInstance(prop, auth);
-            Transport t = session1.getTransport("smtp");
-            try {
-                t.sendMessage(replyMessage, replyMessage.getAllRecipients());
-            } finally {
-                t.close();
-                emailFolder.close(true);
-                store.close();
+            Folder emailFolder = store.getFolder("INBOX.Drafts");
+            emailFolder.open(Folder.READ_WRITE);
+            MimeMessage message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(mail.getLogin()));
+            message.setRecipient(Message.RecipientType.TO, new InternetAddress(Email.getTo()));
+            message.setSubject(Email.getSubject(), ENCODING);
+            if (Email.getAttachments().size() == 0) {
+                if (Email.getContent().size() != 0) {
+                    String temp="";
+                    for (int i=0;i<Email.getContent().size();i++){
+                        if (Email.getContent().get(i).indexOf("<p>")==-1){
+                        temp+="<p>"+Email.getContent().get(i)+"</p>";
+                        } 
+                        else{temp+=Email.getContent().get(i);}
+                    }
+                    message.setContent(temp, "text/html; charset=" + ENCODING + "");}
+            }  else {
+                BodyPart messageBodyPart = new MimeBodyPart();
+                messageBodyPart.setContent(Email.getContent().get(0), "text/plain; charset=" + ENCODING + "");
+                Multipart multipart = new MimeMultipart();
+                multipart.addBodyPart(messageBodyPart);
+                addAttachments(Email.getAttachments(), multipart);
+                message.setContent(multipart);
             }
+            emailFolder.appendMessages(new Message[]{message});
+            emailFolder.close(true);
         } catch (GeneralSecurityException ex) {
             Logger.getLogger(Email.class.getName()).log(Level.SEVERE, null, ex);
         } catch (MessagingException ex) {
+            Logger.getLogger(Email.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnsupportedEncodingException ex) {
             Logger.getLogger(Email.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -326,7 +311,7 @@ public class Email implements EmailRemote {
                 writePart((Part) p.getContent(), arr, content);
             } //check if the content is an inline image
             else if (p.isMimeType("image/jpeg")) {
-                arr.add(p.getFileName());
+                arr.add(MimeUtility.decodeText(p.getFileName()));
                 Object o = p.getContent();
                 InputStream x = (InputStream) o;
                 // Construct the required byte array
@@ -341,8 +326,8 @@ public class Email implements EmailRemote {
                 FileOutputStream f2 = new FileOutputStream("D://email//" + "image.jpg");
                 f2.write(bArray);
             } else if (p.getContentType().contains("image/")) {
-                arr.add(p.getFileName());
-                File f = new File("D://email//" + new Date().getTime() + ".jpg");
+                arr.add(MimeUtility.decodeText(p.getFileName()));
+                File f = new File("D://email//" + MimeUtility.decodeText(p.getFileName()) + ".jpg");
                 DataOutputStream output = new DataOutputStream(
                         new BufferedOutputStream(new FileOutputStream(f)));
                 com.sun.mail.util.BASE64DecoderStream test
@@ -357,8 +342,8 @@ public class Email implements EmailRemote {
                 Object o = p.getContent();
                 if (o instanceof String) {
                     if ((p.getDisposition() != null) && (p.getDisposition().equals(Part.ATTACHMENT))) {
-                        arr.add(p.getFileName());
-                        File file = new File("D://email//" + p.getFileName());
+                        arr.add(MimeUtility.decodeText(p.getFileName()));
+                        File file = new File("D://email//" + MimeUtility.decodeText(p.getFileName()));
                         FileWriter writer = new FileWriter(file);
                         writer.write((String) o);
                         writer.close();
@@ -377,8 +362,8 @@ public class Email implements EmailRemote {
                         }
                     }
                 } else if (o instanceof InputStream) {
-                    arr.add(p.getFileName());
-                    File file = new File("D://email//" + p.getFileName());
+                    arr.add(MimeUtility.decodeText(p.getFileName()));
+                    File file = new File("D://email//" + MimeUtility.decodeText(p.getFileName()));
                     FileWriter writer = new FileWriter(file);
                     InputStream is = (InputStream) o;
                     is = (InputStream) o;
@@ -404,25 +389,35 @@ public class Email implements EmailRemote {
         messageBean.setMsgId(m.getMessageNumber());
         try {
             Address[] a;
-            // FROM
             if ((a = m.getFrom()) != null) {
                 messageBean.setFrom(MimeUtility.decodeText(a[0].toString()));
             }
-            // TO
             if ((a = m.getRecipients(Message.RecipientType.TO)) != null) {
                 messageBean.setTo(MimeUtility.decodeText(a[0].toString()));
             }
-            // SUBJECT
             if (m.getSubject() != null) {
                 messageBean.setSubject(m.getSubject());
             }
-            messageBean.setDateSent(f.format(m.getSentDate()));
+            if (m.getSentDate() != null) {
+                messageBean.setDateSent(f.format(m.getSentDate()));
+            }
         } catch (MessagingException ex) {
             Logger.getLogger(Email.class.getName()).log(Level.SEVERE, null, ex);
         } catch (UnsupportedEncodingException ex) {
             Logger.getLogger(Email.class.getName()).log(Level.SEVERE, null, ex);
         }
         return messageBean;
+    }
+
+    private void addAttachments(ArrayList<String> attachments, Multipart multipart) throws MessagingException, UnsupportedEncodingException {
+        for (int i = 0; i < attachments.size(); i++) {
+            String filename = "D://email//" + attachments.get(i);
+            MimeBodyPart attachmentBodyPart = new MimeBodyPart();
+            DataSource source = new FileDataSource(filename);
+            attachmentBodyPart.setDataHandler(new DataHandler(source));
+            attachmentBodyPart.setFileName(MimeUtility.encodeText(source.getName()));
+            multipart.addBodyPart(attachmentBodyPart);
+        }
     }
 
     private Store connection(by.kursovaa.dbAvtushkoVM.Email mail) throws GeneralSecurityException, NoSuchProviderException, MessagingException {
@@ -445,4 +440,5 @@ public class Email implements EmailRemote {
         store.connect(mail.getImap(), mail.getLogin(), mail.getPassword());
         return store;
     }
+
 }

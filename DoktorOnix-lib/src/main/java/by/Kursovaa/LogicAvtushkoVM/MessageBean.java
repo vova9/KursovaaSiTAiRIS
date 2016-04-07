@@ -17,6 +17,8 @@ public class MessageBean implements Serializable {
     private ArrayList<String> attachments;
 
     public MessageBean() {
+        this.attachments = new ArrayList<String>();
+        this.content = new ArrayList<String>();
     }
 
     public MessageBean(int msgId, String subject, String from, String to, String dateSent, ArrayList<String> content, boolean isNew, ArrayList<String> attachments) {

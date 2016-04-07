@@ -17,14 +17,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 public class Index {
+
     @RequestMapping("/")
     public String indexPage(Model model, HttpSession httpSession) {
-        Polzovateli obj= Ejb.getInterface().lookupPolzovateliFacadeRemote().find(1);
+        Polzovateli obj = Ejb.getInterface().lookupPolzovateliFacadeRemote().find(1);
         httpSession.setAttribute("user", obj);
         model.addAttribute("coutZakaz", "150");
-        model.addAttribute("coutKlientov","44");
-        model.addAttribute("coutSumma","133");
-        model.addAttribute("coutPribyl","133");
+        model.addAttribute("coutKlientov", "44");
+        model.addAttribute("coutSumma", "133");
+        model.addAttribute("coutPribyl", "133");
         return "index";
     }
 }

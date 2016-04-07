@@ -27,21 +27,14 @@ public class Email {
     @RequestMapping(value = "/index")
     public String homeMail(HttpSession httpSession, Model model) {
         Polzovateli obj = (Polzovateli) httpSession.getAttribute("user");
-        CoutMessage cout= Ejb.getInterface().lookupEMailRemote().chek(obj.getIdEmailSluzebny());
         ArrayList<MessageBean> mail
                 = Ejb.getInterface().lookupEMailRemote().fetch(obj.getIdEmailSluzebny(), "INBOX");
         httpSession.setAttribute("Email", mail);
         httpSession.setAttribute("mailbox", "Inbox");
         model.addAttribute("mailbox", "Inbox");
         model.addAttribute("Email", mail);
-        if (cout.getNewMess()>0){model.addAttribute("newmail", cout.getNewMess());}
-        if (cout.getDmail()>0){model.addAttribute("dmail", cout.getDmail());}
-        if (cout.getBmail()>0){model.addAttribute("bmail", cout.getBmail());}
-        if (cout.getSpammail()>0){model.addAttribute("spammail", cout.getSpammail());}
-        if (cout.getNewMess()>0){model.addAttribute("newmailhead", cout.getNewMess()+" новых сообщений");}
         model.addAttribute("zagolovok", "Входящие");
-        model.addAttribute("coutmail", "Показано "+cout.getCout()+ " из " + cout.getCout());
-        model.addAttribute("success");
+        setModel(model, obj);
         return "mailbox/mailbox";
     }
 
@@ -58,39 +51,33 @@ public class Email {
         String temp = "INBOX." + inbox;
         if ("INBOX.Drafts".equals(temp)) {
             model.addAttribute("zagolovok", "Черновики");
-            model.addAttribute("mailbox", "Drafts");
+            httpSession.setAttribute("mailbox", "Drafts");
             flag = true;
         }
         if ("INBOX.Trash".equals(temp)) {
             model.addAttribute("zagolovok", "Коризина");
-            model.addAttribute("mailbox", "Trash");
+            httpSession.setAttribute("mailbox", "Trash");
             flag = true;
         }
         if ("INBOX.Sent".equals(temp)) {
             model.addAttribute("zagolovok", "Отправленные");
-            model.addAttribute("mailbox", "Sent");
+            httpSession.setAttribute("mailbox", "Sent");
             flag = true;
         }
         if ("INBOX.Junk".equals(temp)) {
             model.addAttribute("zagolovok", "Спам");
-            model.addAttribute("mailbox", "Junk");
+            httpSession.setAttribute("mailbox", "Junk");
             flag = true;
         }
         if (flag) {
             Polzovateli obj = (Polzovateli) httpSession.getAttribute("user");
-            CoutMessage cout= Ejb.getInterface().lookupEMailRemote().chek(obj.getIdEmailSluzebny());
             ArrayList<MessageBean> mail
                     = Ejb.getInterface().lookupEMailRemote().fetch(obj.getIdEmailSluzebny(), temp);
-            CoutMessage a= Ejb.getInterface().lookupEMailRemote().chek(obj.getIdEmailSluzebny());
+            CoutMessage a = Ejb.getInterface().lookupEMailRemote().chek(obj.getIdEmailSluzebny());
             httpSession.setAttribute("Email", mail);
             model.addAttribute("Email", mail);
-           if (cout.getNewMess()>0){model.addAttribute("newmail", cout.getNewMess());}
-        if (cout.getDmail()>0){model.addAttribute("dmail", cout.getDmail());}
-        if (cout.getBmail()>0){model.addAttribute("bmail", cout.getBmail());}
-        if (cout.getSpammail()>0){model.addAttribute("spammail", cout.getSpammail());}
-        if (cout.getNewMess()>0){model.addAttribute("newmailhead", cout.getNewMess()+" новых сообщений");}
-        model.addAttribute("zagolovok", "Входящие");
-        model.addAttribute("coutmail", "Показано "+cout.getCout()+ " из " + cout.getCout());
+            model.addAttribute("mailbox", (String) httpSession.getAttribute("mailbox"));
+            setModel(model, obj);
         }
         return "/mailbox/mailbox";
     }
@@ -99,7 +86,6 @@ public class Email {
     public String readMail(@PathVariable("mes") String mes, HttpSession httpSession, Model model) {
         ArrayList<MessageBean> mail = (ArrayList<MessageBean>) httpSession.getAttribute("Email");
         Polzovateli obj = (Polzovateli) httpSession.getAttribute("user");
-            CoutMessage cout= Ejb.getInterface().lookupEMailRemote().chek(obj.getIdEmailSluzebny());
         MessageBean messge = null;
         Long id = Long.parseLong(mes);
         if (id < mail.size() || id > 0) {
@@ -110,18 +96,26 @@ public class Email {
                 }
             }
         } else {
-            model.addAttribute("error", "Нет сообшений!");
+            if (id >= mail.size()) {
+                messge = mail.get(mail.size() - 1);
+            }
+            if (id < 0) {
+                messge = mail.get(0);
+            }
+            model.addAttribute("info", "Нет сообшений!");
         }
-        if(messge.getIsNew()){  Ejb.getInterface().lookupEMailRemote().messegeRead(obj.getIdEmailSluzebny(), 
-                messge, "INBOX");}
+        if (messge.getIsNew()) {
+            String temp = (String) httpSession.getAttribute("mailbox");
+            if ("Inbox".equals(temp)) {
+                temp = "INBOX";
+            } else {
+                temp = "INBOX." + temp;
+            }
+            Ejb.getInterface().lookupEMailRemote().messegeRead(obj.getIdEmailSluzebny(),
+                    messge, temp);
+        }
         model.addAttribute("mail", messge);
-        if (cout.getNewMess()>0){model.addAttribute("newmail", cout.getNewMess());}
-        if (cout.getDmail()>0){model.addAttribute("dmail", cout.getDmail());}
-        if (cout.getBmail()>0){model.addAttribute("bmail", cout.getBmail());}
-        if (cout.getSpammail()>0){model.addAttribute("spammail", cout.getSpammail());}
-        if (cout.getNewMess()>0){model.addAttribute("newmailhead", cout.getNewMess()+" новых сообщений");}
-        model.addAttribute("zagolovok", "Входящие");
-        model.addAttribute("coutmail", "Показано "+cout.getCout()+ " из " + cout.getCout());
+        setModel(model, obj);
         return "/mailbox/read";
     }
 
@@ -140,72 +134,119 @@ public class Email {
     @RequestMapping(value = "/delete/{mes}")
     public String readDelete(@PathVariable("mes") String mes, HttpSession httpSession, Model model) {
         Polzovateli obj = (Polzovateli) httpSession.getAttribute("user");
-        Ejb.getInterface().lookupEMailRemote().delete(obj.getIdEmailSluzebny(), "INBOX", Integer.parseInt(mes));
+        String temp = (String) httpSession.getAttribute("mailbox");
+        if ("Inbox".equals(temp)) {
+            temp = "INBOX";
+        } else {
+            temp = "INBOX." + temp;
+        }
+        Ejb.getInterface().lookupEMailRemote().delete(obj.getIdEmailSluzebny(), temp, Integer.parseInt(mes));
         Long id = Long.parseLong(mes) - 1;
         return "redirect:/mailbox/read/" + id;
     }
 
     @RequestMapping(value = "/reply/{mes}")
-    public String readForward(@PathVariable("mes") String mes, HttpSession httpSession, Model model) {
+    public String readReply(@PathVariable("mes") String mes, HttpSession httpSession, Model model) {
         Polzovateli obj = (Polzovateli) httpSession.getAttribute("user");
-            CoutMessage cout= Ejb.getInterface().lookupEMailRemote().chek(obj.getIdEmailSluzebny());
         ArrayList<MessageBean> mail = (ArrayList<MessageBean>) httpSession.getAttribute("Email");
-        MessageBean messge = null;
+        MessageBean messge = new MessageBean();
         Long id = Long.parseLong(mes);
         if (id < mail.size() || id > 0) {
             for (int i = 0; i < mail.size(); i++) {
                 if (mail.get(i).getMsgId() == id) {
                     messge.setTo(mail.get(i).getFrom());
-                    messge.setSubject("Re"+mail.get(i).getSubject());
+                    messge.setSubject("Re: " + mail.get(i).getSubject());
                     break;
                 }
             }
-        } else {
-            model.addAttribute("error", "Нет сообшений!");
         }
-        model.addAttribute("mail", messge);
-        if (cout.getNewMess()>0){model.addAttribute("newmail", cout.getNewMess());}
-        if (cout.getDmail()>0){model.addAttribute("dmail", cout.getDmail());}
-        if (cout.getBmail()>0){model.addAttribute("bmail", cout.getBmail());}
-        if (cout.getSpammail()>0){model.addAttribute("spammail", cout.getSpammail());}
-        if (cout.getNewMess()>0){model.addAttribute("newmailhead", cout.getNewMess()+" новых сообщений");}
-        model.addAttribute("zagolovok", "Входящие");
-        model.addAttribute("coutmail", "Показано "+cout.getCout()+ " из " + cout.getCout());
+        model.addAttribute("Email", messge);
+        setModel(model, obj);
+        return "mailbox/compose";
+    }
+
+    @RequestMapping(value = "/forward/{mes}")
+    public String readForward(@PathVariable("mes") String mes, HttpSession httpSession, Model model) {
+        Polzovateli obj = (Polzovateli) httpSession.getAttribute("user");
+        ArrayList<MessageBean> mail = (ArrayList<MessageBean>) httpSession.getAttribute("Email");
+        MessageBean messeg = new MessageBean();
+        Long id = Long.parseLong(mes);
+        if (id < mail.size() || id > 0) {
+            for (int i = 0; i < mail.size(); i++) {
+                if (mail.get(i).getMsgId() == id) {
+                    messeg = mail.get(i);
+                    ArrayList<String> comtent = messeg.getContent();
+                    comtent.add(0, "---------- Forwarded message ----------");
+                    comtent.add(1, "From: " + mail.get(i).getFrom());
+                    comtent.add(2, "Date: " + mail.get(i).getDateSent());
+                    comtent.add(3, "Subject: " + mail.get(i).getSubject());
+                    comtent.add(4, "To: " + mail.get(i).getTo());
+                    comtent.add(5, "-------------------------------------------");
+                    messeg.setSubject("Fwd: " + mail.get(i).getSubject());
+                    messeg.setTo("");
+                    messeg.setContent(comtent);
+                    break;
+                }
+            }
+        }
+        model.addAttribute("Email", messeg);
+        setModel(model, obj);
         return "mailbox/compose";
     }
 
     @RequestMapping(value = "/draftsmail")
-    public String draftsMail(@ModelAttribute("Email") MessageBean Email,HttpSession httpSession, Model model) {
+    public String draftsMail(@ModelAttribute("Email") MessageBean Email, HttpSession httpSession, Model model) {
+        Polzovateli obj = (Polzovateli) httpSession.getAttribute("user");
+        Email.setAttachments(new ArrayList<String>());
+        Ejb.getInterface().lookupEMailRemote().draft(Email, obj.getIdEmailSluzebny());
         ArrayList<MessageBean> mail = (ArrayList<MessageBean>) httpSession.getAttribute("Email");
-        System.out.println(Email.getTo());
+        httpSession.setAttribute("mailbox", "Inbox");
+        model.addAttribute("mailbox", "Inbox");
         model.addAttribute("Email", mail);
-        model.addAttribute("newmail", "1");
-        model.addAttribute("dmail", "2");
-        model.addAttribute("bmail", "3");
-        model.addAttribute("spammail", "4");
-        model.addAttribute("newmailhead", "13 новых сообщений");
         model.addAttribute("zagolovok", "Входящие");
-        model.addAttribute("coutmail", "5");
+        model.addAttribute("success", "Сообщение было успешно сохранено!");
+        setModel(model, obj);
         return "mailbox/mailbox";
     }
+
     @RequestMapping(value = "/sendmail")
-    public String sendMail(@ModelAttribute("Email")MessageBean Email,
+    public String sendMail(@ModelAttribute("Email") MessageBean Email,
             HttpSession httpSession, Model model) {
         Polzovateli obj = (Polzovateli) httpSession.getAttribute("user");
-        Ejb.getInterface().lookupEMailRemote().sent(obj.getIdEmailSluzebny(),Email);
-       ArrayList<MessageBean> mail = (ArrayList<MessageBean>) httpSession.getAttribute("Email");
+        Ejb.getInterface().lookupEMailRemote().sent(obj.getIdEmailSluzebny(), Email);
+        ArrayList<MessageBean> mail = (ArrayList<MessageBean>) httpSession.getAttribute("Email");
+        httpSession.setAttribute("mailbox", "Inbox");
+        model.addAttribute("mailbox", "Inbox");
         model.addAttribute("Email", mail);
-        model.addAttribute("newmail", "1");
-        model.addAttribute("dmail", "2");
-        model.addAttribute("bmail", "3");
-        model.addAttribute("spammail", "4");
-        model.addAttribute("newmailhead", "13 новых сообщений");
         model.addAttribute("zagolovok", "Входящие");
-        model.addAttribute("coutmail", "5");
+        model.addAttribute("success", "Сообщение было успешно отправлено!");
+        setModel(model, obj);
         return "mailbox/mailbox";
-    }      
+    }
+
     @RequestMapping(value = "/reflesh")
-        public String Reflesh(HttpSession httpSession, Model model) {
+    public String Reflesh(HttpSession httpSession, Model model) {
         return "redirect:/mailbox/index/";
     }
+
+    private void setModel(Model model, Polzovateli obj) {
+        CoutMessage cout = Ejb.getInterface().lookupEMailRemote().chek(obj.getIdEmailSluzebny());
+        if (cout.getNewMess() > 0) {
+            model.addAttribute("newmail", cout.getNewMess());
+        }
+        if (cout.getDmail() > 0) {
+            model.addAttribute("dmail", cout.getDmail());
+        }
+        if (cout.getBmail() > 0) {
+            model.addAttribute("bmail", cout.getBmail());
+        }
+        if (cout.getSpammail() > 0) {
+            model.addAttribute("spammail", cout.getSpammail());
+        }
+        if (cout.getNewMess() > 0) {
+            model.addAttribute("newmailhead", cout.getNewMess() + " новых сообщений");
+        }
+        model.addAttribute("coutmail", "Показано " + cout.getCout() + " из " + cout.getCout());
+    }
+
 }

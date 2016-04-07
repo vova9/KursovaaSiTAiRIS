@@ -60,6 +60,9 @@
                 <section class="content">
                     <div class="row">
                         <div th:replace="fragments/emailmenu :: emailmenu"></div>
+                        <div th:if="${info != null}" class="callout callout-info">
+                            <h4 th:text="${info}"></h4>
+                        </div>
                         <div class="col-md-9">
                             <div class="box box-primary">
                                 <div class="box-header with-border">

@@ -22,13 +22,11 @@ public interface EmailRemote {
 
     void delete(Email mail, String what, Integer mess);
 
-    void forward(Email mail, MessageBean mess);
-
-    void reply(Email mail, MessageBean mess,String what);
-
     boolean newMess(Email mail);
 
     CoutMessage chek(Email mail);
 
     void messegeRead(Email mail, MessageBean mess, String what);
+
+    public void draft(MessageBean Email, Email idEmailSluzebny);
 }
