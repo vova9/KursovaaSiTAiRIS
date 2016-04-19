@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CHEK" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5056a3cf-ad81-441d-a346-c8a81d65fb2a">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="110"/>
+	<queryString language="xPath">
+		<![CDATA[/danye]]>
+	</queryString>
+	<field name="data" class="java.lang.String">
+		<fieldDescription><![CDATA[informazai/data]]></fieldDescription>
+	</field>
+	<field name="summa" class="java.lang.String">
+		<fieldDescription><![CDATA[informazai/summa]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="472" splitType="Stretch">
+			<staticText>
+				<reportElement x="219" y="0" width="152" height="62" uuid="96f200bb-a06b-4b47-9343-5736e64ea2ce"/>
+				<textElement>
+					<font fontName="DejaVu Serif"/>
+				</textElement>
+				<text><![CDATA[Приложение 1
+к постановлению
+Министерства финансов
+Республики Беларусь
+29.03.2010 № 38]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="17" y="111" width="298" height="30" uuid="c32fe8e9-8ed9-4da4-bedf-3899d4fff56e"/>
+				<textElement>
+					<font fontName="DejaVu Serif"/>
+				</textElement>
+				<text><![CDATA[______________________________________________
+	(наименование организации)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="219" y="62" width="137" height="20" uuid="8e4ead5c-2da6-4a2f-b454-1b9e50854e3e"/>
+				<textElement>
+					<font fontName="DejaVu Serif"/>
+				</textElement>
+				<text><![CDATA[Типовая форма КО-1]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="17" y="91" width="242" height="20" uuid="6064da75-eb3c-4f7f-a306-c5fa7106ae1b"/>
+				<textElement>
+					<font fontName="DejaVu Serif"/>
+				</textElement>
+				<text><![CDATA[Интернет магазин "Доктор Оникс"]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="17" y="151" width="183" height="35" uuid="be9ce541-ebdf-435e-8d50-85432c44bf44"/>
+				<textElement>
+					<font fontName="DejaVu Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ПРИХОДНЫЙ 
+КАССОВЫЙ ОРДЕР ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="371" y="-3" width="11" height="473" uuid="374128f8-4af1-4980-b95b-8f74571b77e7"/>
+				<text><![CDATA[|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="17" y="186" width="183" height="20" uuid="fa6ced15-dc45-4699-b916-dd4365eb67ea"/>
+				<textElement>
+					<font fontName="DejaVu Serif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{data}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="17" y="216" width="213" height="20" uuid="d8fc8e5b-51e1-48e0-864e-6e7185f10eed"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font fontName="DejaVu Serif"/>
+				</textElement>
+				<text><![CDATA[Корреспондирующий счет, субсчет]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="230" y="216" width="100" height="20" uuid="b701fff9-fdd8-4f4d-aa52-3e61a1ef66d4"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="DejaVu Serif"/>
+				</textElement>
+				<text><![CDATA[Сумма, руб.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="17" y="236" width="213" height="20" uuid="c097bd75-28ef-4f0e-90b5-2962600e556b"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[54]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="230" y="236" width="100" height="20" uuid="0b2b347d-4431-46f8-aaf6-55961b367cc8"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font fontName="DejaVu Serif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{summa}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="269" width="371" height="201" uuid="513db711-f82f-4684-921c-521c7bfcdfe1"/>
+				<textElement>
+					<font fontName="DejaVu Serif" size="9"/>
+				</textElement>
+				<text><![CDATA[Принято от ______________________________________________________________
+                   (фамилия, собственное имя и отчество (если таковое имеется))
+
+Основание ______________________________________________________________
+
+Сумма НДС______________%  Сумма НДС ______________________________руб.
+			                          (цифрами)
+
+Сумма с НДС_____________________________________________________________
+			(прописью)
+	__________________________________________________________руб.
+
+Приложение_____________________________________________________________
+
+Главный бухгалтер_____________________     _______________________________
+                                         (подпись)                           (инициалы, фамилия)
+
+Получил кассир      _____________________     _______________________________
+	                    (подпись)                           (инициалы, фамилия)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="390" y="111" width="163" height="30" uuid="0e4147a2-b225-4dfc-8182-4ecdf505dba2"/>
+				<textElement>
+					<font fontName="DejaVu Serif"/>
+				</textElement>
+				<text><![CDATA[____________________________
+(наименование организации)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="390" y="82" width="165" height="29" uuid="02718ab0-c006-42f7-b110-b209d29ebc51"/>
+				<textElement>
+					<font fontName="DejaVu Serif"/>
+				</textElement>
+				<text><![CDATA[Интернет магазин "Доктор Оникс"]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="390" y="151" width="165" height="45" uuid="181c4517-24db-4e60-a6b2-45273ca70064"/>
+				<textElement>
+					<font fontName="DejaVu Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[КВИТАНЦИЯ
+к приходному кассовому
+ордеру]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="390" y="196" width="165" height="20" uuid="484c52c3-6c22-4df9-a465-241b5505ca72"/>
+				<textElement>
+					<font fontName="DejaVu Serif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{data}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="390" y="223" width="165" height="216" uuid="d487bd18-e397-4a0b-ab82-236cccc7359b"/>
+				<textElement>
+					<font fontName="DejaVu Serif" size="7"/>
+				</textElement>
+				<text><![CDATA[Принято от ____________________________
+          (фамилия, собственное имя и отчество
+                                   (если таковое имеется))
+
+Основание _____________________________
+
+Сумма НДС___________________________% 
+
+Сумма НДС __________________________руб.
+		(цифрами)
+
+Сумма с НДС____________________________
+		(прописью)
+___________________________________руб.
+
+Приложение____________________________
+
+Главный бухгалтер______________________
+                                	 (подпись)  
+_______________________________________
+                        (инициалы, фамилия)
+Получил кассир__________________________ 
+	                    (подпись)              
+_______________________________________
+            	 (инициалы, фамилия)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="390" y="450" width="100" height="20" uuid="c570df2d-152f-4812-81f1-9139457b099a"/>
+				<textElement>
+					<font fontName="DejaVu Serif" size="7"/>
+				</textElement>
+				<text><![CDATA[Печать (штамп)]]></text>
+			</staticText>
+		</band>
+	</title>
+</jasperReport>

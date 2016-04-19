@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>Касса</title>
+        <!-- Tell the browser to be responsive to screen width -->
+        <link rel="shortcut icon" href="../../dist/img/favicon.ico" 
+              th:href="@{/resources/dist/img/favicon.ico}" type="image/x-icon" />
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport" />
+        <!-- Bootstrap 3.3.5 -->
+        <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css"	
+              th:href="@{/resources/bootstrap/css/bootstrap.min.css}" />
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" />
+        <!-- Ionicons -->
+        <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
+        <!-- DataTables -->
+        <link rel="stylesheet" href="../../plugins/datatables/dataTables.bootstrap.css"	
+              th:href="@{/resources/plugins/datatables/dataTables.bootstrap.css}" />
+        <!-- Theme style -->
+        <link rel="stylesheet" href="../../dist/css/AdminLTE.min.css"	
+              th:href="@{/resources/dist/css/AdminLTE.min.css}" />
+        <!-- Skins. Choose a skin from the css/skins
+             folder instead of downloading all of them to reduce the load. -->
+        <link rel="stylesheet" href="../../dist/css/skins/_all-skins.min.css" 
+              th:href="@{/resources/dist/css/skins/_all-skins.min.css}" />
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+            <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body class="hold-transition skin-blue sidebar-mini">
+        <div class="wrapper">
+            <header th:replace="fragments/header :: header"></header>
+            <aside th:replace="fragments/menu :: menu"></aside>   
+            <!-- Content Wrapper. Contains page content -->
+            <div class="content-wrapper">
+                <!-- Content Header (Page header) -->
+                <section class="content-header">
+                    <ol class="breadcrumb">
+                        <li><a href="#" th:href="@{/}"><i class="fa fa-dashboard"></i> Основная страница</a></li>
+                        <li class="active">Касса</li>
+                    </ol>
+                </section>
+                <br/>
+                <div th:if="${success != null}" class="callout callout-success">
+                    <h4 th:text="${success}"></h4>
+                </div>
+                <br/>
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">Касса</h3>
+                    </div><!-- /.box-header -->
+                    <div class="box-body">
+
+                        <div class="form-group">
+                            <div class="col-sm-10">
+                                <a href="#" th:href="@{/kassa/report}"
+                                   class="btn btn-sm btn-info btn-flat pull-left ">
+                                    Отчёт по кассовым операциям</a>
+                            </div>
+                        </div>
+                        <br/>
+                        <br/>
+                        <table id="example1" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Номер операции</th>
+                                    <th>Дата</th>
+                                    <th>Тип операции</th>
+                                    <th>Сумма</th>
+                                    <th>Примечание</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="kassa : ${Kassa}">
+                                    <td>
+                                        <a href="#" th:href="@{/kassa/edit/{kassaId}(kassaId=${kassa.id})}" 
+                                           th:text="${kassa.id}">Trident</a>
+                                    </td>
+                                    <td th:text="${#dates.format(kassa.date, 'dd/MM/YYYY')}"></td>
+                                    <td th:text="${kassa.tip}"></td>
+                                    <td th:text="${kassa.summa}"></td>
+                                    <td th:text="${kassa.detali}"></td>
+                                </tr>                    
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>Номер операции</th>
+                                    <th>Дата</th>
+                                    <th>Тип операции</th>
+                                    <th>Сумма</th>
+                                    <th>Примечание</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div><!-- /.box-body -->
+                </div><!-- /.box -->
+            </div><!-- /.content-wrapper -->
+
+            <!-- Control Sidebar -->
+            <footer th:replace="fragments/footer :: footer">  </footer>
+            <aside th:replace="fragments/leftmenu :: leftmenu"></aside>
+            <!-- Add the sidebar's background. This div must be placed
+                 immediately after the control sidebar -->
+            <div class="control-sidebar-bg"></div>
+        </div><!-- ./wrapper -->
+
+        <!-- jQuery 2.1.4 -->
+        <script src="../../plugins/jQuery/jQuery-2.1.4.min.js" 
+        th:src="@{/resources/plugins/jQuery/jQuery-2.1.4.min.js}"></script>
+        <!-- Bootstrap 3.3.5 -->
+        <script src="../../bootstrap/js/bootstrap.min.js" 
+        th:src="@{/resources/bootstrap/js/bootstrap.min.js}"></script>
+        <!-- DataTables -->
+        <script src="../../plugins/datatables/jquery.dataTables.min.js" 
+        th:src="@{/resources/plugins/datatables/jquery.dataTables.min.js}"></script>
+        <script src="../../plugins/datatables/dataTables.bootstrap.min.js" 
+        th:src="@{/resources/plugins/datatables/dataTables.bootstrap.min.js}"></script>
+        <!-- SlimScroll -->
+        <script src="../../plugins/slimScroll/jquery.slimscroll.min.js" 
+        th:src="@{/resources/plugins/slimScroll/jquery.slimscroll.min.js}"></script>
+        <!-- FastClick -->
+        <script src="../../plugins/fastclick/fastclick.min.js" 
+        th:src="@{/resources/plugins/fastclick/fastclick.min.js}"></script>
+        <!-- AdminLTE App -->
+        <script src="../../dist/js/app.min.js" th:src="@{/resources/dist/js/app.min.js}"></script>
+        <!-- AdminLTE for demo purposes -->
+        <script src="../../dist/js/demo.js" th:src="@{/resources/dist/js/demo.js}"></script>
+        <!-- page script -->
+        <script>
+            $(function () {
+                $("#example1").DataTable();
+                $('#example2').DataTable({
+                    "paging": true,
+                    "lengthChange": false,
+                    "searching": false,
+                    "ordering": true,
+                    "info": true,
+                    "autoWidth": false
+                });
+            });
+        </script>
+    </body>
+</html>
