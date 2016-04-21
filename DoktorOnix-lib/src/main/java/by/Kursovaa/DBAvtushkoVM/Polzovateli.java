@@ -188,5 +188,5 @@ public class Polzovateli implements Serializable {
     public String toString() {
         return "by.kursovaa.dbAvtushkoVM.Polzovateli[ id=" + id + " ]";
     }
-    
+
 }

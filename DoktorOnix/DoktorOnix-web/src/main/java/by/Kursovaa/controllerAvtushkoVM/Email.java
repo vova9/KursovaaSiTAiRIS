@@ -247,6 +247,7 @@ public class Email {
             model.addAttribute("newmailhead", cout.getNewMess() + " новых сообщений");
         }
         model.addAttribute("coutmail", "Показано " + cout.getCout() + " из " + cout.getCout());
+        model.addAttribute("User", obj);
     }
 
 }

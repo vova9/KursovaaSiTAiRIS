@@ -42,6 +42,7 @@ public class Kassa {
         Polzovateli obj = (Polzovateli) httpSession.getAttribute("user");
         List<by.kursovaa.dbAvtushkoVM.Kassa> kassa = Ejb.getInterface().lookupKassaFacadeRemote().findAll();
         model.addAttribute("Kassa", kassa);
+        model.addAttribute("User", obj);
         return "kassa/index";
     }
 
@@ -51,6 +52,7 @@ public class Kassa {
         Polzovateli obj = (Polzovateli) httpSession.getAttribute("user");
         by.kursovaa.dbAvtushkoVM.Kassa kassa = Ejb.getInterface().lookupKassaFacadeRemote().find(id1);
         model.addAttribute("kasa", kassa);
+        model.addAttribute("User", obj);
         model.addAttribute("whot", "Изменить операцию");
         return "kassa/form";
     }
@@ -60,6 +62,7 @@ public class Kassa {
         Polzovateli obj = (Polzovateli) httpSession.getAttribute("user");
         by.kursovaa.dbAvtushkoVM.Kassa kassa = new by.kursovaa.dbAvtushkoVM.Kassa();
         model.addAttribute("kasa", kassa);
+        model.addAttribute("User", obj);
         model.addAttribute("whot", "Добавить операцию");
         return "kassa/form";
     }
@@ -71,10 +74,10 @@ public class Kassa {
         } else {
             Ejb.getInterface().lookupKassaFacadeRemote().edit(kasa);
         }
-
         Polzovateli obj = (Polzovateli) httpSession.getAttribute("user");
         List<by.kursovaa.dbAvtushkoVM.Kassa> kassa = Ejb.getInterface().lookupKassaFacadeRemote().findAll();
         model.addAttribute("Kassa", kassa);
+        model.addAttribute("User", obj);
         model.addAttribute("success", "Операция была успешно сохранена!");
         return "kassa/index";
     }
@@ -85,6 +88,7 @@ public class Kassa {
         Polzovateli obj = (Polzovateli) httpSession.getAttribute("user");
         List<by.kursovaa.dbAvtushkoVM.Kassa> kassa = Ejb.getInterface().lookupKassaFacadeRemote().findAll();
         model.addAttribute("Kassa", kassa);
+        model.addAttribute("User", obj);
         model.addAttribute("success", "Операция была успешно удалена!");
         return "kassa/index";
     }

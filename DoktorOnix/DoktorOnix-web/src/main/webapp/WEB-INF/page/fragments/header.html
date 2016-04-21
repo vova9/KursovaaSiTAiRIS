@@ -28,6 +28,31 @@ and open the template in the editor.
                 </a>
                 <div class="navbar-custom-menu">
                     <ul class="nav navbar-nav">
+                        <li class="dropdown user user-menu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <img src="../../dist/img/user2-160x160.jpg" th:src="@{/resources/dist/img/user2-160x160.jpg}"
+                                     class="user-image" alt="User Image" />
+                                <span class="hidden-xs" th:text="${User.familia+' '+User.ima}">Alexander Pierce</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <!-- User image -->
+                                <li class="user-header">
+                                    <img src="../../dist/img/user2-160x160.jpg" 
+                                         th:src="@{/resources/dist/img/user2-160x160.jpg}" class="img-circle" alt="User Image" />
+                                    <p> </p>
+                                </li>                               
+                                <!-- Menu Footer-->
+                                <li class="user-footer">
+                                    <div class="pull-left">
+                                        <a href="#" th:href="@{/polzovateli/userpage}" 
+                                           class="btn btn-default btn-flat">Профиль</a>
+                                    </div>
+                                    <div class="pull-right">
+                                        <a href="#"  th:href="@{/appLogout}" class="btn btn-default btn-flat">Выход</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
                         <!-- Messages: style can be found in dropdown.less-->           
                         <li>
                             <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>

@@ -5,7 +5,6 @@
  */
 package by.Kursovaa.controllerAvtushkoVM;
 
-import by.kursovaa.dbAvtushkoVM.Polzovateli;
 import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,8 +19,9 @@ public class Index {
 
     @RequestMapping("/")
     public String indexPage(Model model, HttpSession httpSession) {
-        Polzovateli obj = Ejb.getInterface().lookupPolzovateliFacadeRemote().find(1);
+        by.kursovaa.dbAvtushkoVM.Polzovateli obj = Ejb.getInterface().lookupPolzovateliFacadeRemote().find(14);
         httpSession.setAttribute("user", obj);
+        model.addAttribute("User", obj);
         model.addAttribute("coutZakaz", "150");
         model.addAttribute("coutKlientov", "44");
         model.addAttribute("coutSumma", "133");
