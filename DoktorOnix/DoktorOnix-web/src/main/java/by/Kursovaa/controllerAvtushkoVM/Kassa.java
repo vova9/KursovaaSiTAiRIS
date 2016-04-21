@@ -83,7 +83,8 @@ public class Kassa {
     }
 
     @RequestMapping(value = "/delete")
-    public String deleteKassa(@ModelAttribute("kasa") by.kursovaa.dbAvtushkoVM.Kassa kasa, HttpSession httpSession, Model model) {
+    public String deleteKassa(@ModelAttribute("kasa") by.kursovaa.dbAvtushkoVM.Kassa kasa, HttpSession httpSession,
+            Model model) {
         Ejb.getInterface().lookupKassaFacadeRemote().remove(kasa);
         Polzovateli obj = (Polzovateli) httpSession.getAttribute("user");
         List<by.kursovaa.dbAvtushkoVM.Kassa> kassa = Ejb.getInterface().lookupKassaFacadeRemote().findAll();

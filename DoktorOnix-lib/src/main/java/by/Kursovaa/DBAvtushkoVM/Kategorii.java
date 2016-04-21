@@ -117,5 +117,4 @@ public class Kategorii implements Serializable {
     public String toString() {
         return "by.kursovaa.dbAvtushkoVM.Kategorii[ id=" + id + " ]";
     }
-    
 }

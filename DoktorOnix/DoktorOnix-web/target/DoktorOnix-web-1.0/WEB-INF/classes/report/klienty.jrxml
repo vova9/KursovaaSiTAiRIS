@@ -4,13 +4,13 @@
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<queryString language="xPath">
-		<![CDATA[/klienty/klient]]>
+		<![CDATA[]]>
 	</queryString>
 	<field name="telefon" class="java.lang.String">
 		<fieldDescription><![CDATA[telefon]]></fieldDescription>
 	</field>
-	<field name="famlia" class="java.lang.String">
-		<fieldDescription><![CDATA[famlia]]></fieldDescription>
+	<field name="familia" class="java.lang.String">
+		<fieldDescription><![CDATA[familia]]></fieldDescription>
 	</field>
 	<field name="ima" class="java.lang.String">
 		<fieldDescription><![CDATA[ima]]></fieldDescription>
@@ -86,7 +86,7 @@
 					<font fontName="DejaVu Serif"/>
 					<paragraph leftIndent="10"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{famlia}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{familia}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="308" y="0" width="162" height="20" uuid="f4110e26-2007-4e81-92b1-30e6007e3a07"/>

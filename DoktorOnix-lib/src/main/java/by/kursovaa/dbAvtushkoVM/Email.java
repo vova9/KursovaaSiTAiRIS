@@ -145,5 +145,4 @@ public class Email implements Serializable {
     public String toString() {
         return "by.kursovaa.dbAvtushkoVM.Email[ idemail=" + idemail + " ]";
     }
-    
 }

@@ -2,15 +2,15 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CHEK" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5056a3cf-ad81-441d-a346-c8a81d65fb2a">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="110"/>
+	<property name="ireport.y" value="97"/>
 	<queryString language="xPath">
-		<![CDATA[/danye]]>
+		<![CDATA[]]>
 	</queryString>
-	<field name="data" class="java.lang.String">
-		<fieldDescription><![CDATA[informazai/data]]></fieldDescription>
+	<field name="summa" class="java.lang.Double">
+		<fieldDescription><![CDATA[summa]]></fieldDescription>
 	</field>
-	<field name="summa" class="java.lang.String">
-		<fieldDescription><![CDATA[informazai/summa]]></fieldDescription>
+	<field name="date" class="java.util.Date">
+		<fieldDescription><![CDATA[date]]></fieldDescription>
 	</field>
 	<background>
 		<band splitType="Stretch"/>
@@ -103,7 +103,7 @@
 				<textElement>
 					<font fontName="DejaVu Serif"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{data}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{date}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="17" y="216" width="213" height="20" uuid="d8fc8e5b-51e1-48e0-864e-6e7185f10eed"/>
@@ -140,7 +140,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<text><![CDATA[54]]></text>
+				<text><![CDATA[50]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="230" y="236" width="100" height="20" uuid="0b2b347d-4431-46f8-aaf6-55961b367cc8"/>
@@ -209,7 +209,7 @@
 				<textElement>
 					<font fontName="DejaVu Serif"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{data}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{date}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="390" y="223" width="165" height="216" uuid="d487bd18-e397-4a0b-ab82-236cccc7359b"/>

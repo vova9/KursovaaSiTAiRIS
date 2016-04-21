@@ -172,5 +172,4 @@ public class Klienty implements Serializable {
     public String toString() {
         return "by.kursovaa.dbAvtushkoVM.Klienty[ telefon=" + telefon + " ]";
     }
-    
 }

@@ -114,5 +114,4 @@ public class ZakazStatus implements Serializable {
     public String toString() {
         return "by.kursovaa.dbAvtushkoVM.ZakazStatus[ idzakazStatus=" + idzakazStatus + " ]";
     }
-    
 }

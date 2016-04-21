@@ -237,5 +237,4 @@ public class Zakazy implements Serializable {
     public String toString() {
         return "by.kursovaa.dbAvtushkoVM.Zakazy[ id=" + id + " ]";
     }
-    
 }

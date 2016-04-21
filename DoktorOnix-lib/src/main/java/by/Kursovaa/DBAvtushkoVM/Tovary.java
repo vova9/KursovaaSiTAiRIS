@@ -142,5 +142,4 @@ public class Tovary implements Serializable {
     public String toString() {
         return "by.kursovaa.dbAvtushkoVM.Tovary[ artikul=" + artikul + " ]";
     }
-    
 }
