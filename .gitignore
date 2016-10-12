@@ -1,0 +1,7 @@
+# игнорировать все файлы в этих каталогах
+DoktorOnix-lib/target/
+DoktorOnix/DoktorOnix-ear/target
+DoktorOnix/DoktorOnix-ear/nbproject
+DoktorOnix/DoktorOnix-ejb/target
+DoktorOnix/DoktorOnix-web/target
+DoktorOnix/DoktorOnix-web/nbproject
