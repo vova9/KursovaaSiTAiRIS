@@ -12,6 +12,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -79,12 +80,12 @@ public class Zakazy implements Serializable {
     private Integer oplata;
     @Column(name = "skidka")
     private Double skidka;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idZakat")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idZakat", fetch = FetchType.EAGER)
     private List<ZakazInfo> zakazInfoList;
     @JoinColumn(name = "telefon", referencedColumnName = "telefon")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Klienty telefon;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idZakaz")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idZakaz", fetch = FetchType.EAGER)
     private List<ZakazStatus> zakazStatusList;
 
     public Zakazy() {

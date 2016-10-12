@@ -23,17 +23,6 @@ and open the template in the editor.
                         <p th:text="${User.familia+' '+User.ima}">Alexander</p>
                     </div>
                 </div>
-                <!-- search form -->
-                <form action="#" method="get" class="sidebar-form">
-                    <div class="input-group">
-                        <input type="text" name="q" class="form-control" placeholder="Поиск..."/>
-                        <span class="input-group-btn">
-                            <button type="submit" name="search" id="search-btn" class="btn btn-flat">
-                                <i class="fa fa-search"></i></button>
-                        </span>
-                    </div>
-                </form>
-                <!-- /.search form -->
                 <!-- sidebar menu: : style can be found in sidebar.less -->
                 <ul class="sidebar-menu">
                     <li class="header"></li>
@@ -52,7 +41,7 @@ and open the template in the editor.
                                     <i class="fa fa-circle-o"></i> Перечень товаров</a></li>
                             <li><a href="pages/forms/dobavtovar.html" th:href="@{/tovary/add}">
                                     <i class="fa fa-circle-o"></i>Добавить товар</a></li>
-                            <li><a href="pages/forms/import.html" th:href="@{/tovary/import}">
+                            <li><a href="pages/forms/import.html" th:href="@{/tovary/import/index}">
                                     <i class="fa fa-circle-o"></i>Экспортировать товары</a></li>
                         </ul>
                     </li>
@@ -75,7 +64,7 @@ and open the template in the editor.
                             </li>
                         </ul>
                     </li> 
-                    <li class="treeview">
+                    <li class="treeview" th:if="${User.admin==1}">
                         <a href="#">
                             <i class="fa fa-table"></i>
                             <span>Пользователи</span>
@@ -131,12 +120,6 @@ and open the template in the editor.
                                 </a>
                             </li>
                         </ul>
-                    </li>
-                    <li>
-                        <a href="pages/examples/spravka.html" th:href="@{/spravka}">
-                            <i class="fa fa-table"></i>
-                            <span>Справка</span>
-                        </a>
                     </li>
                     <li>
                         <a href="pages/mailbox/mailbox.html" th:href="@{/mailbox/index}">

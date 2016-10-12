@@ -11,6 +11,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
@@ -50,10 +51,10 @@ public class Tovary implements Serializable {
     @Lob
     @Column(name = "opisanie")
     private String opisanie;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tovary")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tovary", fetch = FetchType.EAGER)
     private List<ZakazInfo> zakazInfoList;
     @JoinColumn(name = "Kategoria", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Kategorii kategoria;
 
     public Tovary() {

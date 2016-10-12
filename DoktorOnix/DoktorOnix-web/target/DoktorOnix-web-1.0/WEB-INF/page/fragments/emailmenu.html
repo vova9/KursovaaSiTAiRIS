@@ -24,19 +24,19 @@ and open the template in the editor.
                         <li th:classappend="${mailbox=='Inbox'}? 'active'"><a href="#" th:href="@{/mailbox/index}"><i class="fa fa-inbox"></i> 
                                 Входящие 
                                 <span class="label label-primary pull-right" th:text="${newmail}">
-                                    </span></a></li>
+                                </span></a></li>
                         <li th:classappend="${mailbox=='Sent'}? 'active'"><a href="#" th:href="@{/mailbox/index/Sent}"><i class="fa fa-envelope-o"></i> 
                                 Отправленные</a></li>
                         <li th:classappend="${mailbox=='Drafts'}? 'active'"><a href="#" th:href="@{/mailbox/index/Drafts}"><i class="fa fa-file-text-o"></i> 
                                 Черновики
                                 <span class="label label-warning pull-right" th:text="${dmail}">
-                                    </span></a></li>
+                                </span></a></li>
                         <li th:classappend="${mailbox=='Trash'}? 'active'"><a href="#" th:href="@{/mailbox/index/Trash}"><i class="fa fa-filter"></i> Корзина 
                                 <span class="label label-warning pull-right" th:text="${bmail}">
-                                    </span></a></li>
+                                </span></a></li>
                         <li th:classappend="${mailbox=='Junk'}? 'active'"><a href="#" th:href="@{/mailbox/index/Junk}"><i class="fa fa-trash-o"></i> Спам
                                 <span class="label label-warning pull-right" th:text="${spammail}">
-                                    </span></a></li>
+                                </span></a></li>
                     </ul>
                 </div><!-- /.box-body -->
             </div><!-- /. box -->

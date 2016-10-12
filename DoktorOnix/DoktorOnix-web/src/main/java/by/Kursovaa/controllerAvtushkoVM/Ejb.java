@@ -5,7 +5,8 @@
  */
 package by.Kursovaa.controllerAvtushkoVM;
 
-import by.kursovaa.logicAvtushkoVM.EmailRemote;
+import by.kursovaa.logicAvtushkoVM.EmailServiceRemote;
+import by.kursovaa.logicAvtushkoVM.SeviceRemote;
 import by.kursovaa.logicAvtushkoVM.dbAvtushkoVM.EmailFacadeRemote;
 import by.kursovaa.logicAvtushkoVM.dbAvtushkoVM.KassaFacadeRemote;
 import by.kursovaa.logicAvtushkoVM.dbAvtushkoVM.KategoriiFacadeRemote;
@@ -29,16 +30,6 @@ public class Ejb {
 
     public static Ejb getInterface() {
         return new Ejb();
-    }
-
-    public EmailRemote lookupEMailRemote() {
-        try {
-            Context c = new InitialContext();
-            return (EmailRemote) c.lookup("java:global/DoktorOnix-ejb/Email!by.kursovaa.logicAvtushkoVM.EmailRemote");
-        } catch (NamingException ne) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
-            throw new RuntimeException(ne);
-        }
     }
 
     public EmailFacadeRemote lookupEmailFacadeRemote() {
@@ -125,6 +116,26 @@ public class Ejb {
         try {
             Context c = new InitialContext();
             return (ZakazyFacadeRemote) c.lookup("java:global/DoktorOnix-ejb/ZakazyFacade!by.kursovaa.logicAvtushkoVM.dbAvtushkoVM.ZakazyFacadeRemote");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
+
+    public SeviceRemote lookupSeviceRemote() {
+        try {
+            Context c = new InitialContext();
+            return (SeviceRemote) c.lookup("java:global/DoktorOnix-ejb/Sevice!by.kursovaa.logicAvtushkoVM.SeviceRemote");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
+
+    public EmailServiceRemote lookupEmailServiceRemote() {
+        try {
+            Context c = new InitialContext();
+            return (EmailServiceRemote) c.lookup("java:global/DoktorOnix-ejb/EmailService!by.kursovaa.logicAvtushkoVM.EmailServiceRemote");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

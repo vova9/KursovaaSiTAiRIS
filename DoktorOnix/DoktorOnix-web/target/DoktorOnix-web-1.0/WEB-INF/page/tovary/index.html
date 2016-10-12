@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>Список товаров</title>
+        <!-- Tell the browser to be responsive to screen width -->
+        <link rel="shortcut icon" href="../../dist/img/favicon.ico" 
+              th:href="@{/resources/dist/img/favicon.ico}" type="image/x-icon"/>
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport" />
+        <!-- Bootstrap 3.3.5 -->
+        <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css" 
+              th:href="@{/resources/bootstrap/css/bootstrap.min.css}" />
+        <!-- Font Awesome -->
+        <link rel="stylesheet" th:href="@{/resources/dist/font-awesome.min.css}"/>
+        <!-- Ionicons -->
+        <link rel="stylesheet" th:href="@{/resources/dist/ionicons.min.css}"/>
+        <!-- DataTables -->
+        <link rel="stylesheet" href="../../plugins/datatables/dataTables.bootstrap.css"
+              th:href="@{/resources/plugins/datatables/dataTables.bootstrap.css}" />
+        <!-- Theme style -->
+        <link rel="stylesheet" href="../../dist/css/AdminLTE.min.css"
+              th:href="@{/resources/dist/css/AdminLTE.min.css}" />
+        <!-- Skins. Choose a skin from the css/skins
+             folder instead of downloading all of them to reduce the load. -->
+        <link rel="stylesheet" href="../../dist/css/skins/_all-skins.min.css"
+              th:href="@{/resources/dist/css/skins/_all-skins.min.css}" />
+        <link rel="stylesheet" href="../../dist/css/easyTree.css"
+              th:href="@{/resources/dist/css/easyTree.css}" />
+        <link href="../../plugins/jQuery/jquerysctipttop.css" 
+              th:href="@{/resources/plugins/jQuery/jquerysctipttop.css}"/>
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+            <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body class="hold-transition skin-blue sidebar-mini">
+        <div class="wrapper">
+            <header th:replace="fragments/header :: header"></header>
+            <aside th:replace="fragments/menu :: menu"></aside> 
+            <!-- Content Wrapper. Contains page content -->
+            <div class="content-wrapper">
+                <!-- Content Header (Page header) -->
+                <section class="content-header">
+                    <h1>Товары</h1>
+                    <ol class="breadcrumb">
+                        <li><a href="#" th:href="@{/}"><i class="fa fa-dashboard"></i> Основная страница</a></li>
+                        <li class="active">Список товаров</li>
+                    </ol>
+                </section>
+                <section class="content">
+                    <div class="row">
+                        <div th:if="${success != null}"  class="col-md-12">
+                            <div class="callout callout-success" >
+                                <h4 th:text="${success}"></h4>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="box">
+                                <div class="box-header">
+                                    <h3 class="box-title">Категории</h3>
+                                </div>
+                                <div class="box-body">
+                                    <div class="easy-tree">
+                                        <ul th:inline="text">
+                                            <li id = "0">Все</li>
+                                            <li th:each="kategorii : ${Kategorii}" 
+                                                th:if="${kategorii.roditel==0}"
+                                                th:id="${kategorii.id}"
+                                                th:class="${kategorii.id==id} ? 'li_selected'">[[${kategorii.name}]]
+                                            <th:block th:each="kategoria : ${Kategorii}" 
+                                                      th:if="${kategorii.id==kategoria.roditel}">
+                                                <ul>
+                                                    <li th:id="${kategoria.id}"
+                                                        th:text="${kategoria.name}"
+                                                        th:class="${kategoria.id==id} ? 'li_selected'"></li>
+                                                </ul>
+                                            </th:block>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="box">
+                                <div class="box-header">
+                                    <h3 class="box-title">Список товаров</h3>
+                                </div><!-- /.box-header -->
+                                <div class="box-body">
+                                    <table id="example1" class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Артикул</th>
+                                                <th>Наименование</th>
+                                                <th>Цена за единицу</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr th:each="tovary : ${Tovary}">
+                                                <td>
+                                                    <a href="../../pages/forms/dobavtovar.html" 
+                                                       th:href="@{/tovary/edit/{tovarId}(tovarId=${tovary.artikul})}" 
+                                                       th:text="${tovary.artikul}"></a></td>
+                                                <td th:text="${tovary.naimenovanie}"></td>
+                                                <td th:text="${tovary.zena}"></td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th>Артикул</th>
+                                                <th>Наименование</th>
+                                                <th>Цена за единицу</th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div><!-- /.box-body -->   
+                                <div class="box-footer clearfix">
+                                    <a href="#" th:href="@{/tovary/report}" class="btn btn-sm btn-info btn-flat pull-left">
+                                        Прайс - лист</a>
+                                </div>
+                            </div><!-- /.box -->
+                        </div>
+                    </div><!-- /.row -->
+                </section><!-- /.content -->
+            </div><!-- /.content-wrapper -->
+            <footer th:replace="fragments/footer :: footer">  </footer>
+            <aside th:replace="fragments/leftmenu :: leftmenu"></aside>
+            <!-- Add the sidebar's background. This div must be placed
+                    immediately after the control sidebar -->
+            <div class="control-sidebar-bg"></div>
+        </div><!-- ./wrapper -->
+
+        <!-- jQuery 2.1.4 -->
+        <script src="../../plugins/jQuery/jQuery-2.1.4.min.js" 
+        th:src="@{/resources/plugins/jQuery/jQuery-2.1.4.min.js}"></script>
+        <!-- Bootstrap 3.3.5 -->
+        <script src="../../bootstrap/js/bootstrap.min.js" 
+        th:src="@{/resources/bootstrap/js/bootstrap.min.js}"></script>
+        <!-- DataTables -->
+        <script src="../../plugins/datatables/jquery.dataTables.min.js"
+        th:src="@{/resources/plugins/datatables/jquery.dataTables.min.js}"></script>
+        <script src="../../plugins/datatables/dataTables.bootstrap.min.js"
+        th:src="@{/resources/plugins/datatables/dataTables.bootstrap.min.js}"></script>
+        <!-- SlimScroll -->
+        <script src="../../plugins/slimScroll/jquery.slimscroll.min.js"
+        th:src="@{/resources/plugins/slimScroll/jquery.slimscroll.min.js}"></script>
+        <!-- FastClick -->
+        <script src="../../plugins/fastclick/fastclick.min.js" 
+        th:src="@{/resources/plugins/fastclick/fastclick.min.js}"></script>
+        <!-- App -->
+        <script src="../../dist/js/app.min.js" 
+        th:src="@{/resources/dist/js/app.min.js}"></script>
+        <!-- for demo purposes -->
+        <script src="../../dist/js/demo.js" 
+        th:src="@{/resources/dist/js/demo.js}"></script>
+        <script src="../../dist/js/easyTree.js"
+        th:src="@{/resources/dist/js/easyTree.js}"></script>
+        <!-- page script -->
+        <script>
+            $(function () {
+                $("#example1").DataTable();
+                $('#example2').DataTable({
+                    "paging": true,
+                    "lengthChange": false,
+                    "searching": false,
+                    "ordering": true,
+                    "info": true,
+                    "autoWidth": false
+                });
+            });
+            (function ($) {
+                function init() {
+                    $('.easy-tree').EasyTree({
+                        addable: true,
+                        editable: true,
+                        deletable: true
+                    });
+                }
+
+                window.onload = init();
+            })(jQuery)
+        </script>
+    </body>
+</html>

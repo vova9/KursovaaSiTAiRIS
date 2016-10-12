@@ -5,7 +5,6 @@
  */
 package by.Kursovaa.controllerAvtushkoVM;
 
-import by.kursovaa.dbAvtushkoVM.Polzovateli;
 import by.kursovaa.logicAvtushkoVM.CoutMessage;
 import by.kursovaa.logicAvtushkoVM.MessageBean;
 import java.util.ArrayList;
@@ -25,23 +24,37 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class Email {
 
     @RequestMapping(value = "/index")
-    public String homeMail(HttpSession httpSession, Model model) {
-        Polzovateli obj = (Polzovateli) httpSession.getAttribute("user");
-        ArrayList<MessageBean> mail
-                = Ejb.getInterface().lookupEMailRemote().fetch(obj.getIdEmailSluzebny(), "INBOX");
+    public String homeMail(Model model, HttpSession httpSession) {
+        by.kursovaa.dbAvtushkoVM.Polzovateli obj = (by.kursovaa.dbAvtushkoVM.Polzovateli) httpSession.getAttribute("user");
+        by.kursovaa.dbAvtushkoVM.Email em = new by.kursovaa.dbAvtushkoVM.Email();
+        em.setLogin("ras@doktoronix.net.ua");
+        em.setPassword("1629807V");
+        em.setSmtp("mail.ukraine.com.ua");
+        em.setImap("mail.ukraine.com.ua");
+        System.out.println(em.getLogin());
+        ArrayList<MessageBean> mail = Ejb.getInterface().lookupEmailServiceRemote().fetch(em, "INBOX");
         httpSession.setAttribute("Email", mail);
         httpSession.setAttribute("mailbox", "Inbox");
         model.addAttribute("mailbox", "Inbox");
         model.addAttribute("Email", mail);
         model.addAttribute("zagolovok", "Входящие");
-        setModel(model, obj);
+        setModel(model, em);
+        model.addAttribute("User", obj);
         return "mailbox/mailbox";
     }
 
     @RequestMapping(value = "/new")
-    public String newMail(Model model) {
+    public String newMail(HttpSession httpSession, Model model) {
+        by.kursovaa.dbAvtushkoVM.Polzovateli obj = (by.kursovaa.dbAvtushkoVM.Polzovateli) httpSession.getAttribute("user");
         MessageBean messge = new MessageBean();
         model.addAttribute("Email", messge);
+        by.kursovaa.dbAvtushkoVM.Email em = new by.kursovaa.dbAvtushkoVM.Email();
+        em.setLogin("ras@doktoronix.net.ua");
+        em.setPassword("1629807V");
+        em.setSmtp("mail.ukraine.com.ua");
+        em.setImap("mail.ukraine.com.ua");
+        model.addAttribute("User", obj);
+        setModel(model, em);
         return "mailbox/compose";
     }
 
@@ -70,14 +83,20 @@ public class Email {
             flag = true;
         }
         if (flag) {
-            Polzovateli obj = (Polzovateli) httpSession.getAttribute("user");
+            by.kursovaa.dbAvtushkoVM.Polzovateli obj = (by.kursovaa.dbAvtushkoVM.Polzovateli) httpSession.getAttribute("user");
+            by.kursovaa.dbAvtushkoVM.Email em = new by.kursovaa.dbAvtushkoVM.Email();
+            em.setLogin("ras@doktoronix.net.ua");
+            em.setPassword("1629807V");
+            em.setSmtp("mail.ukraine.com.ua");
+            em.setImap("mail.ukraine.com.ua");
+            model.addAttribute("User", obj);
             ArrayList<MessageBean> mail
-                    = Ejb.getInterface().lookupEMailRemote().fetch(obj.getIdEmailSluzebny(), temp);
-            CoutMessage a = Ejb.getInterface().lookupEMailRemote().chek(obj.getIdEmailSluzebny());
+                    = Ejb.getInterface().lookupEmailServiceRemote().fetch(em, temp);
+            CoutMessage a = Ejb.getInterface().lookupEmailServiceRemote().chek(em);
             httpSession.setAttribute("Email", mail);
             model.addAttribute("Email", mail);
             model.addAttribute("mailbox", (String) httpSession.getAttribute("mailbox"));
-            setModel(model, obj);
+            setModel(model, em);
         }
         return "/mailbox/mailbox";
     }
@@ -85,8 +104,14 @@ public class Email {
     @RequestMapping(value = "/read/{mes}")
     public String readMail(@PathVariable("mes") String mes, HttpSession httpSession, Model model) {
         ArrayList<MessageBean> mail = (ArrayList<MessageBean>) httpSession.getAttribute("Email");
-        Polzovateli obj = (Polzovateli) httpSession.getAttribute("user");
+        by.kursovaa.dbAvtushkoVM.Polzovateli obj = (by.kursovaa.dbAvtushkoVM.Polzovateli) httpSession.getAttribute("user");
         MessageBean messge = null;
+        by.kursovaa.dbAvtushkoVM.Email em = new by.kursovaa.dbAvtushkoVM.Email();
+        em.setLogin("ras@doktoronix.net.ua");
+        em.setPassword("1629807V");
+        em.setSmtp("mail.ukraine.com.ua");
+        em.setImap("mail.ukraine.com.ua");
+        model.addAttribute("User", obj);
         Long id = Long.parseLong(mes);
         if (id < mail.size() || id > 0) {
             for (int i = 0; i < mail.size(); i++) {
@@ -111,11 +136,11 @@ public class Email {
             } else {
                 temp = "INBOX." + temp;
             }
-            Ejb.getInterface().lookupEMailRemote().messegeRead(obj.getIdEmailSluzebny(),
+            Ejb.getInterface().lookupEmailServiceRemote().messegeRead(em,
                     messge, temp);
         }
         model.addAttribute("mail", messge);
-        setModel(model, obj);
+        setModel(model, em);
         return "/mailbox/read";
     }
 
@@ -133,21 +158,27 @@ public class Email {
 
     @RequestMapping(value = "/delete/{mes}")
     public String readDelete(@PathVariable("mes") String mes, HttpSession httpSession, Model model) {
-        Polzovateli obj = (Polzovateli) httpSession.getAttribute("user");
+        by.kursovaa.dbAvtushkoVM.Polzovateli obj = (by.kursovaa.dbAvtushkoVM.Polzovateli) httpSession.getAttribute("user");
         String temp = (String) httpSession.getAttribute("mailbox");
         if ("Inbox".equals(temp)) {
             temp = "INBOX";
         } else {
             temp = "INBOX." + temp;
         }
-        Ejb.getInterface().lookupEMailRemote().delete(obj.getIdEmailSluzebny(), temp, Integer.parseInt(mes));
+        by.kursovaa.dbAvtushkoVM.Email em = new by.kursovaa.dbAvtushkoVM.Email();
+        em.setLogin("ras@doktoronix.net.ua");
+        em.setPassword("1629807V");
+        em.setSmtp("mail.ukraine.com.ua");
+        em.setImap("mail.ukraine.com.ua");
+        model.addAttribute("User", obj);
+        Ejb.getInterface().lookupEmailServiceRemote().delete(em, temp, Integer.parseInt(mes));
         Long id = Long.parseLong(mes) - 1;
         return "redirect:/mailbox/read/" + id;
     }
 
     @RequestMapping(value = "/reply/{mes}")
     public String readReply(@PathVariable("mes") String mes, HttpSession httpSession, Model model) {
-        Polzovateli obj = (Polzovateli) httpSession.getAttribute("user");
+        by.kursovaa.dbAvtushkoVM.Polzovateli obj = (by.kursovaa.dbAvtushkoVM.Polzovateli) httpSession.getAttribute("user");
         ArrayList<MessageBean> mail = (ArrayList<MessageBean>) httpSession.getAttribute("Email");
         MessageBean messge = new MessageBean();
         Long id = Long.parseLong(mes);
@@ -161,13 +192,19 @@ public class Email {
             }
         }
         model.addAttribute("Email", messge);
-        setModel(model, obj);
+        by.kursovaa.dbAvtushkoVM.Email em = new by.kursovaa.dbAvtushkoVM.Email();
+        em.setLogin("ras@doktoronix.net.ua");
+        em.setPassword("1629807V");
+        em.setSmtp("mail.ukraine.com.ua");
+        em.setImap("mail.ukraine.com.ua");
+        model.addAttribute("User", obj);
+        setModel(model, em);
         return "mailbox/compose";
     }
 
     @RequestMapping(value = "/forward/{mes}")
     public String readForward(@PathVariable("mes") String mes, HttpSession httpSession, Model model) {
-        Polzovateli obj = (Polzovateli) httpSession.getAttribute("user");
+        by.kursovaa.dbAvtushkoVM.Polzovateli obj = (by.kursovaa.dbAvtushkoVM.Polzovateli) httpSession.getAttribute("user");
         ArrayList<MessageBean> mail = (ArrayList<MessageBean>) httpSession.getAttribute("Email");
         MessageBean messeg = new MessageBean();
         Long id = Long.parseLong(mes);
@@ -190,37 +227,55 @@ public class Email {
             }
         }
         model.addAttribute("Email", messeg);
-        setModel(model, obj);
+        by.kursovaa.dbAvtushkoVM.Email em = new by.kursovaa.dbAvtushkoVM.Email();
+        em.setLogin("ras@doktoronix.net.ua");
+        em.setPassword("1629807V");
+        em.setSmtp("mail.ukraine.com.ua");
+        em.setImap("mail.ukraine.com.ua");
+        model.addAttribute("User", obj);
+        setModel(model, em);
         return "mailbox/compose";
     }
 
     @RequestMapping(value = "/draftsmail")
     public String draftsMail(@ModelAttribute("Email") MessageBean Email, HttpSession httpSession, Model model) {
-        Polzovateli obj = (Polzovateli) httpSession.getAttribute("user");
+        by.kursovaa.dbAvtushkoVM.Polzovateli obj = (by.kursovaa.dbAvtushkoVM.Polzovateli) httpSession.getAttribute("user");
         Email.setAttachments(new ArrayList<String>());
-        Ejb.getInterface().lookupEMailRemote().draft(Email, obj.getIdEmailSluzebny());
+        by.kursovaa.dbAvtushkoVM.Email em = new by.kursovaa.dbAvtushkoVM.Email();
+        em.setLogin("ras@doktoronix.net.ua");
+        em.setPassword("1629807V");
+        em.setSmtp("mail.ukraine.com.ua");
+        em.setImap("mail.ukraine.com.ua");
+        model.addAttribute("User", obj);
+        Ejb.getInterface().lookupEmailServiceRemote().draft(Email, em);
         ArrayList<MessageBean> mail = (ArrayList<MessageBean>) httpSession.getAttribute("Email");
         httpSession.setAttribute("mailbox", "Inbox");
         model.addAttribute("mailbox", "Inbox");
         model.addAttribute("Email", mail);
         model.addAttribute("zagolovok", "Входящие");
         model.addAttribute("success", "Сообщение было успешно сохранено!");
-        setModel(model, obj);
+        setModel(model, em);
         return "mailbox/mailbox";
     }
 
     @RequestMapping(value = "/sendmail")
     public String sendMail(@ModelAttribute("Email") MessageBean Email,
             HttpSession httpSession, Model model) {
-        Polzovateli obj = (Polzovateli) httpSession.getAttribute("user");
-        Ejb.getInterface().lookupEMailRemote().sent(obj.getIdEmailSluzebny(), Email);
+        by.kursovaa.dbAvtushkoVM.Polzovateli obj = (by.kursovaa.dbAvtushkoVM.Polzovateli) httpSession.getAttribute("user");
+        by.kursovaa.dbAvtushkoVM.Email em = new by.kursovaa.dbAvtushkoVM.Email();
+        em.setLogin("ras@doktoronix.net.ua");
+        em.setPassword("1629807V");
+        em.setSmtp("mail.ukraine.com.ua");
+        em.setImap("mail.ukraine.com.ua");
+        model.addAttribute("User", obj);
+        Ejb.getInterface().lookupEmailServiceRemote().sent(em, Email);
         ArrayList<MessageBean> mail = (ArrayList<MessageBean>) httpSession.getAttribute("Email");
         httpSession.setAttribute("mailbox", "Inbox");
         model.addAttribute("mailbox", "Inbox");
         model.addAttribute("Email", mail);
         model.addAttribute("zagolovok", "Входящие");
         model.addAttribute("success", "Сообщение было успешно отправлено!");
-        setModel(model, obj);
+        setModel(model, em);
         return "mailbox/mailbox";
     }
 
@@ -229,8 +284,8 @@ public class Email {
         return "redirect:/mailbox/index/";
     }
 
-    private void setModel(Model model, Polzovateli obj) {
-        CoutMessage cout = Ejb.getInterface().lookupEMailRemote().chek(obj.getIdEmailSluzebny());
+    private void setModel(Model model, by.kursovaa.dbAvtushkoVM.Email obj) {
+        CoutMessage cout = Ejb.getInterface().lookupEmailServiceRemote().chek(obj);
         if (cout.getNewMess() > 0) {
             model.addAttribute("newmail", cout.getNewMess());
         }
@@ -247,7 +302,5 @@ public class Email {
             model.addAttribute("newmailhead", cout.getNewMess() + " новых сообщений");
         }
         model.addAttribute("coutmail", "Показано " + cout.getCout() + " из " + cout.getCout());
-        model.addAttribute("User", obj);
     }
-
 }

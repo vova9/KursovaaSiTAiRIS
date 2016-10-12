@@ -12,9 +12,9 @@
         <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css"	
               th:href="@{/resources/bootstrap/css/bootstrap.min.css}" />
         <!-- Font Awesome -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" />
+        <link rel="stylesheet" th:href="@{/resources/dist/font-awesome.min.css}"/>
         <!-- Ionicons -->
-        <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
+        <link rel="stylesheet" th:href="@{/resources/dist/ionicons.min.css}"/>
         <!-- DataTables -->
         <link rel="stylesheet" href="../../plugins/datatables/dataTables.bootstrap.css"	
               th:href="@{/resources/plugins/datatables/dataTables.bootstrap.css}" />
@@ -41,67 +41,71 @@
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
+                    <h1>Касса</h1>
                     <ol class="breadcrumb">
                         <li><a href="#" th:href="@{/}"><i class="fa fa-dashboard"></i> Основная страница</a></li>
                         <li class="active">Касса</li>
                     </ol>
                 </section>
-                <br/>
-                <div th:if="${success != null}" class="callout callout-success">
-                    <h4 th:text="${success}"></h4>
-                </div>
-                <br/>
-                <div class="box">
-                    <div class="box-header">
-                        <h3 class="box-title">Касса</h3>
-                    </div><!-- /.box-header -->
-                    <div class="box-body">
-
-                        <div class="form-group">
-                            <div class="col-sm-10">
-                                <a href="#" th:href="@{/kassa/report}"
-                                   class="btn btn-sm btn-info btn-flat pull-left ">
-                                    Отчёт по кассовым операциям</a>
-                            </div>
+                <section class="content">
+                    <div class="row">
+                        <div th:if="${success != null}" class="callout callout-success">
+                            <h4 th:text="${success}"></h4>
                         </div>
-                        <br/>
-                        <br/>
-                        <table id="example1" class="table table-bordered table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Номер операции</th>
-                                    <th>Дата</th>
-                                    <th>Тип операции</th>
-                                    <th>Сумма</th>
-                                    <th>Примечание</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr th:each="kassa : ${Kassa}">
-                                    <td>
-                                        <a href="#" th:href="@{/kassa/edit/{kassaId}(kassaId=${kassa.id})}" 
-                                           th:text="${kassa.id}">Trident</a>
-                                    </td>
-                                    <td th:text="${#dates.format(kassa.date, 'dd/MM/YYYY')}"></td>
-                                    <td th:text="${kassa.tip}"></td>
-                                    <td th:text="${kassa.summa}"></td>
-                                    <td th:text="${kassa.detali}"></td>
-                                </tr>                    
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th>Номер операции</th>
-                                    <th>Дата</th>
-                                    <th>Тип операции</th>
-                                    <th>Сумма</th>
-                                    <th>Примечание</th>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div><!-- /.box-body -->
-                </div><!-- /.box -->
-            </div><!-- /.content-wrapper -->
+                        <div class="col-md-12">
+                            <div class="box">
+                                <div class="box-header">
+                                    <h3 class="box-title">Касса</h3>
+                                </div><!-- /.box-header -->
+                                <div class="box-body">
 
+                                    <div class="form-group">
+                                        <div class="col-sm-10">
+                                            <a href="#" th:href="@{/kassa/report}"
+                                               class="btn btn-sm btn-info btn-flat pull-left ">
+                                                Отчёт по кассовым операциям</a>
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <br/>
+                                    <table id="example1" class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Номер операции</th>
+                                                <th>Дата</th>
+                                                <th>Тип операции</th>
+                                                <th>Сумма</th>
+                                                <th>Примечание</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr th:each="kassa : ${Kassa}">
+                                                <td>
+                                                    <a href="#" th:href="@{/kassa/edit/{kassaId}(kassaId=${kassa.id})}" 
+                                                       th:text="${kassa.id}">Trident</a>
+                                                </td>
+                                                <td th:text="${#dates.format(kassa.date, 'dd/MM/YYYY')}"></td>
+                                                <td th:text="${kassa.tip}"></td>
+                                                <td th:text="${kassa.summa}"></td>
+                                                <td th:text="${kassa.detali}"></td>
+                                            </tr>                    
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th>Номер операции</th>
+                                                <th>Дата</th>
+                                                <th>Тип операции</th>
+                                                <th>Сумма</th>
+                                                <th>Примечание</th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div><!-- /.box-body -->
+                            </div><!-- /.box -->
+                        </div><!-- /.content-wrapper -->
+                    </div>
+                </section>
+            </div>
             <!-- Control Sidebar -->
             <footer th:replace="fragments/footer :: footer">  </footer>
             <aside th:replace="fragments/leftmenu :: leftmenu"></aside>

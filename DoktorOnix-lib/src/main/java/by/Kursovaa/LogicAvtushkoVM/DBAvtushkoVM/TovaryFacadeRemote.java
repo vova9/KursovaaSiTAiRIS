@@ -29,5 +29,4 @@ public interface TovaryFacadeRemote {
     List<Tovary> findRange(int[] range);
 
     int count();
-    
 }

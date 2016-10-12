@@ -1,28 +1,28 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="utf-8"/>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-        <title>Авторизуйтесь | Доктор Оникс</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>Доктор Оникс | Log in</title>
+        <link rel="shortcut icon" href="../../dist/img/favicon.ico" 
+              th:href="@{/resources/dist/img/favicon.ico}" type="image/x-icon"/>
         <!-- Tell the browser to be responsive to screen width -->
-        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport" />
         <!-- Bootstrap 3.3.5 -->
-        <link rel="stylesheet" href="../../resources/bootstrap/css/bootstrap.min.css" 
-              th:href="@{/resources/bootstrap/css/bootstrap.min.css}" />
+        <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css" 
+              th:href="@{/resources/bootstrap/css/bootstrap.min.css}"/>
         <!-- Font Awesome -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"/>
+        <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"
+              th:href="@{/resources/bootstrap/css/bootstrap.min.css}"/>
+        <!-- Font Awesome -->
+        <link rel="stylesheet" th:href="@{/resources/dist/font-awesome.min.css}"/>
         <!-- Ionicons -->
-        <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"/>
+        <link rel="stylesheet" th:href="@{/resources/dist/ionicons.min.css}"/>
         <!-- Theme style -->
-        <link rel="stylesheet" href="../../resources/dist/css/AdminLTE.min.css"
-              th:href="@{/resources/dist/css/AdminLTE.min.css}"/>
+        <link rel="stylesheet" href="../../dist/css/AdminLTE.css"
+              th:href="@{/resources/dist/css/AdminLTE.css}"/>
         <!-- iCheck -->
-        <link rel="stylesheet" href="../../resources/plugins/iCheck/square/blue.css" 
+        <link rel="stylesheet" href="../../plugins/iCheck/square/blue.css"
               th:href="@{/resources/plugins/iCheck/square/blue.css}"/>
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -35,44 +35,56 @@ and open the template in the editor.
     <body class="hold-transition login-page">
         <div class="login-box">
             <div class="login-logo">
-                <a href="../../index2.html"><b>Доктор</b>LTE</a>
+                <img src = "../../dist/img/logo.png" th:src="@{/resources/dist/img/logo.png}">
+                <a href="../../index.html" th:href="@{/}"></a></img>
             </div><!-- /.login-logo -->
             <div class="login-box-body">
-                <p class="login-box-msg">Sign in to start your session</p>
-                <form action="@{/appLogin}" method="post">
+                <p class="login-box-msg">Для продолжения необходимо войти в систему!</p>
+                <div th:if="${danger != null}" class="callout callout-danger">
+                    <h4>Не верный логин или пароль!</h4>
+                </div>
+                <form class="contact_form" action="../../index.html" th:object="${Avtozizazia}" 
+                      th:action="@{/avtozizazia}" method="post">
                     <div class="form-group has-feedback">
-                        <input type="email" class="form-control" placeholder="Email"/>
+                        <input type="text" class="form-control" pattern="^[a-zA-Z]+$" th:field="*{login}" 
+                               th:value="*{login}"
+                               placeholder="Логин" required=""/>
                         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                        <span class="form_hint">Поле обязательное для залолнения! 
+                            Допустимый формат: латинские буквы!</span>
                     </div>
                     <div class="form-group has-feedback">
-                        <input type="password" class="form-control" placeholder="Password"/>
+                        <input type="password" class="form-control" pattern="[A-Za-z0-9]{6,}" th:field="*{password}" 
+                               th:value="*{password}"
+                               placeholder="Пароль" required=""/>
                         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                        <span class="form_hint">Поле обязательное для залолнения! 
+                            Допустимый формат: латинские буквы и цифры. Длина от 6 символов!</span>
                     </div>
                     <div class="row">
                         <div class="col-xs-8">
                             <div class="checkbox icheck">
                                 <label>
-                                    <input type="checkbox"/> Remember Me
+                                    <input type="checkbox" /> Запомнить меня
                                 </label>
                             </div>
                         </div><!-- /.col -->
                         <div class="col-xs-4">
-                            <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+                            <button type="submit" class="btn btn-primary btn-block btn-flat">Войти</button>
                         </div><!-- /.col -->
                     </div>
                 </form>
             </div><!-- /.login-box-body -->
         </div><!-- /.login-box -->
-
         <!-- jQuery 2.1.4 -->
-        <script src="../../resources/plugins/jQuery/jQuery-2.1.4.min.js" 
-        th:href="@{/resources/plugins/jQuery/jQuery-2.1.4.min.js}"></script>
+        <script src="../../plugins/jQuery/jQuery-2.1.4.min.js" 
+        th:src="@{/resources/plugins/jQuery/jQuery-2.1.4.min.js}"></script>
         <!-- Bootstrap 3.3.5 -->
-        <script src="../../resources/bootstrap/js/bootstrap.min.js" 
-        th:href="@{/resources/bootstrap/js/bootstrap.min.js}"></script>
+        <script src="../../bootstrap/js/bootstrap.min.js" 
+        th:src="@{/resources/bootstrap/js/bootstrap.min.js}"></script>
         <!-- iCheck -->
-        <script src="../../resources/plugins/iCheck/icheck.min.js" 
-        th:href="@{/resources/plugins/iCheck/icheck.min.js}"></script>
+        <script src="../../plugins/iCheck/icheck.min.js"
+        th:src="@{/resources/plugins/iCheck/icheck.min.js}"></script>
         <script>
             $(function () {
                 $('input').iCheck({
@@ -84,4 +96,3 @@ and open the template in the editor.
         </script>
     </body>
 </html>
-

@@ -41,7 +41,7 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
     }
 
     /*Set these variables for your project needs*/
-        private static final String LOCATION = "D:/mytemp/";
+    private static final String LOCATION = "D:/mytemp/";
     private static final long MAX_FILE_SIZE = 1024 * 1024 * 25;//25MB
     private static final long MAX_REQUEST_SIZE = 1024 * 1024 * 30;//30MB
     private static final int FILE_SIZE_THRESHOLD = 0;

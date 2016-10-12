@@ -68,7 +68,8 @@ public class Kassa {
     }
 
     @RequestMapping(value = "/save")
-    public String saveKassa(@ModelAttribute("kasa") by.kursovaa.dbAvtushkoVM.Kassa kasa, HttpSession httpSession, Model model) {
+    public String saveKassa(@ModelAttribute("kasa") by.kursovaa.dbAvtushkoVM.Kassa kasa, HttpSession httpSession,
+            Model model) {
         if (kasa.getId() == null) {
             Ejb.getInterface().lookupKassaFacadeRemote().create(kasa);
         } else {
@@ -101,7 +102,8 @@ public class Kassa {
     }
 
     @RequestMapping(value = "/printchek")
-    public String printСhekKassa(@ModelAttribute("kasa") by.kursovaa.dbAvtushkoVM.Kassa kasa, Model model, HttpServletRequest request, HttpServletResponse response) {
+    public String printСhekKassa(@ModelAttribute("kasa") by.kursovaa.dbAvtushkoVM.Kassa kasa, Model model,
+            HttpServletRequest request, HttpServletResponse response) {
         try {
             Jasper jasper = new Jasper();
             ArrayList<by.kursovaa.dbAvtushkoVM.Kassa> kassa = new ArrayList();

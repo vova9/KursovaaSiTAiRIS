@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>Экспорт товаров | Доктор Оникс</title>
+        <link rel="shortcut icon" href="../../dist/img/favicon.ico" th:href="@{/resources/dist/img/favicon.ico}" type="image/x-icon"/>
+        <!-- Tell the browser to be responsive to screen width -->
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport" />
+        <!-- Bootstrap 3.3.5 -->
+        <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css"
+              th:href="@{/resources/bootstrap/css/bootstrap.min.css}"/>
+        <!-- Font Awesome -->
+        <link rel="stylesheet" th:href="@{/resources/dist/font-awesome.min.css}"/>
+        <!-- Ionicons -->
+        <link rel="stylesheet" th:href="@{/resources/dist/ionicons.min.css}"/>
+        <link href="../../plugins/jQuery/jquerysctipttop.css" 
+              th:href="@{/resources/plugins/jQuery/jquerysctipttop.css}"/>
+        <!-- Ionicons -->
+        <link rel="stylesheet" th:href="@{/resources/dist/bootstrap-theme.min.css}"/>
+        <link rel="stylesheet" href="../../plugins/select2/select2.min.css" 
+              th:href="@{/resources/plugins/select2/select2.min.css}"/>
+        <!-- Theme style -->
+        <link rel="stylesheet" href="../../dist/css/AdminLTE.css" 
+              th:href="@{/resources/dist/css/AdminLTE.css}"/>
+        <!-- Skins. Choose a skin from the css/skins
+             folder instead of downloading all of them to reduce the load. -->
+        <link rel="stylesheet" href="../../dist/css/skins/_all-skins.min.css" 
+              th:href="@{/resources/dist/css/skins/_all-skins.min.css}"/>
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+            <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body class="hold-transition skin-blue sidebar-mini">
+        <div class="wrapper">
+            <header th:replace="fragments/header :: header"></header>
+            <aside th:replace="fragments/menu :: menu"></aside> 
+
+            <!-- Content Wrapper. Contains page content -->
+            <div class="content-wrapper">
+                <!-- Content Header (Page header) -->
+                <section class="content-header">
+                    <h1>Товары</h1>
+                    <ol class="breadcrumb">
+                        <li><a href="#" th:href="@{/}"><i class="fa fa-dashboard"></i> Основная страница</a></li>
+                        <li class="active">Экспорт товаров</li>
+                    </ol>
+                </section>
+
+                <!-- Main content -->
+                <section class="content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="callout callout-danger" id = "danger">
+                                <h4>Ошибка!</h4>
+                                <p>Возможно поле 'Адрес файла экспорта' не заполнено или заполено не верно. Формат: 'http://domen.by/file'</p>
+                            </div>				
+                            <div th:if="${success != null}" class="callout callout-success" id = "success">
+                                <h4>Файл был успешно экспортирован!</h4>
+                                <p>Обратите внимание! Все изменения будут применены только в данной системе.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="box box-solid">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Экспорт товаров</h3>
+                                </div><!-- /.box-header -->
+                                <div class="box-body">
+                                    <div class="form-group">
+                                        <label for="inputName" class="col-sm-3 control-label">Адрес файла экспорта</label>
+                                        <div class="col-sm-9">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="fa fa-internet-explorer"></i></span>
+                                                <input type="url" class="form-control" id="u" placeholder="Адрес файла экспорта" required=""/>
+                                                <span class="form_hint">Допустимый формат: </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-danger" id="startProgressTimer">Начать</button>
+                                </div>
+                                <div class="overlay" id ="Loading">
+                                    <i class="fa fa-refresh fa-spin"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                </section>
+            </div>
+            <footer th:replace="fragments/footer :: footer">  </footer>
+            <aside th:replace="fragments/leftmenu :: leftmenu"></aside>
+            <!-- Add the sidebar's background. This div must be placed
+                 immediately after the control sidebar -->
+            <div class="control-sidebar-bg"></div>
+        </div><!-- ./wrapper -->
+
+        <!-- jQuery 2.1.4 -->
+        <script src="../../plugins/jQuery/jQuery-2.1.4.min.js" 
+        th:src="@{/resources/plugins/jQuery/jQuery-2.1.4.min.js}"></script>
+        <!-- Bootstrap 3.3.5 -->
+        <script src="../../bootstrap/js/bootstrap.min.js"
+        th:src="@{/resources/bootstrap/js/bootstrap.min.js}"></script>
+        <!-- DataTables -->
+        <script src="../../plugins/slimScroll/jquery.slimscroll.min.js"
+        th:src="@{/resources/plugins/slimScroll/jquery.slimscroll.min.js}"></script>
+        <!-- FastClick -->
+        <script src="../../plugins/fastclick/fastclick.min.js"
+        th:src="@{/resources/plugins/fastclick/fastclick.min.js}"></script>
+        <!-- App -->
+        <script src="../../dist/js/app.min.js"
+        th:src="@{/resources/dist/js/app.min.js}"></script>
+        <!-- for demo purposes -->
+        <script src="../../dist/js/demo.js"
+        th:src="@{/resources/dist/js/demo.js}"></script>
+        <script src="../../dist/js/jquery.progressTimer.js"
+        th:src="@{/resources/dist/js/jquery.progressTimer.js}"></script> 
+        <!-- page script -->
+    </body>
+</html>

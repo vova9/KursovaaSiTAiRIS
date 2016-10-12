@@ -21,11 +21,6 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
     <ejb-ref>
-        <ejb-ref-name>Email</ejb-ref-name>
-        <ejb-ref-type>Session</ejb-ref-type>
-        <remote>by.kursovaa.logicAvtushkoVM.EmailRemote</remote>
-    </ejb-ref>
-    <ejb-ref>
         <ejb-ref-name>EmailFacade</ejb-ref-name>
         <ejb-ref-type>Session</ejb-ref-type>
         <remote>by.kursovaa.logicAvtushkoVM.dbAvtushkoVM.EmailFacadeRemote</remote>
@@ -69,5 +64,15 @@
         <ejb-ref-name>ZakazyFacade</ejb-ref-name>
         <ejb-ref-type>Session</ejb-ref-type>
         <remote>by.kursovaa.logicAvtushkoVM.dbAvtushkoVM.ZakazyFacadeRemote</remote>
+    </ejb-ref>
+    <ejb-ref>
+        <ejb-ref-name>Sevice</ejb-ref-name>
+        <ejb-ref-type>Session</ejb-ref-type>
+        <remote>by.kursovaa.logicAvtushkoVM.SeviceRemote</remote>
+    </ejb-ref>
+    <ejb-ref>
+        <ejb-ref-name>EmailService</ejb-ref-name>
+        <ejb-ref-type>Session</ejb-ref-type>
+        <remote>by.kursovaa.logicAvtushkoVM.EmailServiceRemote</remote>
     </ejb-ref>
 </web-app>

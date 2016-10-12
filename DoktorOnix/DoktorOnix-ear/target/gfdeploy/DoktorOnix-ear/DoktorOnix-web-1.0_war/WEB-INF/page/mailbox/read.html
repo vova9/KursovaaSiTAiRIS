@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+    <head xmlns:th="http://www.thymeleaf.org">
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <title>Чтения письма | Доктор Оникс</title>
+        <!-- Tell the browser to be responsive to screen width -->
+        <link rel="shortcut icon" href="../../dist/img/favicon.ico" 
+              th:href="@{/resources/dist/img/favicon.ico}" type="image/x-icon"/>
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
+        <!-- Bootstrap 3.3.5 -->
+        <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css" 
+              th:href="@{/resources/bootstrap/css/bootstrap.min.css}"/>
+        <!-- Font Awesome -->
+        <link rel="stylesheet" th:href="@{/resources/dist/font-awesome.min.css}"/>
+        <!-- Ionicons -->
+        <link rel="stylesheet" th:href="@{/resources/dist/ionicons.min.css}"/>
+        <!-- fullCalendar 2.2.5-->
+        <link rel="stylesheet" href="../../plugins/fullcalendar/fullcalendar.min.css"
+              th:href="@{/resources/plugins/fullcalendar/fullcalendar.min.css}"/>
+        <link rel="stylesheet" href="../../plugins/fullcalendar/fullcalendar.print.css" media="print"
+              th:href="@{/resources/plugins/fullcalendar/fullcalendar.print.css}"/>
+        <!-- Theme style -->
+        <link rel="stylesheet" href="../../dist/css/AdminLTE.min.css"
+              th:href="@{/resources/dist/css/AdminLTE.min.css}"/>
+        <!-- AdminLTE Skins. Choose a skin from the css/skins
+             folder instead of downloading all of them to reduce the load. -->
+        <link rel="stylesheet" href="../../dist/css/skins/_all-skins.min.css"
+              th:href="@{/resources/dist/css/skins/_all-skins.min.css}"/>
+        <!-- iCheck -->
+        <link rel="stylesheet" href="../../plugins/iCheck/flat/blue.css"
+              th:href="@{/resources/plugins/iCheck/flat/blue.css}"/>
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+            <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body class="hold-transition skin-blue sidebar-mini">
+        <div class="wrapper">
+            <header th:replace="fragments/header :: header"></header>
+            <aside th:replace="fragments/menu :: menu"></aside>   
+
+            <!-- Content Wrapper. Contains page content -->
+            <div class="content-wrapper">
+                <!-- Content Header (Page header) -->
+                <section class="content-header">
+                    <h1>
+                        Чтения письма
+                    </h1>
+                    <ol class="breadcrumb">
+                        <li><a href="#" th:href="@{/}"><i class="fa fa-dashboard">                           
+                                </i> Основная страница</a></li>
+                        <li class="active">Входящие</li>
+                    </ol>
+                </section>
+
+                <!-- Main content -->
+                <section class="content">
+                    <div class="row">
+                        <div th:replace="fragments/emailmenu :: emailmenu"></div>
+                        <div th:if="${info != null}" class="callout callout-info">
+                            <h4 th:text="${info}"></h4>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="box box-primary">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Чтения письма</h3>
+                                    <div class="box-tools pull-right">
+                                        <a href="#" th:href="@{/mailbox/prevmail/{mailId}(mailId=${mail.msgId})}" 
+                                           class="btn btn-box-tool" data-toggle="tooltip" title="Предыдущие">
+                                            <i class="fa fa-chevron-left"></i></a>
+                                        <a href="#" th:href="@{/mailbox/nextmail/{mailId}(mailId=${mail.msgId})}" 
+                                           class="btn btn-box-tool" data-toggle="tooltip" title="Следующие">
+                                            <i class="fa fa-chevron-right"></i></a>
+                                    </div>
+                                </div><!-- /.box-header -->
+                                <div class="box-body no-padding">
+                                    <div class="mailbox-read-info">
+                                        <h3 th:text="${mail.subject}">Message Subject Is Placed Here</h3>
+                                        <h5 th:text="${mail.from}">From: support@almsaeedstudio.com 
+                                            <span class="mailbox-read-time pull-right" th:text="${mail.dateSent}">
+                                                15 Feb. 2015 11:03 PM</span></h5>
+                                    </div><!-- /.mailbox-read-info -->
+                                    <div class="mailbox-controls with-border text-center">
+                                        <div class="btn-group">
+                                            <button class="btn btn-default btn-sm" data-toggle="tooltip" 
+                                                    title="Удалить"> <a th:href="@{/mailbox/delete/{mailId}(mailId=${mail.msgId})}">
+                                                    <i class="fa fa-trash-o"></i></a></button>
+                                            <button class="btn btn-default btn-sm" data-toggle="tooltip" 
+                                                    title="Ответить"><a th:href="@{/mailbox/reply/{mailId}(mailId=${mail.msgId})}">
+                                                    <i class="fa fa-reply"></i></a></button>
+                                            <button class="btn btn-default btn-sm" data-toggle="tooltip" 
+                                                    title="Переслать"> <a th:href="@{/mailbox/forward/{mailId}(mailId=${mail.msgId})}">
+                                                    <i class="fa fa-share"></i></a></button>
+                                        </div><!-- /.btn-group -->
+                                        <button class="btn btn-default btn-sm" data-toggle="tooltip" title="Печать" onclick="window.print()">
+                                            <i class="fa fa-print"></i></button>
+                                    </div><!-- /.mailbox-controls -->
+                                    <div class="mailbox-read-message">
+                                        <p th:each="content : ${mail.content}" th:text="${content}"></p>
+                                    </div><!-- /.mailbox-read-message -->
+                                </div><!-- /.box-body -->
+                                <div class="box-footer">
+                                    <ul class="mailbox-attachments clearfix" th:each="attachments : ${mail.attachments}">
+                                        <li>
+                                            <span class="mailbox-attachment-icon"><i class="fa fa-file"></i></span>
+                                            <div class="mailbox-attachment-info">
+                                                <a href="#" class="mailbox-attachment-name"><i class="fa" th:text="${attachments}"></i></a>
+                                                <span class="mailbox-attachment-size">
+                                                </span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div><!-- /.box-footer -->
+                                <div class="box-footer">
+                                    <div class="pull-right">
+                                        <button class="btn btn-default"><a th:href="@{/mailbox/reply/{mailId}(mailId=${mail.msgId})}">
+                                                <i class="fa fa-reply"></i> Ответить</a></button>
+                                        <button class="btn btn-default"><a th:href="@{/mailbox/forward/{mailId}(mailId=${mail.msgId})}">
+                                                <i class="fa fa-share"></i> Переслать</a></button>
+                                    </div>
+                                    <button class="btn btn-default"><a th:href="@{/mailbox/delete/{mailId}(mailId=${mail.msgId})}">
+                                            <i class="fa fa-trash-o"></i> Удалить</a></button>
+                                    <button class="btn btn-default" onclick="window.print()"><i class="fa fa-print"></i> Печать</button>
+                                </div><!-- /.box-footer -->
+                            </div><!-- /. box -->
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </section><!-- /.content -->
+            </div><!-- /.content-wrapper -->
+            <footer th:replace="fragments/footer :: footer">  </footer>
+            <aside th:replace="fragments/leftmenu :: leftmenu"></aside>
+            <!-- Add the sidebar's background. This div must be placed
+                 immediately after the control sidebar -->
+            <div class="control-sidebar-bg"></div>
+        </div><!-- ./wrapper -->
+
+        <!-- jQuery 2.1.4 -->
+        <script src="../../plugins/jQuery/jQuery-2.1.4.min.js"
+        th:src="@{/resources/plugins/jQuery/jQuery-2.1.4.min.js}"></script>
+        <!-- Bootstrap 3.3.5 -->
+        <script src="../../bootstrap/js/bootstrap.min.js"
+        th:src="@{/resources/bootstrap/js/bootstrap.min.js}"></script>
+        <!-- Slimscroll -->
+        <script src="../../plugins/slimScroll/jquery.slimscroll.min.js"
+        th:src="@{/resources/plugins/slimScroll/jquery.slimscroll.min.js}"></script>
+        <!-- FastClick -->
+        <script src="../../plugins/fastclick/fastclick.min.js"
+        th:src="@{/resources/plugins/fastclick/fastclick.min.js}"></script>
+        <!-- App -->
+        <script src="../../dist/js/app.min.js"
+        th:src="@{/resources/dist/js/app.min.js}"></script>
+        <!-- for demo purposes -->
+        <script src="../../dist/js/demo.js"
+        th:src="@{/resources/dist/js/demo.js}"></script>
+    </body>
+</html>

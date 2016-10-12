@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PRAYS" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e48641ae-a055-4e60-9d49-94741352307f">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="30"/>
+	<style name="style1"/>
+	<queryString language="xPath">
+		<![CDATA[/prays/rovar]]>
+	</queryString>
+	<field name="arkikul" class="java.lang.String">
+		<fieldDescription><![CDATA[arkikul]]></fieldDescription>
+	</field>
+	<field name="naimenovanie" class="java.lang.String">
+		<fieldDescription><![CDATA[naimenovanie]]></fieldDescription>
+	</field>
+	<field name="zena" class="java.lang.String">
+		<fieldDescription><![CDATA[zena]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="169" splitType="Stretch">
+			<staticText>
+				<reportElement x="266" y="0" width="289" height="28" uuid="5c1945cd-fd8a-45c4-bf05-9aed85d58ade"/>
+				<textElement>
+					<font fontName="DejaVu Serif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[СПД "ЧОБАН РУСЛАН НИКОЛАЕВИЧ"]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="266" y="28" width="289" height="31" uuid="1cad9cfe-b152-48da-a970-db27fb9c1aa6"/>
+				<textElement>
+					<font fontName="DejaVu Serif"/>
+				</textElement>
+				<text><![CDATA[Юр. адрес: 65072, г. Одесса, ул. генерала Вишневского д. 13/1, кв. 5]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="266" y="59" width="289" height="110" uuid="cf8d5514-cda2-46fa-95fe-328609ad207c"/>
+				<textElement>
+					<font fontName="DejaVu Serif"/>
+				</textElement>
+				<text><![CDATA[Р/с: 26009054305868  в «ПриватБанк» отделение в г. Одесса
+МФО: 328704
+Код ЄДРПОУ: 2901807134
+Свидетельство плательщика ПДФ: В01 225982
+Телелефон: + 380632662558, +380679177513
+Почта: info@doktoronix.net.ua
+Сайт: http://www.doktoronix.net.ua,
+http://doktoronix.com.ua]]></text>
+			</staticText>
+			<image>
+				<reportElement x="0" y="3" width="266" height="166" uuid="90029a43-8d23-4657-9883-57d845964ad6"/>
+				<imageExpression><![CDATA["C:\\Users\\Vladimir\\Documents\\NetBeansProjects\\kursovaa\\klient\\src\\img\\logo.gif"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement x="200" y="11" width="129" height="24" uuid="a5a1da09-494d-453b-a4ee-320e011d5836"/>
+				<textElement>
+					<font fontName="DejaVu Serif" size="18" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Прайс лист]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="50">
+			<staticText>
+				<reportElement x="0" y="30" width="100" height="20" backcolor="#CCCCCC" uuid="f8509b13-6246-4d26-a423-0172352f6548"/>
+				<box>
+					<topPen lineWidth="2.0"/>
+					<leftPen lineWidth="2.0"/>
+					<bottomPen lineWidth="2.0"/>
+					<rightPen lineWidth="2.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Serif"/>
+				</textElement>
+				<text><![CDATA[Артикул]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="30" width="355" height="20" forecolor="#000000" backcolor="#999999" uuid="f31f4e36-5e3a-41e0-afdc-acb3486dec41"/>
+				<box>
+					<topPen lineWidth="2.0"/>
+					<leftPen lineWidth="2.0"/>
+					<bottomPen lineWidth="2.0"/>
+					<rightPen lineWidth="2.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Serif"/>
+				</textElement>
+				<text><![CDATA[Наименования]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="455" y="30" width="100" height="20" backcolor="#999999" uuid="1b5c106b-c1af-42a4-9af3-4917876a270a"/>
+				<box>
+					<topPen lineWidth="2.0"/>
+					<leftPen lineWidth="2.0"/>
+					<bottomPen lineWidth="2.0"/>
+					<rightPen lineWidth="2.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Serif"/>
+				</textElement>
+				<text><![CDATA[Цена]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="26" splitType="Stretch">
+			<textField>
+				<reportElement mode="Transparent" x="100" y="0" width="355" height="26" uuid="2604c42f-1c5e-48e6-9813-c206306054e3"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle" rotation="None">
+					<font fontName="DejaVu Serif" pdfEncoding="Cp1251"/>
+					<paragraph lineSpacing="Single" leftIndent="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{naimenovanie}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="455" y="0" width="100" height="26" uuid="e4cd684d-73a5-4e50-88bd-8b4a9634bd3a"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="DejaVu Serif" pdfEncoding="Cp1251"/>
+					<paragraph leftIndent="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{zena}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="100" height="26" uuid="5877cd31-5e58-4bd7-acd6-8df2cb7850d0"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Serif" pdfEncoding="Cp1251"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{arkikul}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="28" splitType="Stretch">
+			<textField>
+				<reportElement x="488" y="8" width="13" height="20" uuid="b588ae2b-3e89-4153-ab81-adf2d61c0cd7"/>
+				<textElement>
+					<font fontName="DejaVu Serif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="518" y="8" width="37" height="20" uuid="e8716aa4-d44b-49d1-8546-08a4f45494a1"/>
+				<textElement>
+					<font fontName="DejaVu Serif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="435" y="8" width="53" height="20" uuid="637c63b0-2cc1-42db-be8e-7e652c21da6e"/>
+				<textElement>
+					<font fontName="DejaVu Serif"/>
+				</textElement>
+				<text><![CDATA[Страница]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="8" width="100" height="20" uuid="6ccadf1a-f0ba-46c7-8b65-33fd989c489b"/>
+				<textElement>
+					<font fontName="DejaVu Serif"/>
+				</textElement>
+				<text><![CDATA[Доктор Оникс]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="8" width="100" height="20" uuid="52368cb9-db8c-4465-9992-080b047f030e"/>
+				<textElement textAlignment="Center">
+					<font fontName="DejaVu Serif"/>
+				</textElement>
+				<text><![CDATA[Прайс лист]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="501" y="7" width="17" height="21" uuid="17ed24cc-79f5-4db8-b83a-911b8b0303b4"/>
+				<textElement>
+					<font fontName="DejaVu Serif"/>
+				</textElement>
+				<text><![CDATA[из]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

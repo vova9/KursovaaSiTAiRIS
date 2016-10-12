@@ -12,9 +12,9 @@
         <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css" 
               th:href="@{/resources/bootstrap/css/bootstrap.min.css}"/>
         <!-- Font Awesome -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" />
+        <link rel="stylesheet" th:href="@{/resources/dist/font-awesome.min.css}"/>
         <!-- Ionicons -->
-        <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
+        <link rel="stylesheet" th:href="@{/resources/dist/ionicons.min.css}"/>
         <!-- DataTables -->
         <link rel="stylesheet" href="../../plugins/datatables/dataTables.bootstrap.css" 
               th:href="@{/resources/plugins/datatables/dataTables.bootstrap.css}"/>
@@ -41,57 +41,63 @@
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
+                    <h1>Клиенты</h1>
                     <ol class="breadcrumb">
-                        <li><a href="../../indewx.html" th:href="@{/}"><i class="fa fa-dashboard"></i> Основная страница</a></li>
+                        <li><a href="../../index.html" th:href="@{/}"><i class="fa fa-dashboard"></i> Основная страница</a></li>
                         <li class="active">Перечень клиентов</li>
                     </ol>
                 </section>
-                <div th:if="${success != null}" class="callout callout-success">
-                    <h4 th:text="${success}"></h4>
-                </div>
-                <br/>
-                <div class="box">
-                    <div class="box-header">
-                        <h3 class="box-title">Перечень клиентов</h3>                
-                    </div><!-- /.box-header -->
-                    <div class="box-footer clearfix">
-                        <a href="#"  th:href="@{/klienty/report}" class="btn btn-sm btn-info btn-flat pull-left">
-                            Отчёт по клиентам</a>
+                <section class="content">
+                    <div class="row">
+                        <div th:if="${success != null}" class="callout callout-success">
+                            <h4 th:text="${success}"></h4>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="box">
+                                <div class="box-header">
+                                    <h3 class="box-title">Перечень клиентов</h3>                
+                                </div><!-- /.box-header -->
+                                <div class="box-footer clearfix">
+                                    <a href="#"  th:href="@{/klienty/report}" class="btn btn-sm btn-info btn-flat pull-left">
+                                        Отчёт по клиентам</a>
+                                </div>
+                                <br/>
+                                <div class="box-body">
+                                    <table id="example1" class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Номер телефона</th>
+                                                <th>Фамилия</th>
+                                                <th>Имя</th>
+                                                <th>Email</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr th:each="klient : ${Klient}">
+                                                <td>
+                                                    <a href="../../pages/forms/klient.html" 
+                                                       th:href="@{/klienty/edit/{klientId}(klientId=${klient.telefon})}" 
+                                                       th:text="${klient.telefon}" ></a>
+                                                </td>
+                                                <td th:text="${klient.familia}"></td>
+                                                <td th:text="${klient.ima}"></td>
+                                                <td th:text="${klient.email}"></td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th>Номер телефона</th>
+                                                <th>Фамилия</th>
+                                                <th>Имя</th>
+                                                <th>Email</th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div><!-- /.box-body -->
+                            </div><!-- /.box -->
+                        </div>
                     </div>
-                    <br/>
-                    <div class="box-body">
-                        <table id="example1" class="table table-bordered table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Номер телефона</th>
-                                    <th>Фамилия</th>
-                                    <th>Имя</th>
-                                    <th>Email</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr th:each="klient : ${Klient}">
-                                    <td>
-                                        <a href="../../pages/forms/klient.html" 
-                                           th:href="@{/klienty/edit/{klientId}(klientId=${klient.telefon})}" 
-                                           th:text="${klient.telefon}" ></a>
-                                    </td>
-                                    <td th:text="${klient.familia}"></td>
-                                    <td th:text="${klient.ima}"></td>
-                                    <td th:text="${klient.email}"></td>
-                                </tr>
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th>Номер телефона</th>
-                                    <th>Фамилия</th>
-                                    <th>Имя</th>
-                                    <th>Email</th>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div><!-- /.box-body -->
-                </div><!-- /.box -->
+                </section>
             </div><!-- /.col -->
             <footer th:replace="fragments/footer :: footer">  </footer>
             <aside th:replace="fragments/leftmenu :: leftmenu"></aside>

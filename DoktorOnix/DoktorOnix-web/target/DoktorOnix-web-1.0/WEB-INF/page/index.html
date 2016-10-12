@@ -7,16 +7,17 @@
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
         <!-- Bootstrap 3.3.5 -->
+        <link rel="shortcut icon" href="../../dist/img/favicon.ico" th:href="@{/resources/dist/img/favicon.ico}" type="image/x-icon"/>
         <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"
               th:href="@{/resources/bootstrap/css/bootstrap.min.css}"/>
         <!-- Font Awesome -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"/>
+        <link rel="stylesheet" th:href="@{/resources/dist/font-awesome.min.css}"/>
         <!-- Ionicons -->
-        <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"/>
+        <link rel="stylesheet" th:href="@{/resources/dist/ionicons.min.css}"/>
         <!-- Theme style -->
-        <link rel="stylesheet" href="dist/css/AdminLTE.min.css"
-              th:href="@{/resources/dist/css/AdminLTE.min.css}"/>
-        <!-- AdminLTE Skins. Choose a skin from the css/skins
+        <link rel="stylesheet" href="dist/css/AdminLTE.css"
+              th:href="@{/resources/dist/css/AdminLTE.css}"/>
+        <!-- Skins. Choose a skin from the css/skins
              folder instead of downloading all of them to reduce the load. -->
         <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css"
               th:href="@{/resources/dist/css/skins/_all-skins.min.css}"/>
@@ -133,23 +134,8 @@
                     <!-- Main row -->
                     <div class="row">
                         <!-- Left col -->
-                        <section class="col-lg-7 connectedSortable">
+                        <section class="col-lg-13 connectedSortable">
                             <!-- Custom tabs (Charts with tabs)-->
-                            <div class="nav-tabs-custom">
-                                <!-- Tabs within a box -->
-                                <ul class="nav nav-tabs pull-right">
-                                    <li class="active"><a href="#revenue-chart" data-toggle="tab">Area</a></li>
-                                    <li><a href="#sales-chart" data-toggle="tab">Donut</a></li>
-                                    <li class="pull-left header"><i class="fa fa-inbox"></i> Продажи</li>
-                                </ul>
-                                <div class="tab-content no-padding">
-                                    <!-- Morris chart - Sales -->
-                                    <div class="chart tab-pane active" id="revenue-chart" 
-                                         style="position: relative; height: 300px;"></div>
-                                    <div class="chart tab-pane" id="sales-chart" 
-                                         style="position: relative; height: 300px;"></div>
-                                </div>
-                            </div><!-- /.nav-tabs-custom -->
                             <!-- TABLE: LATEST ORDERS -->
                             <div class="box box-info">
                                 <div class="box-header with-border">
@@ -170,102 +156,23 @@
                                             <thead>
                                                 <tr>
                                                     <th>ID</th>
-                                                    <th>Товар</th>
+                                                    <th>Фамилия имя</th>
+                                                    <th>Дата заказа</th>
                                                     <th>Статус</th>
                                                     <th>Сумма</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
+                                                <tr th:each="zakazy : ${Zakazy}">
                                                     <td>
-                                                        <a href="pages/forms/redactzakaz.html">OR9842</a>
+                                                        <a href="../../pages/forms/dobavtovar.html" 
+                                                           th:href="@{/zakazy/edit/{zakazId}(zakazId=${zakazy.id})}" 
+                                                           th:text="${zakazy.id}"></a>
                                                     </td>
-                                                    <td>Call of Duty IV</td>
-                                                    <td>
-                                                        <span class="label label-success">Отправлен</span>
-                                                    </td>
-                                                    <td>
-                                                        <div class="sparkbar" data-color="#00a65a" data-height="20">
-                                                            90,80,90,-70,61,-83,63</div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <a href="pages/forms/redactzakaz.html">OR1848</a>
-                                                    </td>
-                                                    <td>Samsung Smart TV</td>
-                                                    <td>
-                                                        <span class="label label-warning">Отменен</span>
-                                                    </td>
-                                                    <td>
-                                                        <div class="sparkbar" data-color="#f39c12" data-height="20">
-                                                            90,80,-90,70,61,-83,68</div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <a href="pages/forms/redactzakaz.html">OR7429</a>
-                                                    </td>
-                                                    <td>iPhone 6 Plus</td>
-                                                    <td>
-                                                        <span class="label label-danger">Закрыт</span>
-                                                    </td>
-                                                    <td>
-                                                        <div class="sparkbar" data-color="#f56954" data-height="20">
-                                                            90,-80,90,70,-61,83,63</div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <a href="pages/forms/redactzakaz.html">OR7429</a>
-                                                    </td>
-                                                    <td>Samsung Smart TV</td>
-                                                    <td>
-                                                        <span class="label label-info">Подтвержден</span>
-                                                    </td>
-                                                    <td>
-                                                        <div class="sparkbar" data-color="#00c0ef" data-height="20">
-                                                            90,80,-90,70,-61,83,63</div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <a href="pages/forms/redactzakaz.html">OR1848</a>
-                                                    </td>
-                                                    <td>Samsung Smart TV</td>
-                                                    <td>
-                                                        <span class="label label-warning">Новый</span>
-                                                    </td>
-                                                    <td>
-                                                        <div class="sparkbar" data-color="#f39c12" data-height="20">
-                                                            90,80,-90,70,61,-83,68</div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <a href="pages/forms/redactzakaz.html">OR7429</a>
-                                                    </td>
-                                                    <td>iPhone 6 Plus</td>
-                                                    <td>
-                                                        <span class="label label-danger">Отменен</span>
-                                                    </td>
-                                                    <td>
-                                                        <div class="sparkbar" data-color="#f56954" data-height="20">
-                                                            90,-80,90,70,-61,83,63</div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <a href="pages/forms/redactzakaz.html">OR9842</a>
-                                                    </td>
-                                                    <td>Call of Duty IV</td>
-                                                    <td>
-                                                        <span class="label label-success">Закрыт</span>
-                                                    </td>
-                                                    <td>
-                                                        <div class="sparkbar" data-color="#00a65a" data-height="20">
-                                                            90,80,90,-70,61,-83,63</div>
-                                                    </td>
+                                                    <td th:text="${zakazy.telefon.familia +' '+ zakazy.telefon.ima}"></td>
+                                                    <td th:text="${#dates.format(zakazy.dataZakaza, 'dd/MM/YYYY')}"></td>
+                                                    <td th:text="${zakazy.status}"></td>
+                                                    <td th:text="${zakazy.summa}"></td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -296,25 +203,29 @@
                                     </div><!-- /. tools -->
                                 </div>
                                 <div class="box-body">
-                                    <form action="#" method="post">
+                                    <form action="#" th:action="@{/mailbox/sendmail}" 
+                                          th:object="${Email}" method="POST">
                                         <div class="form-group">
                                             <input type="email" class="form-control" name="emailto" 
-                                                   placeholder="Кому:"/>
+                                                   placeholder="Кому:" th:value="*{to}" th:field="*{to}"
+                                                   required=""/>
+                                            <span class="form_hint">Допустимый формат: "name@domen.com"</span>
                                         </div>
                                         <div class="form-group">
-                                            <input type="text" class="form-control" name="subject" 
+                                            <input type="text" class="form-control" name="subject" th:value="*{subject}" 
+                                                   th:field="*{subject}"
                                                    placeholder="Тема сообщения:"/>
                                         </div>
                                         <div>
-                                            <textarea class="textarea" placeholder="Текст сообщения: " 
+                                            <textarea class="textarea" placeholder="Текст сообщения: " th:field="*{content}" 
                                                       style="width: 100%; height: 125px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">
                                             </textarea>
                                         </div>
+                                        <div class="box-footer clearfix">
+                                            <button class="pull-right btn btn-default" id="sendEmail">Отправить <i class="fa fa-arrow-circle-right">
+                                                </i></button>
+                                        </div>
                                     </form>
-                                </div>
-                                <div class="box-footer clearfix">
-                                    <button class="pull-right btn btn-default" id="sendEmail">Отправить <i class="fa fa-arrow-circle-right">
-                                        </i></button>
                                 </div>
                             </div>
                         </section><!-- /.Left col -->
@@ -331,7 +242,7 @@
         <script src="plugins/jQuery/jQuery-2.1.4.min.js"
         th:src="@{/resources/plugins/jQuery/jQuery-2.1.4.min.js}"></script>
         <!-- jQuery UI 1.11.4 -->
-        <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+        <script th:src="@{/resources/dist/jquery-ui.min.js}"></script>
         <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
         <script>
             $.widget.bridge('uibutton', $.ui.button);
@@ -340,9 +251,7 @@
         <script src="bootstrap/js/bootstrap.min.js"
         th:src="@{/resources/bootstrap/js/bootstrap.min.js}"></script>
         <!-- Morris.js charts -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-        <script src="plugins/morris/morris.min.js"
-        th:src="@{/resources/plugins/morris/morris.min.js}"></script>
+        <script th:src="@{/resources/dist/raphael-min.js}"></script>
         <!-- Sparkline -->
         <script src="plugins/sparkline/jquery.sparkline.min.js"
         th:src="@{/resources/plugins/sparkline/jquery.sparkline.min.js}"></script>
@@ -355,7 +264,7 @@
         <script src="plugins/knob/jquery.knob.js"
         th:src="@{/resources/plugins/knob/jquery.knob.js}"></script>
         <!-- daterangepicker -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"></script>
+        <script th:src="@{/resources/dist/moment.min.js}"></script>
         <script src="plugins/daterangepicker/daterangepicker.js"
         th:src="@{/resources/plugins/daterangepicker/daterangepicker.js}"></script>
         <!-- datepicker -->
@@ -370,13 +279,10 @@
         <!-- FastClick -->
         <script src="plugins/fastclick/fastclick.min.js" 
         th:src="@{/resources/plugins/fastclick/fastclick.min.js}"></script>
-        <!-- AdminLTE App -->
+        <!-- App -->
         <script src="dist/js/app.min.js" 
         th:src="@{/resources/dist/js/app.min.js}"></script>
-        <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-        <script src="dist/js/pages/dashboard.js" 
-        th:src="@{/resources/dist/js/pages/dashboard.js}"></script>
-        <!-- AdminLTE for demo purposes -->
+        <!-- for demo purposes -->
         <script src="dist/js/demo.js" 
         th:src="@{/resources/dist/js/demo.js}"></script>
     </body>

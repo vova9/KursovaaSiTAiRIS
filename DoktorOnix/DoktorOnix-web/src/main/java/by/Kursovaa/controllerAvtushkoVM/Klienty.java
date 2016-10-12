@@ -35,7 +35,7 @@ public class Klienty {
         by.kursovaa.dbAvtushkoVM.Polzovateli obj = (by.kursovaa.dbAvtushkoVM.Polzovateli) httpSession.getAttribute("user");
         List<by.kursovaa.dbAvtushkoVM.Klienty> klienty = Ejb.getInterface().lookupKlientyFacadeRemote().findAll();
         model.addAttribute("Klient", klienty);
-        model.addAttribute("User", obj);             
+        model.addAttribute("User", obj);
         return "klienty/index";
     }
 
@@ -76,7 +76,8 @@ public class Klienty {
     }
 
     @RequestMapping(value = "/delete")
-    public String deleteKlienty(@ModelAttribute("Klient") by.kursovaa.dbAvtushkoVM.Klienty klienty, HttpSession httpSession, Model model) {
+    public String deleteKlienty(@ModelAttribute("Klient") by.kursovaa.dbAvtushkoVM.Klienty klienty,
+            HttpSession httpSession, Model model) {
         Ejb.getInterface().lookupKlientyFacadeRemote().remove(klienty);
         by.kursovaa.dbAvtushkoVM.Polzovateli obj = (by.kursovaa.dbAvtushkoVM.Polzovateli) httpSession.getAttribute("user");
         List<by.kursovaa.dbAvtushkoVM.Klienty> klient = Ejb.getInterface().lookupKlientyFacadeRemote().findAll();
