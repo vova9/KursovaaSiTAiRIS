@@ -4,6 +4,14 @@
         <error-code>404</error-code>
         <location>/404</location>
     </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/500</location>
+    </error-page>
+    <error-page>
+        <error-code>403</error-code>
+        <location>/403</location>
+    </error-page>
     <filter>
         <filter-name>characterEncodingFilter</filter-name>
         <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
@@ -23,56 +31,56 @@
     <ejb-ref>
         <ejb-ref-name>EmailFacade</ejb-ref-name>
         <ejb-ref-type>Session</ejb-ref-type>
-        <remote>by.kursovaa.logicAvtushkoVM.dbAvtushkoVM.EmailFacadeRemote</remote>
+        <remote>by.kursovaa.interfaces.EmailFacadeRemote</remote>
     </ejb-ref>
     <ejb-ref>
         <ejb-ref-name>KassaFacade</ejb-ref-name>
         <ejb-ref-type>Session</ejb-ref-type>
-        <remote>by.kursovaa.logicAvtushkoVM.dbAvtushkoVM.KassaFacadeRemote</remote>
+        <remote>by.kursovaa.interfaces.KassaFacadeRemote</remote>
     </ejb-ref>
     <ejb-ref>
         <ejb-ref-name>KategoriiFacade</ejb-ref-name>
         <ejb-ref-type>Session</ejb-ref-type>
-        <remote>by.kursovaa.logicAvtushkoVM.dbAvtushkoVM.KategoriiFacadeRemote</remote>
+        <remote>by.kursovaa.interfaces.KategoriiFacadeRemote</remote>
     </ejb-ref>
     <ejb-ref>
         <ejb-ref-name>KlientyFacade</ejb-ref-name>
         <ejb-ref-type>Session</ejb-ref-type>
-        <remote>by.kursovaa.logicAvtushkoVM.dbAvtushkoVM.KlientyFacadeRemote</remote>
+        <remote>by.kursovaa.interfaces.KlientyFacadeRemote</remote>
     </ejb-ref>
     <ejb-ref>
         <ejb-ref-name>PolzovateliFacade</ejb-ref-name>
         <ejb-ref-type>Session</ejb-ref-type>
-        <remote>by.kursovaa.logicAvtushkoVM.dbAvtushkoVM.PolzovateliFacadeRemote</remote>
+        <remote>by.kursovaa.interfaces.PolzovateliFacadeRemote</remote>
     </ejb-ref>
     <ejb-ref>
         <ejb-ref-name>TovaryFacade</ejb-ref-name>
         <ejb-ref-type>Session</ejb-ref-type>
-        <remote>by.kursovaa.logicAvtushkoVM.dbAvtushkoVM.TovaryFacadeRemote</remote>
+        <remote>by.kursovaa.interfaces.TovaryFacadeRemote</remote>
     </ejb-ref>
     <ejb-ref>
         <ejb-ref-name>ZakazInfoFacade</ejb-ref-name>
         <ejb-ref-type>Session</ejb-ref-type>
-        <remote>by.kursovaa.logicAvtushkoVM.dbAvtushkoVM.ZakazInfoFacadeRemote</remote>
+        <remote>by.kursovaa.interfaces.ZakazInfoFacadeRemote</remote>
     </ejb-ref>
     <ejb-ref>
         <ejb-ref-name>ZakazStatusFacade</ejb-ref-name>
         <ejb-ref-type>Session</ejb-ref-type>
-        <remote>by.kursovaa.logicAvtushkoVM.dbAvtushkoVM.ZakazStatusFacadeRemote</remote>
+        <remote>by.kursovaa.interfaces.ZakazStatusFacadeRemote</remote>
     </ejb-ref>
     <ejb-ref>
         <ejb-ref-name>ZakazyFacade</ejb-ref-name>
         <ejb-ref-type>Session</ejb-ref-type>
-        <remote>by.kursovaa.logicAvtushkoVM.dbAvtushkoVM.ZakazyFacadeRemote</remote>
+        <remote>by.kursovaa.interfaces.ZakazyFacadeRemote</remote>
     </ejb-ref>
     <ejb-ref>
         <ejb-ref-name>Sevice</ejb-ref-name>
         <ejb-ref-type>Session</ejb-ref-type>
-        <remote>by.kursovaa.logicAvtushkoVM.SeviceRemote</remote>
+        <remote>by.kursovaa.interfaces.SeviceRemote</remote>
     </ejb-ref>
     <ejb-ref>
         <ejb-ref-name>EmailService</ejb-ref-name>
         <ejb-ref-type>Session</ejb-ref-type>
-        <remote>by.kursovaa.logicAvtushkoVM.EmailServiceRemote</remote>
+        <remote>by.kursovaa.interfaces.EmailServiceRemote</remote>
     </ejb-ref>
 </web-app>

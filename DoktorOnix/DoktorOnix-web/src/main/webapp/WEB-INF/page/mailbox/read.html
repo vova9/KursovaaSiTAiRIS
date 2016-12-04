@@ -68,10 +68,10 @@
                                 <div class="box-header with-border">
                                     <h3 class="box-title">Чтения письма</h3>
                                     <div class="box-tools pull-right">
-                                        <a href="#" th:href="@{/mailbox/prevmail/{mailId}(mailId=${mail.msgId})}" 
+                                        <a href="#" th:href="@{/mailbox/prevmail/{mailId}(mailId=${mail.id})}" 
                                            class="btn btn-box-tool" data-toggle="tooltip" title="Предыдущие">
                                             <i class="fa fa-chevron-left"></i></a>
-                                        <a href="#" th:href="@{/mailbox/nextmail/{mailId}(mailId=${mail.msgId})}" 
+                                        <a href="#" th:href="@{/mailbox/nextmail/{mailId}(mailId=${mail.id})}" 
                                            class="btn btn-box-tool" data-toggle="tooltip" title="Следующие">
                                             <i class="fa fa-chevron-right"></i></a>
                                     </div>
@@ -86,13 +86,13 @@
                                     <div class="mailbox-controls with-border text-center">
                                         <div class="btn-group">
                                             <button class="btn btn-default btn-sm" data-toggle="tooltip" 
-                                                    title="Удалить"> <a th:href="@{/mailbox/delete/{mailId}(mailId=${mail.msgId})}">
+                                                    title="Удалить"> <a th:href="@{/mailbox/delete/{mailId}(mailId=${mail.id})}">
                                                     <i class="fa fa-trash-o"></i></a></button>
                                             <button class="btn btn-default btn-sm" data-toggle="tooltip" 
-                                                    title="Ответить"><a th:href="@{/mailbox/reply/{mailId}(mailId=${mail.msgId})}">
+                                                    title="Ответить"><a th:href="@{/mailbox/reply/{mailId}(mailId=${mail.id})}">
                                                     <i class="fa fa-reply"></i></a></button>
                                             <button class="btn btn-default btn-sm" data-toggle="tooltip" 
-                                                    title="Переслать"> <a th:href="@{/mailbox/forward/{mailId}(mailId=${mail.msgId})}">
+                                                    title="Переслать"> <a th:href="@{/mailbox/forward/{mailId}(mailId=${mail.id})}">
                                                     <i class="fa fa-share"></i></a></button>
                                         </div><!-- /.btn-group -->
                                         <button class="btn btn-default btn-sm" data-toggle="tooltip" title="Печать" onclick="window.print()">
@@ -103,12 +103,17 @@
                                     </div><!-- /.mailbox-read-message -->
                                 </div><!-- /.box-body -->
                                 <div class="box-footer">
-                                    <ul class="mailbox-attachments clearfix" th:each="attachments : ${mail.attachments}">
-                                        <li>
+                                    <ul class="mailbox-attachments clearfix">
+                                        <li th:each="attachments : ${mail.attachments}">
                                             <span class="mailbox-attachment-icon"><i class="fa fa-file"></i></span>
                                             <div class="mailbox-attachment-info">
-                                                <a href="#" class="mailbox-attachment-name"><i class="fa" th:text="${attachments}"></i></a>
+                                                <a th:href="@{/mailbox/downloadAttachment/{mailId}/{attachments}/ (mailId=${mail.id}, attachments=${attachments.fileName})}"
+                                                   class="mailbox-attachment-name"><i class="fa fa-paperclip" th:text="${attachments.fileName}"></i></a>
                                                 <span class="mailbox-attachment-size">
+                                                    <span th:text="${attachments.fileSize}">
+                                                        <a th:href="@{/mailbox/downloadAttachment/{mailId}/{attachments}/ (mailId=${mail.id}, attachments=${attachments.fileName})}"
+                                                           class="btn btn-default btn-xs pull-right"><i class="fa fa-cloud-download"></i></a>
+                                                    </span>
                                                 </span>
                                             </div>
                                         </li>
@@ -116,12 +121,12 @@
                                 </div><!-- /.box-footer -->
                                 <div class="box-footer">
                                     <div class="pull-right">
-                                        <button class="btn btn-default"><a th:href="@{/mailbox/reply/{mailId}(mailId=${mail.msgId})}">
+                                        <button class="btn btn-default"><a th:href="@{/mailbox/reply/{mailId}(mailId=${mail.id})}">
                                                 <i class="fa fa-reply"></i> Ответить</a></button>
-                                        <button class="btn btn-default"><a th:href="@{/mailbox/forward/{mailId}(mailId=${mail.msgId})}">
+                                        <button class="btn btn-default"><a th:href="@{/mailbox/forward/{mailId}(mailId=${mail.id})}">
                                                 <i class="fa fa-share"></i> Переслать</a></button>
                                     </div>
-                                    <button class="btn btn-default"><a th:href="@{/mailbox/delete/{mailId}(mailId=${mail.msgId})}">
+                                    <button class="btn btn-default"><a th:href="@{/mailbox/delete/{mailId}(mailId=${mail.id})}">
                                             <i class="fa fa-trash-o"></i> Удалить</a></button>
                                     <button class="btn btn-default" onclick="window.print()"><i class="fa fa-print"></i> Печать</button>
                                 </div><!-- /.box-footer -->

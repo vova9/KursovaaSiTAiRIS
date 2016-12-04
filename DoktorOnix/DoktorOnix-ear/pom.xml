@@ -4,12 +4,12 @@
     <parent>
     <artifactId>DoktorOnix</artifactId>
     <groupId>by.Kursovaa</groupId>
-    <version>1.0</version>
+    <version>1.1</version>
   </parent>
 
     <groupId>by.Kursovaa</groupId>
     <artifactId>DoktorOnix-ear</artifactId>
-    <version>1.0</version>
+    <version>1.1</version>
     <packaging>ear</packaging>
 
     <name>DoktorOnix-ear</name>
@@ -44,13 +44,13 @@
         <dependency>
             <groupId>by.Kursovaa</groupId>
             <artifactId>DoktorOnix-ejb</artifactId>
-            <version>1.0</version>
+            <version>1.1</version>
             <type>ejb</type>
         </dependency>
         <dependency>
             <groupId>by.Kursovaa</groupId>
             <artifactId>DoktorOnix-web</artifactId>
-            <version>1.0</version>
+            <version>1.1</version>
             <type>war</type>
         </dependency>
         <dependency>

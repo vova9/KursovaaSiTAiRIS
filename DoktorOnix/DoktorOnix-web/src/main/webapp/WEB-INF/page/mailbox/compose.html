@@ -18,11 +18,16 @@
         <!-- fullCalendar 2.2.5-->
         <link rel="stylesheet" href="../../plugins/fullcalendar/fullcalendar.min.css"
               th:href="@{/resources/plugins/fullcalendar/fullcalendar.min.css}"/>
+
         <link rel="stylesheet" href="../../plugins/fullcalendar/fullcalendar.print.css" media="print"
               th:href="@{/resources/plugins/fullcalendar/fullcalendar.print.css}"/>
         <!-- Theme style -->
         <link rel="stylesheet" href="../../dist/css/AdminLTE.css"
               th:href="@{/resources/dist/css/AdminLTE.css}"/>
+
+        <link href="css/dropzone.css" th:href="@{/resources/dist/css/dropzone.css}"
+              type="text/css" rel="stylesheet" />
+
         <!-- Choose a skin from the css/skins
              folder instead of downloading all of them to reduce the load. -->
         <link rel="stylesheet" href="../../dist/css/skins/_all-skins.min.css"
@@ -63,7 +68,10 @@
                     <div class="row">
                         <div th:replace="fragments/emailmenu :: emailmenu"></div>
 
-                        <div class="col-md-9">
+                        <div class="col-md-9">                         
+                            <div th:if="${error != null}" class="callout callout-danger">
+                                <h4 th:text="${error}"></h4>
+                            </div>
                             <div class="box box-primary">
                                 <div class="box-header with-border">
                                     <h3 class="box-title">Написать новое сообщение</h3>
@@ -72,9 +80,21 @@
                                       th:object="${Email}" method="POST">
                                     <div class="box-body">
                                         <div class="form-group">                                          
-                                            <input type="email" class="form-control" name="to" 
-                                                   id="to" th:value="*{to}"
+                                            <input class="form-control" name="toString" 
+                                                   id="toString" th:value="*{toString}"
                                                    placeholder="Кому:" required=""/>
+                                            <span class="form_hint">Допустимый формат: "name@domen.com"</span>
+                                        </div>
+                                        <div class="form-group">                                          
+                                            <input type="email" class="form-control" name="ccString" 
+                                                   id="ccString" th:value="*{ccString}"
+                                                   placeholder="Копия:"/>
+                                            <span class="form_hint">Допустимый формат: "name@domen.com"</span>
+                                        </div>
+                                        <div class="form-group">                                          
+                                            <input class="form-control" name="bccString" 
+                                                   id="bccString" th:value="*{bccString}"
+                                                   placeholder="Скрытая копия:"/>
                                             <span class="form_hint">Допустимый формат: "name@domen.com"</span>
                                         </div>
                                         <div class="form-group">
@@ -87,6 +107,26 @@
                                                       class="form-control" style="height: 300px">
                                                 <p th:each="content1 : *{content}" th:text="${content1}"></p>
                                             </textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="btn btn-default btn-file">
+                                                <i class="fa fa-paperclip"></i> Вложение
+                                                <input id="fileupload" type="file" th:attr="data-url=@{'/mailbox/upload'}"
+                                                       multiple="multiple"/>
+                                            </div>
+                                            <p class="help-block">Макс. 20 MB</p>
+                                            <div id="dropzone" class="fade well">Перетащите файлы сюда</div>
+                                            <div id="progress" class="progress">
+                                                <div class="bar" style="width: 0%;"></div>
+                                            </div>
+                                            <table id="uploaded-files" class="table">
+                                                <tr>
+                                                    <th>Имя</th>
+                                                    <th>Размер</th>
+                                                    <th>Тип</th>
+                                                    <th>Удалить</th>
+                                                </tr>
+                                            </table>
                                         </div>
                                     </div><!-- /.box-body -->
                                     <div class="box-footer">
@@ -137,6 +177,19 @@
         <!-- Bootstrap WYSIHTML5 -->
         <script src="../../plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"
         th:src="@{/resources/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js}"></script>
+
+        <script src="js/vendor/jquery.ui.widget.js"
+        th:src="@{/resources/dist/js/vendor/jquery.ui.widget.js}"></script>
+
+        <script src="js/jquery.iframe-transport.js"
+        th:src="@{/resources/dist/js/jquery.iframe-transport.js}"></script>
+
+        <script src="js/jquery.fileupload.js"
+        th:src="@{/resources/dist/js/jquery.fileupload.js}"></script>
+
+        <!-- we code these -->
+        <script src="js/myuploadfunction.js"
+        th:src="@{/resources/dist/js/myuploadfunction.js}"></script>
         <!-- Page Script -->
         <script>
             $(function () {

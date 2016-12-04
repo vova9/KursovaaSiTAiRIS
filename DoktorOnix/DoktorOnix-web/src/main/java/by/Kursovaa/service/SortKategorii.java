@@ -3,16 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package by.Kursovaa.service;
+package by.kursovaa.service;
 
-import by.kursovaa.dbAvtushkoVM.Kategorii;
+import by.kursovaa.entity.Kategorii;
 import java.util.Comparator;
 
 /**
  *
  * @author Vladimir
  */
-public class SortKategorii implements Comparator<by.kursovaa.dbAvtushkoVM.Kategorii> {
+public class SortKategorii implements Comparator<by.kursovaa.entity.Kategorii> {
 
     @Override
     public int compare(Kategorii t, Kategorii t1) {
