@@ -1,12 +1,12 @@
 # игнорировать все файлы в этих каталогах
-DoktorOnix/DoktorOnix-lib/target/
-DoktorOnix/DoktorOnix-lib/nbproject
+DoktorOnix/DoktorOnix-lib/target/*
+DoktorOnix/DoktorOnix-lib/nbproject/*
 
-DoktorOnix/DoktorOnix-ear/target
-DoktorOnix/DoktorOnix-ear/nbproject
+DoktorOnix/DoktorOnix-ear/target/*
+DoktorOnix/DoktorOnix-ear/nbproject/*
 
-DoktorOnix/DoktorOnix-ejb/target
-DoktorOnix/DoktorOnix-ejb/nbproject
+DoktorOnix/DoktorOnix-ejb/target/*
+DoktorOnix/DoktorOnix-ejb/nbproject/*
 
-DoktorOnix/DoktorOnix-web/target
-DoktorOnix/DoktorOnix-web/nbproject
+DoktorOnix/DoktorOnix-web/target/*
+DoktorOnix/DoktorOnix-web/nbproject/*
