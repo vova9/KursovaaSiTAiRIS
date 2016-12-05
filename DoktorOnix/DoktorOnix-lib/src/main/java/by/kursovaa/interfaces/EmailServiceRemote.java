@@ -50,6 +50,8 @@ public interface EmailServiceRemote {
 
     public void sentMessage(Email accountInfo, MessageInfo messageInfo);
 
+    public void setFile(byte[] bytes);
+
     public String convertByteCount(long bytes, boolean si);
 
     //////////////////////////////////////////////////////

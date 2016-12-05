@@ -78,8 +78,7 @@ public class Smtp {
             System.out.println("Smtp::addContent contentType" + contentType);
 
             if (!text.isEmpty()) {
-
-                messageBodyPart.setContent(text, "" + contentType + "; charset=" + ENCODING + "");
+                messageBodyPart.setContent(text, "text/html ; charset=" + ENCODING + "");
             }
         } else {
             System.out.println("Smtp::addContent uzas!!!");
@@ -100,7 +99,11 @@ public class Smtp {
                 if (contentType.isEmpty()) {
                     contentType = "text/html";
                 }
-
+            } else {
+                text += messageInfo.getContent().get(i);
+                if (contentType.isEmpty()) {
+                    contentType = "text/plain";
+                }
             }
         }
         System.out.println("Smtp::addContent OK");

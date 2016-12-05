@@ -55,6 +55,7 @@ public class EmailService implements EmailServiceRemote {
     private String textError;
     private Thread threadGetMessages = null;
     private Synchronized synchroniz = null;
+    private ArrayList<byte[]> attachments = null;
 
     @Override
     public String getTextError() {
@@ -531,6 +532,13 @@ public class EmailService implements EmailServiceRemote {
             Smtp smtp = new Smtp();
             smtp.connectionSmtp(accountInfo);
 
+            if (attachments != null && attachments.size() == 0) {
+                for (int i = 0; i < attachments.size(); i++) {
+                    messageInfo.getAttachments().get(i).setBytes(attachments.get(i));
+                }
+                attachments.clear();
+            }
+
             smtp.createMessage(accountInfo, messageInfo);
 
             // отправим сообщение
@@ -588,6 +596,14 @@ public class EmailService implements EmailServiceRemote {
             imap.connectionImap(accountInfo);
 
             Smtp smtp = new Smtp();
+
+            if (attachments != null && attachments.size() == 0) {
+                for (int i = 0; i < attachments.size(); i++) {
+                    messageInfo.getAttachments().get(i).setBytes(attachments.get(i));
+                }
+                attachments.clear();
+            }
+
             smtp.createMessage(accountInfo, messageInfo);
 
             MimeMessage message = smtp.getMessage();
@@ -647,6 +663,14 @@ public class EmailService implements EmailServiceRemote {
         int exp = (int) (Math.log(bytes) / Math.log(unit));
         String pre = (si ? "kMGTPE" : "KMGTPE").charAt(exp - 1) + (si ? "" : "i");
         return String.format("%.1f %sB", bytes / Math.pow(unit, exp), pre);
+    }
+
+    @Override
+    public void setFile(byte[] bytes) {
+        if (attachments == null) {
+            attachments = new ArrayList<byte[]>();
+        }
+        attachments.add(bytes);
     }
 
     private MessageInfo parseMessage(String url, MessageInfo messageInfo)

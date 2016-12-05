@@ -22,7 +22,7 @@ public class FileMeta implements Serializable {
     private String fileName;
     private String fileSize;
     private String fileType;
-    private byte[] bytes;
+    private transient byte[] bytes;
 
     public FileMeta() {
     }

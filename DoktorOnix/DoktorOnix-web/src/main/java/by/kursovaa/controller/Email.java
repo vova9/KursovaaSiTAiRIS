@@ -334,14 +334,13 @@ public class Email {
 
         Email.setMsgId(nomberLast++);
 
-        for (int i = 0; i < attachments.size(); i++) {
-            FileMeta fileMeta = new FileMeta(attachments.get(i));
-            Email.addAttachments(fileMeta);
+        if (attachments != null) {
+            for (int i = 0; i < attachments.size(); i++) {
+                Ejb.getInterface().lookupEmailServiceRemote().setFile(attachments.get(i).getBytes());
+                Email.addAttachments(attachments.get(i));
+            }
+            attachments.clear();
         }
-
-        attachments.clear();
-
-        System.out.println(Email.getAttachments().get(0).getFileName());
 
         Ejb.getInterface().lookupEmailServiceRemote().sentMessage(accountInfo, Email);
 
@@ -473,6 +472,14 @@ public class Email {
             model.addAttribute("error", "Не верный Email");
             setModel(model, httpSession);
             return "mailbox/compose";
+        }
+
+        if (attachments != null) {
+            for (int i = 0; i < attachments.size(); i++) {
+                Ejb.getInterface().lookupEmailServiceRemote().setFile(attachments.get(i).getBytes());
+                Email.addAttachments(attachments.get(i));
+            }
+            attachments.clear();
         }
 
         Ejb.getInterface().lookupEmailServiceRemote().saveDraft(accountInfo, Email);
