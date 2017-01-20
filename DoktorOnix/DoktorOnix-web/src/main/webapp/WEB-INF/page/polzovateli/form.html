@@ -36,7 +36,7 @@
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
-
+                    <h1> Пользователь </h1>
                     <ol class="breadcrumb">
                         <li><a href="../../index.html" th:href="@{/}"><i class="fa fa-dashboard"></i> Основная страница</a></li>
                         <li class="active">Форма пользователь</li>
@@ -44,169 +44,159 @@
                 </section>
 
                 <!-- Content Wrapper. Contains page content -->
-                <div class="content-wrapper">
-                    <!-- Content Header (Page header) -->
-                    <section class="content-header">
-                        <h1>
-                            Пользователь
-                        </h1>
+                <section class="content">
+                    <div class="row">
+                        <div class="col-md-9">
+                            <div class="nav-tabs-custom">
+                                <ul class="nav nav-tabs">
+                                    <li class="active">
+                                        <a href="#activity" data-toggle="tab">Основные данные</a>
+                                    </li>
+                                    <li>
+                                        <a href="#timeline" data-toggle="tab">Служебная почта</a>
+                                    </li>
+                                </ul>
+                                <form class="form-horizontal contact_form" th:action="@{/polzovateli/save}" th:object="${Polzovateli}" method="POST">
+                                    <div class="tab-content">
+                                        <div class="active tab-pane" id="activity">
 
-                    </section>
-
-                    <section class="content">
-                        <div class="row">
-                            <div class="col-md-9">
-                                <div class="nav-tabs-custom">
-                                    <ul class="nav nav-tabs">
-                                        <li class="active">
-                                            <a href="#activity" data-toggle="tab">Основные данные</a>
-                                        </li>
-                                        <li>
-                                            <a href="#timeline" data-toggle="tab">Служебная почта</a>
-                                        </li>
-                                    </ul>
-                                    <form class="form-horizontal contact_form" th:action="@{/polzovateli/save}" th:object="${Polzovateli}" method="POST">
-                                        <div class="tab-content">
-                                            <div class="active tab-pane" id="activity">
-
-                                                <!-- Post -->
-                                                <div class="form-group">
-                                                    <label for="inputName" class="col-sm-2 control-label">ID пользователя</label>
-                                                    <div class="col-sm-10">
-                                                        <input type="text" class="form-control" id="inputName" placeholder="ID пользователя" th:value="*{id}" th:disabled="disabled" />
-                                                        <input type="hidden" th:field="*{id}" th:value="*{id}" />
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="inputExperience" class="col-sm-2 control-label">Логин</label>
-                                                    <div class="col-sm-10">
-                                                        <input type="text" class="form-control" id="inputSkills" 
-                                                               th:field="*{login}" th:value="*{login}" pattern="^[a-zA-Z]+$" placeholder="Логин" required=""/>
-                                                        <span class="form_hint">Допустимый формат: латинские буквы!</span>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="inputExperience" class="col-sm-2 control-label">Пароль</label>
-                                                    <div class="col-sm-10">
-                                                        <input type="text" class="form-control" id="inputSkills" 
-                                                               th:field="*{parol}" th:value="*{parol}" pattern="[A-Za-z0-9]{6,}" placeholder="Пароль" required=""/>
-                                                        <span class="form_hint">Допустимый формат: латинские буквы и цифры. Длина от 6 символов!</span>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="inputName" class="col-sm-2 control-label">Фамилия</label>
-                                                    <div class="col-sm-10">
-                                                        <input type="text" class="form-control" id="inputName" 
-                                                               th:field="*{familia}" th:value="*{familia}" pattern="^[А-Яа-яЁё]+$"  placeholder="Фамилия" required=""/>
-                                                        <span class="form_hint">Допустимый формат: русские буквы!</span>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="inputName" class="col-sm-2 control-label">Имя</label>
-                                                    <div class="col-sm-10">
-                                                        <input type="text" class="form-control" id="inputName" th:field="*{ima}" th:value="*{ima}"
-                                                               pattern="^[А-Яа-яЁё]+$"  placeholder="Имя" required="" />
-                                                        <span class="form_hint">Допустимый формат: русские буквы!</span>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="inputName" class="col-sm-2 control-label">Телефон</label>
-                                                    <div class="col-sm-10">
-                                                        <input type="tel" class="form-control" pattern="^\d{12}" th:field="*{telefon}" th:value="*{telefon}" 
-                                                               id="inputName" placeholder="Номер телефона"/>
-                                                        <span class="form_hint">Допустимый формат: Цифры без + !</span>		
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="inputName" class="col-sm-2 control-label">Email</label>
-                                                    <div class="col-sm-10">
-                                                        <input type="email" class="form-control" id="email" 
-                                                               th:field="*{email}" th:value="*{email}" placeholder="Email"/>
-                                                        <span class="form_hint">Допустимый формат: name@domen.com!</span>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="inputName" class="col-sm-2 control-label">Администратор</label>
-                                                    <div class="col-sm-10">
-                                                        <select class="form-control" th:field="*{admin}" th:value="*{admin}">
-                                                            <option value="1">Да</option>
-                                                            <option value="0" selected="selected">Нет</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="inputName" class="col-sm-2 control-label">Активен</label>
-                                                    <div class="col-sm-10">
-                                                        <select class="form-control" th:field="*{aktiven}" th:value="*{aktiven}">
-                                                            <option value="1" selected="selected">Да</option>
-                                                            <option value="0">Нет</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <div class="col-sm-offset-2 col-sm-10">
-                                                        <button type="submit" class="btn btn-danger">Сохранить</button>
-                                                        <button type="reset" class="btn btn-sm btn-default btn-flat pull-right">Очистить форму</button>
-                                                        <button type="submit" class="btn btn-sm btn-default btn-flat pull-right" th:if="*{id != null}"
-                                                                th:formaction="@{/polzovateli/delete}">Удалить</button>
-                                                    </div>
+                                            <!-- Post -->
+                                            <div class="form-group">
+                                                <label for="inputName" class="col-sm-2 control-label">ID пользователя</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" id="inputName" placeholder="ID пользователя" th:value="*{id}" th:disabled="disabled" />
+                                                    <input type="hidden" th:field="*{id}" th:value="*{id}" />
                                                 </div>
                                             </div>
-                                            <!-- /.tab-pane -->
-                                            <div class="tab-pane" id="timeline">
-                                                <div class="form-group">
-                                                    <label for="inputExperience" class="col-sm-2 control-label">Логин</label>
-                                                    <div class="col-sm-10">
-                                                        <input type="text" class="form-control" id="inputSkills" 
-                                                               th:field="*{idEmailSluzebny.login}" th:value="*{idEmailSluzebny.login}" pattern="[A-Za-z@.]{6,}" placeholder="Логин" />
-                                                        <input type="hidden" th:field="*{idEmailSluzebny.idemail}" 
-                                                               th:value="*{idEmailSluzebny.idemail}" />
-                                                    </div>
+                                            <div class="form-group">
+                                                <label for="inputExperience" class="col-sm-2 control-label">Логин</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" id="inputSkills" 
+                                                           th:field="*{login}" th:value="*{login}" pattern="^[a-zA-Z]+$" placeholder="Логин" required=""/>
+                                                    <span class="form_hint">Допустимый формат: латинские буквы!</span>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label for="inputExperience" class="col-sm-2 control-label">Пароль</label>
-                                                    <div class="col-sm-10">
-                                                        <input type="text" class="form-control" id="inputSkills" 
-                                                               th:field="*{idEmailSluzebny.password}" th:value="*{idEmailSluzebny.password}" placeholder="Пароль" />
-                                                    </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="inputExperience" class="col-sm-2 control-label">Пароль</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" id="inputSkills" 
+                                                           th:field="*{parol}" th:value="*{parol}" pattern="[A-Za-z0-9]{6,}" placeholder="Пароль" required=""/>
+                                                    <span class="form_hint">Допустимый формат: латинские буквы и цифры. Длина от 6 символов!</span>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label for="inputExperience" class="col-sm-2 control-label">imap сервер</label>
-                                                    <div class="col-sm-10">
-                                                        <input type="text" class="form-control" id="inputSkills" 
-                                                               th:field="*{idEmailSluzebny.imap}" th:value="*{idEmailSluzebny.imap}" pattern="^[a-zA-Z.]+$" placeholder="imap сервер"  />
-                                                    </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="inputName" class="col-sm-2 control-label">Фамилия</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" id="inputName" 
+                                                           th:field="*{familia}" th:value="*{familia}" pattern="^[А-Яа-яЁё]+$"  placeholder="Фамилия" required=""/>
+                                                    <span class="form_hint">Допустимый формат: русские буквы!</span>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label for="inputExperience" class="col-sm-2 control-label">smtp сервер</label>
-                                                    <div class="col-sm-10">
-                                                        <input type="text" class="form-control" id="inputSkills" 
-                                                               th:field="*{idEmailSluzebny.smtp}" th:value="*{idEmailSluzebny.smtp}" pattern="^[a-zA-Z.]+$" placeholder="smtp сервер" />
-                                                    </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="inputName" class="col-sm-2 control-label">Имя</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" id="inputName" th:field="*{ima}" th:value="*{ima}"
+                                                           pattern="^[А-Яа-яЁё]+$"  placeholder="Имя" required="" />
+                                                    <span class="form_hint">Допустимый формат: русские буквы!</span>
                                                 </div>
-                                                <div class="form-group">
-                                                    <div class="col-sm-offset-2 col-sm-10">
-                                                        <button type="submit" class="btn btn-danger">Сохранить</button>
-                                                        <button type="reset" class="btn btn-sm btn-default btn-flat pull-right">Очистить форму</button>
-                                                    </div>
-                                                </div><!-- /.tab-pane -->
-                                            </div> <!-- /.tab-content -->
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="inputName" class="col-sm-2 control-label">Телефон</label>
+                                                <div class="col-sm-10">
+                                                    <input type="tel" class="form-control" pattern="^\d{12}" th:field="*{telefon}" th:value="*{telefon}" 
+                                                           id="inputName" placeholder="Номер телефона"/>
+                                                    <span class="form_hint">Допустимый формат: Цифры без + !</span>		
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="inputName" class="col-sm-2 control-label">Email</label>
+                                                <div class="col-sm-10">
+                                                    <input type="email" class="form-control" id="email" 
+                                                           th:field="*{email}" th:value="*{email}" placeholder="Email"/>
+                                                    <span class="form_hint">Допустимый формат: name@domen.com!</span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="inputName" class="col-sm-2 control-label">Администратор</label>
+                                                <div class="col-sm-10">
+                                                    <select class="form-control" th:field="*{admin}" th:value="*{admin}">
+                                                        <option value="1">Да</option>
+                                                        <option value="0" selected="selected">Нет</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="inputName" class="col-sm-2 control-label">Активен</label>
+                                                <div class="col-sm-10">
+                                                    <select class="form-control" th:field="*{aktiven}" th:value="*{aktiven}">
+                                                        <option value="1" selected="selected">Да</option>
+                                                        <option value="0">Нет</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-sm-offset-2 col-sm-10">
+                                                    <button type="submit" class="btn btn-danger">Сохранить</button>
+                                                    <button type="reset" class="btn btn-sm btn-default btn-flat pull-right">Очистить форму</button>
+                                                    <button type="submit" class="btn btn-sm btn-default btn-flat pull-right" th:if="*{id != null}"
+                                                            th:formaction="@{/polzovateli/delete}">Удалить</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- /.tab-pane -->
+                                        <div class="tab-pane" id="timeline">
+                                            <div class="form-group">
+                                                <label for="inputExperience" class="col-sm-2 control-label">Логин</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" id="inputSkills" 
+                                                           th:field="*{idEmailSluzebny.login}" th:value="*{idEmailSluzebny.login}" pattern="[A-Za-z@.]{6,}" placeholder="Логин" />
+                                                    <input type="hidden" th:field="*{idEmailSluzebny.idemail}" 
+                                                           th:value="*{idEmailSluzebny.idemail}" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="inputExperience" class="col-sm-2 control-label">Пароль</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" id="inputSkills" 
+                                                           th:field="*{idEmailSluzebny.password}" th:value="*{idEmailSluzebny.password}" placeholder="Пароль" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="inputExperience" class="col-sm-2 control-label">imap сервер</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" id="inputSkills" 
+                                                           th:field="*{idEmailSluzebny.imap}" th:value="*{idEmailSluzebny.imap}" pattern="^[a-zA-Z.]+$" placeholder="imap сервер"  />
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="inputExperience" class="col-sm-2 control-label">smtp сервер</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" id="inputSkills" 
+                                                           th:field="*{idEmailSluzebny.smtp}" th:value="*{idEmailSluzebny.smtp}" pattern="^[a-zA-Z.]+$" placeholder="smtp сервер" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-sm-offset-2 col-sm-10">
+                                                    <button type="submit" class="btn btn-danger">Сохранить</button>
+                                                    <button type="reset" class="btn btn-sm btn-default btn-flat pull-right">Очистить форму</button>
+                                                </div>
+                                            </div><!-- /.tab-pane -->
+                                        </div> <!-- /.tab-content -->
 
-                                        </div> <!-- /.nav-tabs-custom -->
-                                    </form>
-                                </div>  <!-- /.col -->
-                            </div>   <!-- /.row -->                       
-                        </div> <!-- /.content -->
-                    </section>
-                </div>   <!-- /.content-wrapper -->
-                <footer th:replace="fragments/footer :: footer">  </footer>
-                <aside th:replace="fragments/leftmenu :: leftmenu"></aside>
+                                    </div> <!-- /.nav-tabs-custom -->
+                                </form>
+                            </div>  <!-- /.col -->
+                        </div>   <!-- /.row -->                       
+                    </div> <!-- /.content -->
+                </section>
+            </div>   <!-- /.content-wrapper -->
+            <footer th:replace="fragments/footer :: footer">  </footer>
+            <aside th:replace="fragments/leftmenu :: leftmenu"></aside>
 
-                <!-- Add the sidebar's background. This div must be placed
-                     immediately after the control sidebar -->
-                <div class="control-sidebar-bg"></div>
-            </div><!-- ./wrapper -->
-        </div>
+            <!-- Add the sidebar's background. This div must be placed
+                 immediately after the control sidebar -->
+            <div class="control-sidebar-bg"></div>
+        </div><!-- ./wrapper -->
         <!-- jQuery 2.1.4 -->
         <script src="../../plugins/jQuery/jQuery-2.1.4.min.js" th:src="@{/resources/plugins/jQuery/jQuery-2.1.4.min.js}"></script>
         <!-- Bootstrap 3.3.5 -->

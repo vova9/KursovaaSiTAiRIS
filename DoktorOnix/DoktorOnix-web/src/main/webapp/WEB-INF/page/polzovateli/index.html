@@ -44,67 +44,66 @@
                     </ol>
                 </section>
 
-                <br/>
-                <div th:if="${success != null}" class="callout callout-success">
-                    <h4 th:text="${success}"></h4>
-                </div>
-                <br/>
+                <section class="content">
+                    <div th:if="${success != null}" class="callout callout-success">
+                        <h4 th:text="${success}"></h4>
+                    </div>
+                    <br/>  <br/>
 
-                <div class="box">
-                    <div class="box-header">
-                        <h3 class="box-title">Пользователи</h3>
-                    </div><!-- /.box-header -->
-                    <div class="box-body">
-                        <table id="example1" class="table table-bordered table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Логин</th>
-                                    <th>Фамилия</th>
-                                    <th>Имя</th>
-                                    <th>E-mail</th>
-                                    <th>Номер телефона</th>
-                                    <th>Админ</th>
-                                    <th>Активен</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr th:each="polzovateli : ${Polzovateli}">
-                                    <td>
-                                        <a href="#" th:href="@{/polzovateli/edit/{polzovateliId}(polzovateliId=${polzovateli.id})}" th:text="${polzovateli.login}" ></a>
-                                    </td>
-                                    <td th:text="${polzovateli.familia}"></td>
-                                    <td th:text="${polzovateli.ima}"></td>
-                                    <td th:text="${polzovateli.email}"></td>
-                                    <td th:text="${polzovateli.telefon}"></td>
-                                    <td th:text="${polzovateli.admin}"></td>
-                                    <td th:text="${polzovateli.aktiven}"></td>
-                                </tr>
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th>Логин</th>
-                                    <th>Фамилия</th>
-                                    <th>Имя</th>
-                                    <th>E-mail</th>
-                                    <th>Номер телефона</th>
-                                    <th>Админ</th>
-                                    <th>Активен</th>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div><!-- /.box-body -->
-                </div><!-- /.box -->
-          
-        <!-- Control Sidebar -->
-        <footer th:replace="fragments/footer :: footer">  </footer>
-        <aside th:replace="fragments/leftmenu :: leftmenu"></aside>
-        <!-- Add the sidebar's background. This div must be placed
-             immediately after the control sidebar -->
-        <div class="control-sidebar-bg"></div>
-        </div><!-- /.content-wrapper -->
-        
-        
-        </div><!-- /.cwrapper -->
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">Пользователи</h3>
+                        </div><!-- /.box-header -->
+                        <div class="box-body">
+                            <table id="example1" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Логин</th>
+                                        <th>Фамилия</th>
+                                        <th>Имя</th>
+                                        <th>E-mail</th>
+                                        <th>Номер телефона</th>
+                                        <th>Админ</th>
+                                        <th>Активен</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="polzovateli : ${Polzovateli}">
+                                        <td>
+                                            <a href="#" th:href="@{/polzovateli/edit/{polzovateliId}(polzovateliId=${polzovateli.id})}" th:text="${polzovateli.login}" ></a>
+                                        </td>
+                                        <td th:text="${polzovateli.familia}"></td>
+                                        <td th:text="${polzovateli.ima}"></td>
+                                        <td th:text="${polzovateli.email}"></td>
+                                        <td th:text="${polzovateli.telefon}"></td>
+                                        <td th:text="${polzovateli.admin}"></td>
+                                        <td th:text="${polzovateli.aktiven}"></td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Логин</th>
+                                        <th>Фамилия</th>
+                                        <th>Имя</th>
+                                        <th>E-mail</th>
+                                        <th>Номер телефона</th>
+                                        <th>Админ</th>
+                                        <th>Активен</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div><!-- /.box-body -->
+                    </div><!-- /.box -->
+                </section>
+            </div><!-- /.content-wrapper -->
+
+            <!-- Control Sidebar -->
+            <footer th:replace="fragments/footer :: footer">  </footer>
+            <aside th:replace="fragments/leftmenu :: leftmenu"></aside>
+            <!-- Add the sidebar's background. This div must be placed
+                 immediately after the control sidebar -->
+            <div class="control-sidebar-bg"></div>
+        </div><!-- /.wrapper -->
         <!-- jQuery 2.1.4 -->
         <script src="../../plugins/jQuery/jQuery-2.1.4.min.js" th:src="@{/resources/plugins/jQuery/jQuery-2.1.4.min.js}"></script>
         <!-- Bootstrap 3.3.5 -->
