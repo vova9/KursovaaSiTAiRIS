@@ -494,9 +494,19 @@ public class Email {
 //    
 //    }
     private boolean checkRecipient(MessageInfo messageInfo) {
+        if (messageInfo.getToString() == null) {
+            return false;
+        }
         String[] toString = messageInfo.getToString().split(";");
-        String[] ccString = messageInfo.getCcString().split(";");
-        String[] bccString = messageInfo.getBccString().split(";");
+        String[] ccString = null;
+        String[] bccString = null;       
+        
+        if (messageInfo.getCcString() != null) {
+            ccString = messageInfo.getCcString().split(";");
+        }
+        if (messageInfo.getBccString() != null) {
+            bccString = messageInfo.getCcString().split(";");
+        }
 
         String recipient;
 
@@ -523,7 +533,7 @@ public class Email {
             }
         }
 
-        if (!messageInfo.getCcString().isEmpty()) {
+        if (messageInfo.getCcString() != null && !messageInfo.getCcString().isEmpty()) {
             for (int i = 0; i < ccString.length; i++) {
                 System.out.println("cc 1 " + ccString[i]);
 
@@ -550,7 +560,7 @@ public class Email {
             }
         }
 
-        if (!messageInfo.getBccString().isEmpty()) {
+        if (messageInfo.getCcString() != null && !messageInfo.getBccString().isEmpty()) {
             for (int i = 0; i < bccString.length; i++) {
                 System.out.println("bcc 1");
 

@@ -134,7 +134,7 @@
                     <!-- Main row -->
                     <div class="row">
                         <!-- Left col -->
-                        <section class="col-lg-13 connectedSortable">
+                        <section class="col-lg-12 connectedSortable">
                             <!-- Custom tabs (Charts with tabs)-->
                             <!-- TABLE: LATEST ORDERS -->
                             <div class="box box-info">
@@ -207,7 +207,7 @@
                                           th:object="${Email}" method="POST">
                                         <div class="form-group">
                                             <input type="email" class="form-control" name="emailto" 
-                                                   placeholder="Кому:" th:value="*{to}" th:field="*{to}"
+                                                   placeholder="Кому:" th:value="*{toString}" th:field="*{toString}"
                                                    required=""/>
                                             <span class="form_hint">Допустимый формат: "name@domen.com"</span>
                                         </div>
