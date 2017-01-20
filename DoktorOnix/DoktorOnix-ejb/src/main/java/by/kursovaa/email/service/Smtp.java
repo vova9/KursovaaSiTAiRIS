@@ -5,6 +5,7 @@
  */
 package by.kursovaa.email.service;
 
+import by.kursovaa.email.interfaces.SmtpLocal;
 import by.kursovaa.entity.Email;
 import by.kursovaa.pojo.FileMeta;
 import by.kursovaa.pojo.MessageInfo;
@@ -33,17 +34,19 @@ import javax.mail.internet.MimeUtility;
  *
  * @author Vladimir
  */
-public class Smtp {
+public class Smtp implements SmtpLocal {
 
     private final String ENCODING = "koi8-r";
     private Session session;
     private MimeMessage message;
     private String contentType;
 
+    @Override
     public void createMessage(Email accountInfo, MessageInfo messageInfo)
             throws MessagingException, IOException {
 
         System.out.println("Smtp::createMessage ST");
+
         contentType = "";
         message = new MimeMessage(session);
         message.setFrom(new InternetAddress(accountInfo.getLogin()));
@@ -69,8 +72,36 @@ public class Smtp {
         System.out.println("Smtp::createMessage OK");
     }
 
+    @Override
+    public void connectionSmtp(Email accountInfo) {
+        System.out.println("Smtp::connectionSmtp ST");
+
+        Properties props = new Properties();
+        props.put("mail.transport.protocol", "smtp");
+        props.put("mail.smtp.host", accountInfo.getSmtp());
+        props.put("mail.smtp.auth", "true");
+
+        MyAuthenticator auth = new MyAuthenticator(accountInfo.getLogin(), accountInfo.getPassword());
+
+        session = Session.getDefaultInstance(props, auth);
+        session.setDebug(true);
+
+        System.out.println("Smtp::connectionSmtp OK");
+    }
+
+    @Override
+    public void send() throws MessagingException {
+        Transport.send(message);
+    }
+
+    @Override
+    public MimeMessage getMessage() {
+        return message;
+    }
+
     private void addContent(MessageInfo messageInfo, Part messageBodyPart) throws MessagingException {
         System.out.println("Smtp::addContent ST");
+
         if (!messageInfo.getContent().isEmpty()) {
             String text = createBoby(messageInfo);
 
@@ -83,11 +114,13 @@ public class Smtp {
         } else {
             System.out.println("Smtp::addContent uzas!!!");
         }
+
         System.out.println("Smtp::addContent OK");
     }
 
     private String createBoby(MessageInfo messageInfo) {
         System.out.println("Smtp::createBoby ST");
+
         String text = "";
         for (int i = 0; i < messageInfo.getContent().size(); i++) {
 
@@ -106,6 +139,7 @@ public class Smtp {
                 }
             }
         }
+
         System.out.println("Smtp::addContent OK");
         return text;
     }
@@ -147,29 +181,5 @@ public class Smtp {
         }
 
         System.out.println("Smtp::addAttachments OK");
-    }
-
-    public void connectionSmtp(Email accountInfo) {
-        System.out.println("Smtp::connectionSmtp ST");
-
-        Properties props = new Properties();
-        props.put("mail.transport.protocol", "smtp");
-        props.put("mail.smtp.host", accountInfo.getSmtp());
-        props.put("mail.smtp.auth", "true");
-
-        MyAuthenticator auth = new MyAuthenticator(accountInfo.getLogin(), accountInfo.getPassword());
-
-        session = Session.getDefaultInstance(props, auth);
-        session.setDebug(true);
-
-        System.out.println("Smtp::connectionSmtp OK");
-    }
-
-    public void send() throws MessagingException {
-        Transport.send(message);
-    }
-
-    public MimeMessage getMessage() {
-        return message;
     }
 }

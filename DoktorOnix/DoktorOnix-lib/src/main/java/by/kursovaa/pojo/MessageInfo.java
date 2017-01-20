@@ -318,9 +318,6 @@ public class MessageInfo implements Serializable {
         if (!Objects.equals(this.dateSent, other.dateSent)) {
             return false;
         }
-        if (!Objects.equals(this.content, other.content)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.content, other.content);
     }
 }

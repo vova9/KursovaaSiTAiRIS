@@ -107,9 +107,6 @@ public class FileMeta implements Serializable {
         if (!Objects.equals(this.fileType, other.fileType)) {
             return false;
         }
-        if (!Arrays.equals(this.bytes, other.bytes)) {
-            return false;
-        }
-        return true;
+        return Arrays.equals(this.bytes, other.bytes);
     }
 }

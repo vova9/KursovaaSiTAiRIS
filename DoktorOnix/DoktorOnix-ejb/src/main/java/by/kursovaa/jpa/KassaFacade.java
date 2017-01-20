@@ -33,17 +33,13 @@ public class KassaFacade extends AbstractFacade<Kassa> implements KassaFacadeRem
 
     @Override
     public Double summaAll() {
-        Double summaAll = 0.0;
         Query query = em.createQuery("SELECT SUM(k.summa) FROM Kassa k");
-        summaAll = (Double) query.getSingleResult();
-        return summaAll;
+        return (Double) query.getSingleResult();
     }
 
     @Override
     public Double profitAll() {
-        Double profitAll = 0.0;
         Query query = em.createQuery("SELECT SUM(k.summa) FROM Kassa k WHERE k.tip = 'Приход'");
-        profitAll = (Double) query.getSingleResult();
-        return profitAll;
+        return (Double) query.getSingleResult();
     }
 }

@@ -128,7 +128,7 @@ public class EmailService implements EmailServiceRemote {
 
     @Override
     public void stopSynchronization() {
-        System.out.println("EmailService::stopSynchronization ST ");
+        System.out.println("EmailService::stopSynchronization ST");
 
         try {
             if (threadGetMessages != null && threadGetMessages.isAlive()) {
@@ -162,6 +162,7 @@ public class EmailService implements EmailServiceRemote {
             textError = ex.getMessage();
         }
 
+         System.out.println("EmailService::getMessageList OK null");
         return listMail;
     }
 
@@ -204,7 +205,7 @@ public class EmailService implements EmailServiceRemote {
         } finally {
 
             try {
-                imap.close();
+                imap.disconnectionImap();
             } catch (MessagingException ex) {
                 Logger.getLogger(EmailService.class.getName()).log(Level.SEVERE, null, ex);
                 textError = ex.getMessage();
@@ -257,7 +258,7 @@ public class EmailService implements EmailServiceRemote {
         } finally {
 
             try {
-                imap.close();
+                imap.disconnectionImap();
             } catch (MessagingException ex) {
                 Logger.getLogger(EmailService.class.getName()).log(Level.SEVERE, null, ex);
                 textError = ex.getMessage();
@@ -309,7 +310,7 @@ public class EmailService implements EmailServiceRemote {
         } finally {
 
             try {
-                imap.close();
+                imap.disconnectionImap();
             } catch (MessagingException ex) {
                 Logger.getLogger(EmailService.class.getName()).log(Level.SEVERE, null, ex);
                 textError = ex.getMessage();
@@ -365,13 +366,14 @@ public class EmailService implements EmailServiceRemote {
         } finally {
 
             try {
-                imap.close();
+                imap.disconnectionImap();
             } catch (MessagingException ex) {
                 Logger.getLogger(EmailService.class.getName()).log(Level.SEVERE, null, ex);
                 textError = ex.getMessage();
             }
 
         }
+        
         System.out.println("EmailService::markReadMultiple OK");
     }
 
@@ -420,13 +422,14 @@ public class EmailService implements EmailServiceRemote {
         } finally {
 
             try {
-                imap.close();
+                imap.disconnectionImap();
             } catch (MessagingException ex) {
                 Logger.getLogger(EmailService.class.getName()).log(Level.SEVERE, null, ex);
                 textError = ex.getMessage();
             }
 
         }
+        
         System.out.println("EmailService::deleteMessageMultiple OK");
     }
 
@@ -455,15 +458,22 @@ public class EmailService implements EmailServiceRemote {
 
     @Override
     public MessageInfo getMessageBody(Email accountInfo, MessageInfo messageInfo) {
+        System.out.println("EmailService::getMessageBody ST");
+        
         String url = Path.getInterface().getPath() + "mail_temp" + File.separator + accountInfo.getLogin()
                 + File.separator + messageInfo.getDirectory() + File.separator + messageInfo.getMessageID() + ".eml";
         textError = "";
         try {
-            return parseMessage(url, messageInfo);
+            MessageInfo message = parseMessage(url, messageInfo);
+            
+            System.out.println("EmailService::getMessageBody OK");               
+            return message;
         } catch (MessagingException | IOException ex) {
             Logger.getLogger(EmailService.class.getName()).log(Level.SEVERE, null, ex);
             textError = ex.getMessage();
         }
+        
+        System.out.println("EmailService::getMessageBody OK null");     
         return null;
     }
 
@@ -554,7 +564,7 @@ public class EmailService implements EmailServiceRemote {
             imap.connectionImap(accountInfo);
             imap.saveMessage(message, "INBOX.Sent");
             imap.closeFolderSave();
-            imap.close();
+            imap.disconnectionImap();
 
             messageInfo.setMessageID(message.getContentID());
             messageInfo.setRead(true);
@@ -611,7 +621,7 @@ public class EmailService implements EmailServiceRemote {
 
             imap.saveMessage(message, "INBOX.Drafts");
             imap.closeFolderSave();
-            imap.close();
+            imap.disconnectionImap();
 
             messageInfo.setMessageID(message.getContentID());
             messageInfo.setRead(true);
@@ -637,6 +647,7 @@ public class EmailService implements EmailServiceRemote {
     @Override
     public boolean hasNewMessage(by.kursovaa.entity.Email accountInfo) {
         System.out.println("EmailService::hasNewMessage ST");
+        
         textError = "";
         boolean newMess = false;
 //        try {
@@ -656,25 +667,35 @@ public class EmailService implements EmailServiceRemote {
 
     @Override
     public String convertByteCount(long bytes, boolean si) {
+        System.out.println("EmailService::convertByteCount ST");
+        
         int unit = si ? 1000 : 1024;
         if (bytes < unit) {
+            System.out.println("EmailService::convertByteCount OK bytes");
             return bytes + " B";
         }
         int exp = (int) (Math.log(bytes) / Math.log(unit));
         String pre = (si ? "kMGTPE" : "KMGTPE").charAt(exp - 1) + (si ? "" : "i");
+        
+        System.out.println("EmailService::convertByteCount OK");
         return String.format("%.1f %sB", bytes / Math.pow(unit, exp), pre);
     }
 
     @Override
     public void setFile(byte[] bytes) {
+        System.out.println("EmailService::setFile ST");
+        
         if (attachments == null) {
             attachments = new ArrayList<byte[]>();
         }
         attachments.add(bytes);
+      
+        System.out.println("EmailService::setFile ST");
     }
 
     private MessageInfo parseMessage(String url, MessageInfo messageInfo)
             throws MessagingException, IOException {
+        
         System.out.println("EmailService::parseMessage ST");
 // TODO REFRACTORING
         Properties props = new Properties();
@@ -688,8 +709,10 @@ public class EmailService implements EmailServiceRemote {
             // content may contain attachments
             Multipart multiPart = (Multipart) message.getContent();
             int numberOfParts = multiPart.getCount();
+            
             for (int partCount = 0; partCount < numberOfParts; partCount++) {
                 MimeBodyPart part = (MimeBodyPart) multiPart.getBodyPart(partCount);
+                
                 if (Part.ATTACHMENT.equalsIgnoreCase(part.getDisposition())) {
                     // this part is attachment
                     FileMeta fileMeta = new FileMeta();
@@ -705,6 +728,7 @@ public class EmailService implements EmailServiceRemote {
                     // this part may be the message content
                     // TODO здесь может быть html
                     messageContent = part.getContent().toString();
+                    
                     while (true) {
                         if (messageContent.indexOf("\n") != -1) {
                             messageInfo.addContent(messageContent.substring(0, messageContent.indexOf("\n")));
@@ -715,7 +739,7 @@ public class EmailService implements EmailServiceRemote {
                             break;
                         }
                     }
-                }
+                }               
             }
         } else if (contentType.contains("text/plain")) {
             Object content = message.getContent();
@@ -772,5 +796,4 @@ public class EmailService implements EmailServiceRemote {
 
         System.out.println("EmailService::saveFileMessage OK");
     }
-
 }

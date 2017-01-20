@@ -26,7 +26,7 @@ public class DataBaseEmail {
     private static int count = 0;
 
     public static void connect(String path) throws ClassNotFoundException, SQLException, SQLiteException {
-        System.out.println("DataBaseEmail::connect ST ");
+        System.out.println("DataBaseEmail::connect ST");
 
         String url = "jdbc:sqlite:" + path + "/Email.db";
         Class.forName("org.sqlite.JDBC");
@@ -37,11 +37,11 @@ public class DataBaseEmail {
             System.out.println("A new database has been created.");
         }
 
-        System.out.println("DataBaseEmail::connect OK ");
+        System.out.println("DataBaseEmail::connect OK");
     }
 
     public static void createTable(String folderName) throws ClassNotFoundException, SQLException, SQLiteException {
-        System.out.println("DataBaseEmail::createTable ST ");
+        System.out.println("DataBaseEmail::createTable ST");
 
         Statement statmt = conn.createStatement();
         statmt.execute("CREATE TABLE if not exists [" + folderName + "] (messageId TEXT (255) PRIMARY KEY UNIQUE,"
@@ -59,11 +59,12 @@ public class DataBaseEmail {
                 + "    sender         TEXT);");
 
         statmt.close();
-        System.out.println("DataBaseEmail::createTable OK ");
+        
+        System.out.println("DataBaseEmail::createTable OK");
     }
 
     public static void insert(String folderName, MessageInfo info) throws SQLException, SQLiteException {
-        System.out.println("DataBaseEmail::insert ST ");
+        System.out.println("DataBaseEmail::insert ST");
 
         String sql = "INSERT INTO [" + folderName + "] (messageId, date, read, mark, synchronized, subject, attachment, "
                 + "size, id, recipientTo, recipientCc, recipientBcc, sender) VALUES ("
@@ -105,13 +106,13 @@ public class DataBaseEmail {
         pstmt.executeUpdate();
         pstmt.close();
 
-        System.out.println("DataBaseEmail::insert OK ");
+        System.out.println("DataBaseEmail::insert OK");
     }
 
     public static ArrayList<MessageInfo> getMessages(String folderName, int limit, int offset)
             throws SQLException, SQLiteException {
 
-        System.out.println("DataBaseEmail::getMessages ST ");
+        System.out.println("DataBaseEmail::getMessages ST");
 
         ArrayList<MessageInfo> listMail = new ArrayList<MessageInfo>();
         MessageInfo info = null;
@@ -136,7 +137,7 @@ public class DataBaseEmail {
     public static boolean getMessage(String folderName, String messageId, MessageInfo info)
             throws ClassNotFoundException, SQLException, SQLiteException {
 
-        System.out.println("DataBaseEmail::getMessages ST ");
+        System.out.println("DataBaseEmail::getMessages ST");
 
         Statement statmt = conn.createStatement();
         ResultSet resSet = statmt.executeQuery("SELECT * FROM [" + folderName + "] WHERE messageId = '" + messageId + "'");
@@ -158,7 +159,8 @@ public class DataBaseEmail {
     }
 
     public static void updateSynchronized(String folderName) throws SQLException, SQLiteException {
-        System.out.println("DataBaseEmail::updateSynchronized STOK ");
+        System.out.println("DataBaseEmail::updateSynchronized STOK");
+        
         Statement statmt = conn.createStatement();
         statmt.execute("UPDATE [" + folderName + "] SET synchronized=0 WHERE synchronized = 1;");
         statmt.close();
@@ -166,6 +168,7 @@ public class DataBaseEmail {
 
     public static void updatedSynchronized(String folderName, String messageId) throws SQLException, SQLiteException {
         System.out.println("DataBaseEmail::updatedSynchronized STOK");
+        
         Statement statmt = conn.createStatement();
         statmt.execute("UPDATE [" + folderName + "] SET synchronized=1 WHERE messageId = '" + messageId + "';");
         statmt.close();
@@ -243,7 +246,7 @@ public class DataBaseEmail {
         pstmt.executeUpdate();
         pstmt.close();
 
-        System.out.println("DataBaseEmail::update OK ");
+        System.out.println("DataBaseEmail::update OK");
     }
 
     public static void updatedMessageNumber(String folderName, String messageID, int messageNumber)
@@ -259,7 +262,8 @@ public class DataBaseEmail {
         pstmt.executeUpdate();
 
         pstmt.close();
-        System.out.println("DataBaseEmail::updatedMessageNumber OK ");
+        
+        System.out.println("DataBaseEmail::updatedMessageNumber OK");
     }
 
     public static void updatedFlags(String folderName, MessageInfo info) throws SQLException, SQLiteException {
@@ -274,7 +278,8 @@ public class DataBaseEmail {
         pstmt.executeUpdate();
 
         pstmt.close();
-        System.out.println("DataBaseEmail::updatedFlags OK ");
+        
+        System.out.println("DataBaseEmail::updatedFlags OK");
     }
 
     public static void updatedAttachment(String folderName, boolean attachment, String messageID)
@@ -289,17 +294,18 @@ public class DataBaseEmail {
         pstmt.setString(2, messageID);//messageId
         pstmt.executeUpdate();
         pstmt.close();
+        
         System.out.println("DataBaseEmail::updatedAttachment OK");
     }
 
     public static void close() throws ClassNotFoundException, SQLException, SQLiteException {
-        System.out.println("DataBaseEmail::close ST ");
+        System.out.println("DataBaseEmail::close ST");
 
         if (conn != null && !conn.isClosed()) {
             conn.close();
         }
 
-        System.out.println("DataBaseEmail::close OK ");
+        System.out.println("DataBaseEmail::close OK");
     }
 
     public static int countRecord(String folderName) throws SQLException, SQLiteException {
@@ -329,7 +335,7 @@ public class DataBaseEmail {
     }
 
     public static int countUnRead(String folderName) throws SQLException, SQLiteException {
-        System.out.println("DataBaseEmail::countRecord ST");
+        System.out.println("DataBaseEmail::countUnRead ST");
 
         Statement statmt = conn.createStatement();
         ResultSet resSet
@@ -344,19 +350,21 @@ public class DataBaseEmail {
             resSet.close();
             statmt.close();
 
-            System.out.println("DataBaseEmail::countRecord OK true");
+            System.out.println("DataBaseEmail::countUnRead OK true");
             return count;
         }
         resSet.close();
         statmt.close();
 
-        System.out.println("DataBaseEmail::countRecord OK false");
+        System.out.println("DataBaseEmail::countUnRead OK false");
         return 0;
     }
 
     public static void updatedMarkMessage(String folderName, String messageID, boolean b, boolean a)
             throws SQLException, SQLiteException {
 
+        System.out.println("DataBaseEmail::updatedMarkMessage ST");
+        
         String sql = "UPDATE [" + folderName + "] SET mark=? WHERE messageId =?;";
 
         PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -364,11 +372,14 @@ public class DataBaseEmail {
         pstmt.setString(2, messageID);//messageId
         pstmt.executeUpdate();
         pstmt.cancel();
+        
+        System.out.println("DataBaseEmail::updatedMarkMessage OK");
     }
 
     public static void updatedReadMessage(String folderName, String messageID, boolean b, boolean b0)
             throws SQLException, SQLiteException {
 
+        System.out.println("DataBaseEmail::updatedReadMessage ST");
         String sql = "UPDATE [" + folderName + "] SET read=? WHERE messageId =?;";
 
         PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -376,6 +387,7 @@ public class DataBaseEmail {
         pstmt.setString(2, messageID);//messageId
         pstmt.executeUpdate();
         pstmt.cancel();
+        System.out.println("DataBaseEmail::updatedReadMessage OK");
     }
 
 //TODO
@@ -400,7 +412,7 @@ public class DataBaseEmail {
     }
 
     private static void initMessageInfo(MessageInfo info, ResultSet resSet) throws SQLException, SQLiteException {
-        System.out.println("DataBaseEmail::initMessageInfo ST ");
+        System.out.println("DataBaseEmail::initMessageInfo ST");
 
         info.setMessageID(resSet.getString("messageId"));// messageId
         info.setDateSent(resSet.getString("date"));//date
@@ -434,7 +446,6 @@ public class DataBaseEmail {
         info.setFrom(resSet.getString("sender"));//from
         info.setId(count);
 
-        System.out.println("DataBaseEmail::initMessageInfo OK ");
+        System.out.println("DataBaseEmail::initMessageInfo OK");
     }
-
 }

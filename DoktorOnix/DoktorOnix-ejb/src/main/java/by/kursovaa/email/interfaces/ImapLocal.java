@@ -22,26 +22,28 @@ import javax.mail.internet.MimeMessage;
  */
 public interface ImapLocal {
 
-    public void connectionImap(Email accountInfo)
+    void connectionImap(Email accountInfo)
             throws GeneralSecurityException, NoSuchProviderException, MessagingException,
             UnknownHostException, NullPointerException;
 
-    public String getMessageID(MimeMessage message) throws MessagingException;
+    void disconnectionImap() throws MessagingException;
+    
+    String getMessageID(MimeMessage message) throws MessagingException;
 
-    public MessageInfo getMessageInfo(MimeMessage message, MessageInfo messageInfo)
+    MessageInfo getMessageInfo(MimeMessage message, MessageInfo messageInfo)
             throws MessagingException, UnsupportedEncodingException;
 
-    public boolean getFlag(MessageInfo messageBean, Message message) throws MessagingException;
+    boolean getFlag(MessageInfo messageBean, Message message) throws MessagingException;
 
-    public Folder[] getFolders() throws MessagingException;
+    Folder[] getFolders() throws MessagingException;
 
-    public void markMessage(int msgId, String folderName, boolean mark) throws MessagingException;
+    void markMessage(int msgId, String folderName, boolean mark) throws MessagingException;
 
-    public void readMessage(int msgId, String folderName, boolean mark) throws MessagingException;
+    void readMessage(int msgId, String folderName, boolean mark) throws MessagingException;
 
-    public void deleteMessage(int msgId, String folderName) throws MessagingException;
+    void deleteMessage(int msgId, String folderName) throws MessagingException;
+  
+    void closeFolderSave() throws MessagingException;
 
-    public void save() throws MessagingException;
-
-    public void close() throws MessagingException;
+    void saveMessage(MimeMessage message, String folderName) throws MessagingException;
 }

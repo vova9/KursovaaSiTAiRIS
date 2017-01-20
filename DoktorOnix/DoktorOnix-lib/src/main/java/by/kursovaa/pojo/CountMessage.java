@@ -117,9 +117,6 @@ public class CountMessage implements Serializable {
         if (this.bmail != other.bmail) {
             return false;
         }
-        if (this.spammail != other.spammail) {
-            return false;
-        }
-        return true;
+        return (this.spammail == other.spammail);
     }
 }

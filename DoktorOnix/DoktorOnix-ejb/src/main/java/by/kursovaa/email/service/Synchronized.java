@@ -5,6 +5,7 @@
  */
 package by.kursovaa.email.service;
 
+import by.kursovaa.email.interfaces.SynchronizedLocal;
 import by.kursovaa.pojo.MessageInfo;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -26,7 +27,7 @@ import java.sql.SQLException;
  *
  * @author Vladimir
  */
-public class Synchronized implements Runnable {
+public class Synchronized implements Runnable,  SynchronizedLocal{
 
     private Imap imap;
 
@@ -59,12 +60,12 @@ public class Synchronized implements Runnable {
                 DataBaseEmail.createTable(folderName);
                 DataBaseEmail.updateSynchronized(folderName);
 
-                System.out.println("Synchronized::run folder name:" + folderName);
+                System.out.println("Synchronized::run folder name: " + folderName);
 
                 int countMessage = emailFolder[i].getMessageCount();
                 Message messages = null;
 
-                System.out.println("Synchronized::run count message:" + countMessage);
+                System.out.println("Synchronized::run count message: " + countMessage);
 
                 for (int j = countMessage; j > 0; j--) {
                     messages = emailFolder[i].getMessage(j);
@@ -146,7 +147,7 @@ public class Synchronized implements Runnable {
         } finally {
 
             try {
-                imap.close();
+                imap.disconnectionImap();
             } catch (MessagingException ex) {
                 Logger.getLogger(Synchronized.class.getName()).log(Level.SEVERE, null, ex);
                 textError = ex.getMessage();
@@ -157,6 +158,7 @@ public class Synchronized implements Runnable {
         System.out.println("Synchronized::run OK");
     }
 
+    @Override
     public void saveMessage(String messageID, String folderName, Message messages, MessageInfo messageInfo)
             throws IOException, MessagingException {
 
@@ -184,15 +186,18 @@ public class Synchronized implements Runnable {
         System.out.println("Synchronized::saveMessage OK");
     }
 
+    @Override
     public void setAccountInfo(Email accountInfo) {
         System.out.println("Synchronized::setAccountInfo STOK");
         this.accountInfo = accountInfo;
     }
 
+    @Override
     public void setImap(Imap imap) {
         this.imap = imap;
     }
 
+    @Override
     public String getTextError() {
         System.out.println("Synchronized::getTextError STOK");
         return textError;

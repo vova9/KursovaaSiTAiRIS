@@ -8,6 +8,10 @@ package by.kursovaa.email.service;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.net.SocketFactory;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
@@ -26,7 +30,8 @@ public class MySSLSocketFactory extends SSLSocketFactory {
             SSLContext sslcontext = SSLContext.getInstance("TLS");
             sslcontext.init(null, new TrustManager[]{new MyTrustManager()}, null);
             factory = (SSLSocketFactory) sslcontext.getSocketFactory();
-        } catch (Exception ex) {
+        } catch (NoSuchAlgorithmException | KeyManagementException ex) {
+            Logger.getLogger(MySSLSocketFactory.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

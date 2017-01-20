@@ -55,6 +55,14 @@ public class Index {
         Double summaAll = Ejb.getInterface().lookupKassaFacadeRemote().summaAll();
         Double profitAll = Ejb.getInterface().lookupKassaFacadeRemote().profitAll();
 
+        if (summaAll == null) {
+            summaAll = 0.0;
+        }
+
+        if (profitAll == null) {
+            profitAll = 0.0;
+        }
+
         model.addAttribute("Email", message);
         model.addAttribute("coutZakaz", countZakaz);
         model.addAttribute("coutKlientov", countClients);

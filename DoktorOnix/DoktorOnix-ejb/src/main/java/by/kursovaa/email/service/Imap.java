@@ -5,6 +5,7 @@
  */
 package by.kursovaa.email.service;
 
+import by.kursovaa.email.interfaces.ImapLocal;
 import by.kursovaa.email.listener.MyConnectionListener;
 import by.kursovaa.email.listener.MyFolderListener;
 import by.kursovaa.email.listener.MyMessageChangedListener;
@@ -34,11 +35,12 @@ import javax.mail.internet.MimeUtility;
  *
  * @author Vladimir
  */
-public class Imap /*implements ImapLocal*/ {
+public class Imap implements ImapLocal {
 
     private Store store;
     private Folder emailFolder;
 
+    @Override
     public void connectionImap(Email accountInfo)
             throws GeneralSecurityException, NoSuchProviderException, MessagingException,
             UnknownHostException, NullPointerException {
@@ -78,6 +80,7 @@ public class Imap /*implements ImapLocal*/ {
         System.out.println("Imap::connectionImap OK");
     }
 
+    @Override
     public String getMessageID(MimeMessage message) throws MessagingException {
         System.out.println("Imap::getMessageID ST");
 
@@ -97,6 +100,7 @@ public class Imap /*implements ImapLocal*/ {
         return messageID;
     }
 
+    @Override
     public MessageInfo getMessageInfo(MimeMessage message, MessageInfo messageInfo)
             throws MessagingException, UnsupportedEncodingException {
 
@@ -146,6 +150,7 @@ public class Imap /*implements ImapLocal*/ {
         return messageInfo;
     }
 
+    @Override
     public boolean getFlag(MessageInfo messageBean, Message message) throws MessagingException {
         System.out.println("Imap::getFlag ST");
 
@@ -201,6 +206,7 @@ public class Imap /*implements ImapLocal*/ {
         return hasUpdate;
     }
 
+    @Override
     public Folder[] getFolders() throws MessagingException {
         System.out.println("Imap::getFolders ST");
 
@@ -218,6 +224,7 @@ public class Imap /*implements ImapLocal*/ {
         return folders;
     }
 
+    @Override
     public void markMessage(int msgId, String folderName, boolean mark) throws MessagingException {
         System.out.println("Imap::markMessage ST");
 
@@ -234,6 +241,7 @@ public class Imap /*implements ImapLocal*/ {
         System.out.println("Imap::markMessage OK");
     }
 
+    @Override
     public void readMessage(int msgId, String folderName, boolean mark) throws MessagingException {
         System.out.println("Imap::markMessage ST");
 
@@ -251,6 +259,7 @@ public class Imap /*implements ImapLocal*/ {
         System.out.println("Imap::markMessage OK");
     }
 
+    @Override
     public void deleteMessage(int msgId, String folderName) throws MessagingException {
         System.out.println("Imap::deleteMessage ST");
 
@@ -268,24 +277,26 @@ public class Imap /*implements ImapLocal*/ {
         System.out.println("Imap::deleteMessage OK");
     }
 
+    @Override
     public void closeFolderSave() throws MessagingException {
         System.out.println("Imap::save STOK");
         emailFolder.close(true);
     }
 
-    public void close() throws MessagingException {
+    @Override
+    public void disconnectionImap() throws MessagingException {
         System.out.println("Imap::close STOK");
         store.close();
     }
 
+    @Override
     public void saveMessage(MimeMessage message, String folderName) throws MessagingException {
         System.out.println("Imap::saveMessage ST");
 
-        Folder emailFolder = store.getFolder(folderName);
+        emailFolder = store.getFolder(folderName);
         emailFolder.open(Folder.READ_WRITE);
         emailFolder.appendMessages(new Message[]{message});
 
         System.out.println("Imap::saveMessage OK");
     }
-
 }

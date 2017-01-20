@@ -18,42 +18,42 @@ import javax.ejb.Remote;
 @Remote
 public interface EmailServiceRemote {
 
-    public String getTextError();
+    String getTextError();
 
-    public void remove();
+    void remove();
 
-    public void startSynchronization(Email accountInfo);
+    void startSynchronization(Email accountInfo);
 
-    public void stopSynchronization();
+    void stopSynchronization();
 
-    public boolean isSynchronization();
+    boolean isSynchronization();
 
-    public ArrayList<MessageInfo> getMessageList(Email accountInfo, String folderName, int limit, int offset);
+    ArrayList<MessageInfo> getMessageList(Email accountInfo, String folderName, int limit, int offset);
 
-    public void markRead(Email accountInfo, MessageInfo messageInfo);
+    void markRead(Email accountInfo, MessageInfo messageInfo);
 
-    public void markReadMultiple(Email accountInfo, ArrayList<MessageInfo> listMail);
+    void markReadMultiple(Email accountInfo, ArrayList<MessageInfo> listMail);
 
-    public void deleteMessageMultiple(Email accountInfo, ArrayList<MessageInfo> listMail);
+    void deleteMessageMultiple(Email accountInfo, ArrayList<MessageInfo> listMail);
 
-    public void deleteMessage(Email accountInfo, MessageInfo messageInfo);
+    void deleteMessage(Email accountInfo, MessageInfo messageInfo);
 
-    public void markFLAGGED(Email accountInfo, MessageInfo messageInfo);
+    void markFLAGGED(Email accountInfo, MessageInfo messageInfo);
 
-    public CountMessage getMessageCout(Email accountInfo, String folderName);
+    CountMessage getMessageCout(Email accountInfo, String folderName);
 
-    public MessageInfo getMessageBody(Email accountInfo, MessageInfo messageInfo);
+    MessageInfo getMessageBody(Email accountInfo, MessageInfo messageInfo);
 
-    public byte[] downloadAttachment(String url, String fileName);
+    byte[] downloadAttachment(String url, String fileName);
 
-    public void saveDraft(Email accountInfo, MessageInfo Email);
+    void saveDraft(Email accountInfo, MessageInfo Email);
 
-    public void sentMessage(Email accountInfo, MessageInfo messageInfo);
+    void sentMessage(Email accountInfo, MessageInfo messageInfo);
 
-    public void setFile(byte[] bytes);
+    void setFile(byte[] bytes);
 
-    public String convertByteCount(long bytes, boolean si);
+    String convertByteCount(long bytes, boolean si);
 
     //////////////////////////////////////////////////////
-    public boolean hasNewMessage(Email accountInfo);
+    boolean hasNewMessage(Email accountInfo);
 }
