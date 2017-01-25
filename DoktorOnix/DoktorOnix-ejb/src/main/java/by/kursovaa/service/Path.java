@@ -11,7 +11,7 @@ package by.kursovaa.service;
  */
 public class Path {
 
-    private final boolean test = false;
+    private final boolean test = true;
     private final String WORK_DIR_TEST = "D:/mailArhiv/";
 
     public static Path getInterface() {

@@ -17,9 +17,13 @@ import javax.mail.MessagingException;
  * @author Vladimir.Avtushko
  */
 public interface SynchronizedLocal {
+
     void saveMessage(String messageID, String folderName, Message messages, MessageInfo messageInfo)
             throws IOException, MessagingException;
-            void setAccountInfo(Email accountInfo);
-                    public void setImap(Imap imap);
-                            public String getTextError();
+
+    void setAccountInfo(Email accountInfo);
+
+    public void setImap(Imap imap);
+
+    public String getTextError();
 }

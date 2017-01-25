@@ -365,8 +365,8 @@ public class Email {
 
             try {
                 fileMeta.setBytes(mpf.getBytes());
-            } catch (IOException e) {
-                e.printStackTrace();
+            } catch (IOException ex) {
+                Logger.getLogger(Email.class.getName()).log(Level.SEVERE, null, ex);
             }
 
             if (attachments == null) {
@@ -499,8 +499,8 @@ public class Email {
         }
         String[] toString = messageInfo.getToString().split(";");
         String[] ccString = null;
-        String[] bccString = null;       
-        
+        String[] bccString = null;
+
         if (messageInfo.getCcString() != null) {
             ccString = messageInfo.getCcString().split(";");
         }

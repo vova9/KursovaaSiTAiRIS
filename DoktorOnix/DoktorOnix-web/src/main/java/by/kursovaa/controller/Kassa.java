@@ -40,30 +40,33 @@ public class Kassa {
 
     @RequestMapping(value = "/index")
     public String homeKassa(HttpSession httpSession, Model model) {
-        Polzovateli obj = (Polzovateli) httpSession.getAttribute("user");
+        Polzovateli user = (Polzovateli) httpSession.getAttribute("user");
         List<by.kursovaa.entity.Kassa> kassa = Ejb.getInterface().lookupKassaFacadeRemote().findAll();
+       
         model.addAttribute("Kassa", kassa);
-        model.addAttribute("User", obj);
+        model.addAttribute("User", user);
         return "kassa/index";
     }
 
     @RequestMapping(value = "/edit/{id}")
     public String editKassa(@PathVariable("id") String id, HttpSession httpSession, Model model) {
-        Integer id1 = Integer.parseInt(id);
-        Polzovateli obj = (Polzovateli) httpSession.getAttribute("user");
-        by.kursovaa.entity.Kassa kassa = Ejb.getInterface().lookupKassaFacadeRemote().find(id1);
+        Integer idOperations = Integer.parseInt(id);
+        Polzovateli user = (Polzovateli) httpSession.getAttribute("user");
+        by.kursovaa.entity.Kassa kassa = Ejb.getInterface().lookupKassaFacadeRemote().find(idOperations);
+       
         model.addAttribute("kasa", kassa);
-        model.addAttribute("User", obj);
+        model.addAttribute("User", user);
         model.addAttribute("whot", "Изменить операцию");
         return "kassa/form";
     }
 
     @RequestMapping(value = "/add")
     public String addKassa(HttpSession httpSession, Model model) {
-        Polzovateli obj = (Polzovateli) httpSession.getAttribute("user");
+        Polzovateli user = (Polzovateli) httpSession.getAttribute("user");
         by.kursovaa.entity.Kassa kassa = new by.kursovaa.entity.Kassa();
+       
         model.addAttribute("kasa", kassa);
-        model.addAttribute("User", obj);
+        model.addAttribute("User", user);
         model.addAttribute("whot", "Добавить операцию");
         return "kassa/form";
     }
@@ -71,15 +74,18 @@ public class Kassa {
     @RequestMapping(value = "/save")
     public String saveKassa(@ModelAttribute("kasa") by.kursovaa.entity.Kassa kasa, HttpSession httpSession,
             Model model) {
+
         if (kasa.getId() == null) {
             Ejb.getInterface().lookupKassaFacadeRemote().create(kasa);
         } else {
             Ejb.getInterface().lookupKassaFacadeRemote().edit(kasa);
         }
-        Polzovateli obj = (Polzovateli) httpSession.getAttribute("user");
+
+        Polzovateli user = (Polzovateli) httpSession.getAttribute("user");
         List<by.kursovaa.entity.Kassa> kassa = Ejb.getInterface().lookupKassaFacadeRemote().findAll();
+       
         model.addAttribute("Kassa", kassa);
-        model.addAttribute("User", obj);
+        model.addAttribute("User", user);
         model.addAttribute("success", "Операция была успешно сохранена!");
         return "kassa/index";
     }
@@ -87,11 +93,13 @@ public class Kassa {
     @RequestMapping(value = "/delete")
     public String deleteKassa(@ModelAttribute("kasa") by.kursovaa.entity.Kassa kasa, HttpSession httpSession,
             Model model) {
+
         Ejb.getInterface().lookupKassaFacadeRemote().remove(kasa);
-        Polzovateli obj = (Polzovateli) httpSession.getAttribute("user");
+        Polzovateli user = (Polzovateli) httpSession.getAttribute("user");
         List<by.kursovaa.entity.Kassa> kassa = Ejb.getInterface().lookupKassaFacadeRemote().findAll();
+       
         model.addAttribute("Kassa", kassa);
-        model.addAttribute("User", obj);
+        model.addAttribute("User", user);
         model.addAttribute("success", "Операция была успешно удалена!");
         return "kassa/index";
     }
@@ -105,6 +113,7 @@ public class Kassa {
     @RequestMapping(value = "/printchek")
     public String printСhekKassa(@ModelAttribute("kasa") by.kursovaa.entity.Kassa kasa, Model model,
             HttpServletRequest request, HttpServletResponse response) {
+
         try {
             Jasper jasper = new Jasper();
             ArrayList<by.kursovaa.entity.Kassa> kassa = new ArrayList();
@@ -114,7 +123,9 @@ public class Kassa {
             jasper.generateReportPDF(response, hmParams, jasperReport, kassa);
         } catch (JRException | NamingException | IOException ex) {
             Logger.getLogger(Kassa.class.getName()).log(Level.SEVERE, null, ex);
+            return "500";
         }
+
         return null;
     }
 
@@ -128,7 +139,9 @@ public class Kassa {
             jasper.generateReportPDF(response, hmParams, jasperReport, kassa);
         } catch (JRException | IOException | NamingException ex) {
             Logger.getLogger(Kassa.class.getName()).log(Level.SEVERE, null, ex);
+            return "500";
         }
+
         return null;
     }
 }

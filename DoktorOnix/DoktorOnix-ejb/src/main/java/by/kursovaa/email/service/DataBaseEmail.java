@@ -59,7 +59,7 @@ public class DataBaseEmail {
                 + "    sender         TEXT);");
 
         statmt.close();
-        
+
         System.out.println("DataBaseEmail::createTable OK");
     }
 
@@ -160,7 +160,7 @@ public class DataBaseEmail {
 
     public static void updateSynchronized(String folderName) throws SQLException, SQLiteException {
         System.out.println("DataBaseEmail::updateSynchronized STOK");
-        
+
         Statement statmt = conn.createStatement();
         statmt.execute("UPDATE [" + folderName + "] SET synchronized=0 WHERE synchronized = 1;");
         statmt.close();
@@ -168,7 +168,7 @@ public class DataBaseEmail {
 
     public static void updatedSynchronized(String folderName, String messageId) throws SQLException, SQLiteException {
         System.out.println("DataBaseEmail::updatedSynchronized STOK");
-        
+
         Statement statmt = conn.createStatement();
         statmt.execute("UPDATE [" + folderName + "] SET synchronized=1 WHERE messageId = '" + messageId + "';");
         statmt.close();
@@ -262,7 +262,7 @@ public class DataBaseEmail {
         pstmt.executeUpdate();
 
         pstmt.close();
-        
+
         System.out.println("DataBaseEmail::updatedMessageNumber OK");
     }
 
@@ -278,7 +278,7 @@ public class DataBaseEmail {
         pstmt.executeUpdate();
 
         pstmt.close();
-        
+
         System.out.println("DataBaseEmail::updatedFlags OK");
     }
 
@@ -294,7 +294,7 @@ public class DataBaseEmail {
         pstmt.setString(2, messageID);//messageId
         pstmt.executeUpdate();
         pstmt.close();
-        
+
         System.out.println("DataBaseEmail::updatedAttachment OK");
     }
 
@@ -364,7 +364,7 @@ public class DataBaseEmail {
             throws SQLException, SQLiteException {
 
         System.out.println("DataBaseEmail::updatedMarkMessage ST");
-        
+
         String sql = "UPDATE [" + folderName + "] SET mark=? WHERE messageId =?;";
 
         PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -372,7 +372,7 @@ public class DataBaseEmail {
         pstmt.setString(2, messageID);//messageId
         pstmt.executeUpdate();
         pstmt.cancel();
-        
+
         System.out.println("DataBaseEmail::updatedMarkMessage OK");
     }
 

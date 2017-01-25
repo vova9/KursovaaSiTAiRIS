@@ -27,7 +27,7 @@ public interface ImapLocal {
             UnknownHostException, NullPointerException;
 
     void disconnectionImap() throws MessagingException;
-    
+
     String getMessageID(MimeMessage message) throws MessagingException;
 
     MessageInfo getMessageInfo(MimeMessage message, MessageInfo messageInfo)
@@ -42,7 +42,7 @@ public interface ImapLocal {
     void readMessage(int msgId, String folderName, boolean mark) throws MessagingException;
 
     void deleteMessage(int msgId, String folderName) throws MessagingException;
-  
+
     void closeFolderSave() throws MessagingException;
 
     void saveMessage(MimeMessage message, String folderName) throws MessagingException;

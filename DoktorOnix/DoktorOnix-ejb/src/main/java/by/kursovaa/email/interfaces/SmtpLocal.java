@@ -6,13 +6,9 @@
 package by.kursovaa.email.interfaces;
 
 import by.kursovaa.entity.Email;
-import by.kursovaa.pojo.FileMeta;
 import by.kursovaa.pojo.MessageInfo;
 import java.io.IOException;
-import java.util.ArrayList;
 import javax.mail.MessagingException;
-import javax.mail.Multipart;
-import javax.mail.Part;
 import javax.mail.internet.MimeMessage;
 
 /**

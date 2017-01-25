@@ -33,29 +33,32 @@ public class Klienty {
 
     @RequestMapping(value = "/index")
     public String homeKlienty(HttpSession httpSession, Model model) {
-        by.kursovaa.entity.Polzovateli obj = (by.kursovaa.entity.Polzovateli) httpSession.getAttribute("user");
+        by.kursovaa.entity.Polzovateli user = (by.kursovaa.entity.Polzovateli) httpSession.getAttribute("user");
         List<by.kursovaa.entity.Klienty> klienty = Ejb.getInterface().lookupKlientyFacadeRemote().findAll();
+
         model.addAttribute("Klient", klienty);
-        model.addAttribute("User", obj);
+        model.addAttribute("User", user);
         return "klienty/index";
     }
 
     @RequestMapping(value = "/edit/{id}")
     public String editKlienty(@PathVariable("id") String id, HttpSession httpSession, Model model) {
-        by.kursovaa.entity.Polzovateli obj = (by.kursovaa.entity.Polzovateli) httpSession.getAttribute("user");
+        by.kursovaa.entity.Polzovateli user = (by.kursovaa.entity.Polzovateli) httpSession.getAttribute("user");
         by.kursovaa.entity.Klienty klienty = Ejb.getInterface().lookupKlientyFacadeRemote().find(id);
+
         model.addAttribute("Klient", klienty);
-        model.addAttribute("User", obj);
+        model.addAttribute("User", user);
         model.addAttribute("whot", "Изменить данные о клиенте");
         return "klienty/form";
     }
 
     @RequestMapping(value = "/add")
     public String addKlienty(HttpSession httpSession, Model model) {
-        by.kursovaa.entity.Polzovateli obj = (by.kursovaa.entity.Polzovateli) httpSession.getAttribute("user");
+        by.kursovaa.entity.Polzovateli user = (by.kursovaa.entity.Polzovateli) httpSession.getAttribute("user");
         by.kursovaa.entity.Klienty klienty = new by.kursovaa.entity.Klienty();
+
         model.addAttribute("Klient", klienty);
-        model.addAttribute("User", obj);
+        model.addAttribute("User", user);
         model.addAttribute("whot", "Добавить нового клиента");
         return "klienty/form";
     }
@@ -63,15 +66,18 @@ public class Klienty {
     @RequestMapping(value = "/save")
     public String saveKlienty(@ModelAttribute("Klienty") by.kursovaa.entity.Klienty klienty,
             HttpSession httpSession, Model model) {
+
         if (klienty.getTelefon().isEmpty()) {
             Ejb.getInterface().lookupKlientyFacadeRemote().create(klienty);
         } else {
             Ejb.getInterface().lookupKlientyFacadeRemote().edit(klienty);
         }
-        by.kursovaa.entity.Polzovateli obj = (by.kursovaa.entity.Polzovateli) httpSession.getAttribute("user");
-        model.addAttribute("User", obj);
+
+        by.kursovaa.entity.Polzovateli user = (by.kursovaa.entity.Polzovateli) httpSession.getAttribute("user");
         List<by.kursovaa.entity.Klienty> klient = Ejb.getInterface().lookupKlientyFacadeRemote().findAll();
+
         model.addAttribute("Klient", klient);
+        model.addAttribute("User", user);
         model.addAttribute("success", "Данные о клиенте были успешно сохранены!");
         return "klienty/index";
     }
@@ -79,11 +85,13 @@ public class Klienty {
     @RequestMapping(value = "/delete")
     public String deleteKlienty(@ModelAttribute("Klient") by.kursovaa.entity.Klienty klienty,
             HttpSession httpSession, Model model) {
+
         Ejb.getInterface().lookupKlientyFacadeRemote().remove(klienty);
-        by.kursovaa.entity.Polzovateli obj = (by.kursovaa.entity.Polzovateli) httpSession.getAttribute("user");
+        by.kursovaa.entity.Polzovateli user = (by.kursovaa.entity.Polzovateli) httpSession.getAttribute("user");
         List<by.kursovaa.entity.Klienty> klient = Ejb.getInterface().lookupKlientyFacadeRemote().findAll();
+
         model.addAttribute("Klient", klient);
-        model.addAttribute("User", obj);
+        model.addAttribute("User", user);
         model.addAttribute("success", "Данные о клиенте были успешно удалены!");
         return "klienty/index";
     }
@@ -98,6 +106,7 @@ public class Klienty {
             jasper.generateReportPDF(response, hmParams, jasperReport, klienty);
         } catch (JRException | IOException | NamingException ex) {
             Logger.getLogger(Kassa.class.getName()).log(Level.SEVERE, null, ex);
+            return "500";
         }
         return null;
     }

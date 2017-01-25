@@ -35,21 +35,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/tovary")
 public class Tovary {
 
-    private by.kursovaa.entity.Polzovateli test() {
-        by.kursovaa.entity.Polzovateli obj = new by.kursovaa.entity.Polzovateli();
-        obj.setAdmin(0);
-        obj.setIma("dsfdkf");
-        obj.setFamilia("kjdfdfd");
-        return obj;
-    }
-
     @RequestMapping(value = "/index")
     public String homeTovary(HttpSession httpSession, Model model) {
-        by.kursovaa.entity.Polzovateli obj = (by.kursovaa.entity.Polzovateli) httpSession.getAttribute("user");
+        by.kursovaa.entity.Polzovateli user = (by.kursovaa.entity.Polzovateli) httpSession.getAttribute("user");
         List<by.kursovaa.entity.Kategorii> kategorii = Ejb.getInterface().lookupKategoriiFacadeRemote().findAll();
+
         model.addAttribute("Tovary", Ejb.getInterface().lookupTovaryFacadeRemote().findAll());
         model.addAttribute("Kategorii", kategorii);
-        model.addAttribute("User", obj);
+        model.addAttribute("User", user);
         return "tovary/index";
     }
 
@@ -94,45 +87,47 @@ public class Tovary {
 
     @RequestMapping(value = "/view/{id}")
     public String veiwTovary(@PathVariable("id") String id, HttpSession httpSession, Model model) {
-        Integer id1 = Integer.parseInt(id);
-        by.kursovaa.entity.Polzovateli obj = (by.kursovaa.entity.Polzovateli) httpSession.getAttribute("user");
+        Integer idProducts = Integer.parseInt(id);
+        by.kursovaa.entity.Polzovateli user = (by.kursovaa.entity.Polzovateli) httpSession.getAttribute("user");
         List<by.kursovaa.entity.Kategorii> kategorii = Ejb.getInterface().lookupKategoriiFacadeRemote().findAll();
-        if (id1 == 0) {
+        if (idProducts == 0) {
             model.addAttribute("Tovary", Ejb.getInterface().lookupTovaryFacadeRemote().findAll());
         } else {
             for (int i = 0; i < kategorii.size(); i++) {
-                if (Objects.equals(kategorii.get(i).getId(), id1)) {
+                if (Objects.equals(kategorii.get(i).getId(), idProducts)) {
                     model.addAttribute("Tovary", kategorii.get(i).getTovaryList());
                 }
             }
         }
-        model.addAttribute("id", id1);
+        model.addAttribute("id", idProducts);
         model.addAttribute("Kategorii", kategorii);
-        model.addAttribute("User", obj);
+        model.addAttribute("User", user);
         return "tovary/index";
     }
 
     @RequestMapping(value = "/edit/{id}")
     public String editTovary(@PathVariable("id") String id, HttpSession httpSession, Model model) {
-        by.kursovaa.entity.Polzovateli obj = (by.kursovaa.entity.Polzovateli) httpSession.getAttribute("user");
+        by.kursovaa.entity.Polzovateli user = (by.kursovaa.entity.Polzovateli) httpSession.getAttribute("user");
         by.kursovaa.entity.Tovary tovary = Ejb.getInterface().lookupTovaryFacadeRemote().find(Integer.parseInt(id));
         List<by.kursovaa.entity.Kategorii> kategorii = Ejb.getInterface().lookupKategoriiFacadeRemote().findAll();
+
         model.addAttribute("Kategorii", kategorii);
         model.addAttribute("Tovar", tovary);
-        model.addAttribute("User", obj);
+        model.addAttribute("User", user);
         model.addAttribute("whot", "Изменить данные о товаре");
         return "tovary/form";
     }
 
     @RequestMapping(value = "/add")
     public String addTovary(HttpSession httpSession, Model model) {
-        by.kursovaa.entity.Polzovateli obj = (by.kursovaa.entity.Polzovateli) httpSession.getAttribute("user");
+        by.kursovaa.entity.Polzovateli user = (by.kursovaa.entity.Polzovateli) httpSession.getAttribute("user");
         by.kursovaa.entity.Tovary tovary = new by.kursovaa.entity.Tovary();
         List<by.kursovaa.entity.Kategorii> kategorii = Ejb.getInterface().lookupKategoriiFacadeRemote().findAll();
+
         tovary.setKategoria(new by.kursovaa.entity.Kategorii());
         model.addAttribute("Kategorii", kategorii);
         model.addAttribute("Tovar", tovary);
-        model.addAttribute("User", obj);
+        model.addAttribute("User", user);
         model.addAttribute("whot", "Добавить новый товар");
         return "tovary/form";
     }
@@ -141,11 +136,12 @@ public class Tovary {
     public String saveTovary(@ModelAttribute("Tovar") by.kursovaa.entity.Tovary tovar,
             HttpSession httpSession, Model model) {
         Ejb.getInterface().lookupTovaryFacadeRemote().edit(tovar);
-        by.kursovaa.entity.Polzovateli obj = (by.kursovaa.entity.Polzovateli) httpSession.getAttribute("user");
+        by.kursovaa.entity.Polzovateli user = (by.kursovaa.entity.Polzovateli) httpSession.getAttribute("user");
         List<by.kursovaa.entity.Kategorii> kategorii = Ejb.getInterface().lookupKategoriiFacadeRemote().findAll();
+
         model.addAttribute("Tovary", Ejb.getInterface().lookupTovaryFacadeRemote().findAll());
         model.addAttribute("Kategorii", kategorii);
-        model.addAttribute("User", obj);
+        model.addAttribute("User", user);
         model.addAttribute("success", "Товар был успешно сохранен!");
         return "tovary/index";
     }
@@ -153,11 +149,12 @@ public class Tovary {
     @RequestMapping(value = "/delete")
     public String deleteTovary(@ModelAttribute("Tovar") by.kursovaa.entity.Tovary tovar, HttpSession httpSession, Model model) {
         Ejb.getInterface().lookupTovaryFacadeRemote().remove(tovar);
-        by.kursovaa.entity.Polzovateli obj = (by.kursovaa.entity.Polzovateli) httpSession.getAttribute("user");
+        by.kursovaa.entity.Polzovateli user = (by.kursovaa.entity.Polzovateli) httpSession.getAttribute("user");
         List<by.kursovaa.entity.Kategorii> kategorii = Ejb.getInterface().lookupKategoriiFacadeRemote().findAll();
+
         model.addAttribute("Tovary", Ejb.getInterface().lookupTovaryFacadeRemote().findAll());
         model.addAttribute("Kategorii", kategorii);
-        model.addAttribute("User", obj);
+        model.addAttribute("User", user);
         model.addAttribute("success", "Товар был успешно удален!");
         return "tovary/index";
     }
@@ -165,8 +162,9 @@ public class Tovary {
     @RequestMapping(value = "/import")
     public String importTovary(HttpServletRequest request, HttpServletResponse response, HttpSession httpSession,
             Model model) {
-        by.kursovaa.entity.Polzovateli obj = (by.kursovaa.entity.Polzovateli) httpSession.getAttribute("user");
-        model.addAttribute("User", obj);
+        by.kursovaa.entity.Polzovateli user = (by.kursovaa.entity.Polzovateli) httpSession.getAttribute("user");
+        model.addAttribute("User", user);
+
         String url = request.getParameter("url");
         if (!url.isEmpty()) {
             Ejb.getInterface().lookupSeviceRemote().importTovary(url);
@@ -178,8 +176,8 @@ public class Tovary {
 
     @RequestMapping(value = "/import/index")
     public String importIndexTovary(HttpSession httpSession, Model model) {
-        by.kursovaa.entity.Polzovateli obj = (by.kursovaa.entity.Polzovateli) httpSession.getAttribute("user");
-        model.addAttribute("User", obj);
+        by.kursovaa.entity.Polzovateli user = (by.kursovaa.entity.Polzovateli) httpSession.getAttribute("user");
+        model.addAttribute("User", user);
         return "tovary/import";
     }
 
@@ -193,6 +191,7 @@ public class Tovary {
             jasper.generateReportPDF(response, hmParams, jasperReport, tovary);
         } catch (JRException | IOException | NamingException ex) {
             Logger.getLogger(Kassa.class.getName()).log(Level.SEVERE, null, ex);
+            return "500";
         }
         return null;
     }

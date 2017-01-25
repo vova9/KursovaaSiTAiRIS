@@ -27,7 +27,7 @@ import java.sql.SQLException;
  *
  * @author Vladimir
  */
-public class Synchronized implements Runnable,  SynchronizedLocal{
+public class Synchronized implements Runnable, SynchronizedLocal {
 
     private Imap imap;
 
@@ -76,7 +76,7 @@ public class Synchronized implements Runnable,  SynchronizedLocal{
                         System.out.println("Synchronized::run Sent Date: " + messages.getSentDate());
 
                         messageID = messages.getSentDate().toString();
-                      
+
                         if (!messageID.isEmpty() || !"null".equals(messageID)) {
                             messageID = messageID.replace(" ", "");
                             messageID = messageID.replace(":", "");

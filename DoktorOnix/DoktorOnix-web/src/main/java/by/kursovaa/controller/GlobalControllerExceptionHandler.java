@@ -19,11 +19,12 @@ public class GlobalControllerExceptionHandler {
     public String Eror404() {
         return "404";
     }
+
     @RequestMapping(value = "/403")
     public String Eror403() {
         return "403";
     }
-    
+
     @RequestMapping(value = "/500")
     public String Eror500() {
         return "500";
